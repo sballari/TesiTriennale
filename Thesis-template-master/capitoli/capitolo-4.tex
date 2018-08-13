@@ -71,32 +71,16 @@ Sono stati individuati i seguenti attori secondari: ITF, MonoKee.
     \caption{Use Case - UC1: Azioni utente generico}
 \end{figure}
 
-\begin{table}[!htbp]
-    \caption{Use Case - UC1: Azioni utente generico}
-    \label{tab:UC1-Azioni-utente-generico}
-    \begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Descrizione} & L’utente può visualizzare le informazioni sull’applicazione 
-    \\
-    \hline
-    \textbf{Attore primario} & Utente\\
-    \hline
-    \textbf{Attore secondario} & Nessuno\\
-    \hline
-    \textbf{Precondizioni} & L’utente ha avviato l’applicazione\\
-    \hline
-    \textbf{Postcondizioni} & L’utente ha eseguito le azioni che desiderava compiere in relazione alle sue possibilità\\
-    \hline
-    \textbf{Scenario principale} & 
-        \begin{itemize}
-            \item UC1.1 Visualizza info applicazione
-        \end{itemize}\\
-    \hline
-    \textbf{Scenari alternativi} & Nessuno\\
-    \hline
-    \end{tabularx}
-\end{table}
-
+\paragraph{Descrizione}  L’utente può visualizzare le informazioni sull’applicazione 
+\paragraph{Attore primario}  Utente
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione
+\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alle sue possibilità
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC1.1 Visualizza info applicazione
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
 
 
 \subsubsection{UC1.1 – Visualizza info applicazione}
@@ -106,86 +90,711 @@ Sono stati individuati i seguenti attori secondari: ITF, MonoKee.
     \caption{Use Case - UC1.1 – Visualizza info applicazione}
 \end{figure}
 
-\begin{table}[!htbp]
-    \caption{Use Case - UC1.1 – Visualizza info applicazione}
-    \label{tab:UC1-Azioni-utente-generico}
-    \begin{tabularx}{\textwidth}{|l|X|}
-    \hline
-    \textbf{Descrizione} & Il sistema deve visualizzare le informazioni relative all’applicazione mobile e al servizio MonoKee
-    \\
-    \hline
-    \textbf{Attore primario} & Utente\\
-    \hline
-    \textbf{Attore secondario} & Nessuno\\
-    \hline
-    \textbf{Precondizioni} & L’utente ha avviato l’applicazione\\
-    \hline
-    \textbf{Postcondizioni} & L’utente ha visualizzato le informazioni che desirava riguardo l’applicazione\\
-    \hline
-    \textbf{Scenario principale} & 
-        \begin{itemize}
-            \item UC1.1.1 Visualizza info applicazione
-            \item UC1.1.2 Visualizza info servizio MonoKee
-            \item UC1.1.3 Visualizza tutorial utilizzo
-        \end{itemize}\\
-    \hline
-    \textbf{Scenari alternativi} & Nessuno\\
-    \hline
-    \end{tabularx}
-\end{table}
+\paragraph{Descrizione}  Il sistema deve visualizzare le informazioni relative all’applicazione mobile e al servizio MonoKee  
+\paragraph{Attore primario}  Utente
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione
+\paragraph{Postcondizioni}  L’utente ha visualizzato le informazioni che desirava riguardo l’applicazione
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC1.1.1 Visualizza info applicazione
+        \item UC1.1.2 Visualizza info servizio MonoKee
+        \item UC1.1.3 Visualizza tutorial utilizzo
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC1.1.1 – Visualizza info app mobile}
+\paragraph{Descrizione}  Il sistema deve visualizzare le informazioni tecniche relative all’applicazione mobile
+\paragraph{Attore primario}  Utente
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed ha richiesto la visualizzazione delle informazioni tecniche relative all’applicazione mobile
+\paragraph{Postcondizioni}  L’utente ha visualizzato le informazioni con le informazioni tecniche relative all’applicazione mobile
+\paragraph{Scenario principale}  
+L’utente visualizza un messaggio con le informazioni tecniche relative all’applicazione mobile
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC1.1.2 – Visualizza info servizio MonoKee}
+\paragraph{Descrizione}  Il sistema deve visualizzare le informazioni relative al servizio MonoKee
+\paragraph{Attore primario}  Utente
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed ha richiesto la visualizzazione delle informazioni relative al servizio MonoKee
+\paragraph{Postcondizioni}  L’utente ha visualizzato le informazioni con le informazioni relative al servizio MonoKee
+\paragraph{Scenario principale}  
+L’utente visualizza un messaggio con le informazioni relative al servizio MonoKee
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC1.1.3 – Visualizza tutorial utilizzo}
+\paragraph{Descrizione}  Il sistema deve visualizzare un tutorial su come utilizzare l’applicazione IW
+\paragraph{Attore primario}  Utente
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed ha richiesto la visualizzazione di un tutorial su come utilizzare l’applicazione IW
+\paragraph{Postcondizioni}  L’utente ha visualizzato il tutorial su come utilizzare l’applicazione IW
+\paragraph{Scenario principale}  
+L’utente visualizza un tutorial su come utilizzare l’applicazione IW
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC2 – Azioni utente non registrato}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC2-azioni-utente-non-registrato.png} 
+    \caption{Use Case - UC2: Azioni utente non registrato}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente non registrato può eseguire le operazioni di registrazione e accesso al servizio MonoKee 
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed non è ancora riconosciuto nel sistema
+\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione di non essere registrato
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC2.1 Registrazione
+        \item UC2.2 Accesso MonoKee
+    \end{enumerate}
+\paragraph{Scenari alternativi}  
+    \begin{enumerate}
+        \item l’utente ha fornito dati di registrazione non validi o il doppio inserimento della password non coincide: UC2.3 Visualizzazione messaggio di errore registrazione.
+        \item l’utente ha fornito username e password non corrispondenti ha nessun utente registrato al servizio: UC2.4 Visualizzazione messaggio di errore autenticazione.
+    \end{enumerate}
+
+
+\subsubsection{UC2.1 – Registrazione}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC2-1-Registrazione.png} 
+    \caption{Use Case - UC2.1: Registrazione}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente non registrato può eseguire l’operazione di registrazione 
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare la registrazione al servizio MonoKee
+\paragraph{Postcondizioni}  L’utente ha eseguito l’operazione di registrazione al sistema
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC2.1.1 Inserimento username
+        \item UC2.1.2 Inserimento password
+        \item UC2.1.3 Reinserimento password
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.1.1 – Inserimento username}
+\paragraph{Descrizione}  L’utente non registrato deve inserire un username per l’operazione di registrazione
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di un username per l’operazione di registrazione
+\paragraph{Postcondizioni}  L’utente ha inserito l’username per la registrazione
+\paragraph{Scenario principale}  
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC2.1.2 – Inserimento password}
+\paragraph{Descrizione}  L’utente non registrato deve inserire una password per l’operazione di registrazione
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di una password per l’operazione di registrazione
+\paragraph{Postcondizioni}  L’utente ha inserito la password per la registrazione
+\paragraph{Scenario principale}  
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.1.3 – Reinserimento password}
+\paragraph{Descrizione}  L’utente non registrato deve reinserire la password per l’operazione di registrazione
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede il reinserimento di una password per l’operazione di registrazione
+\paragraph{Postcondizioni}  L’utente ha reinserito la password per la registrazione
+\paragraph{Scenario principale}  
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.2 – Accesso MonoKee}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC2-2-Accesso-MonoKee.png} 
+    \caption{Use Case - UC2.1: Accesso MonoKee}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente non registrato può eseguire l’operazione di autenticazione 
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare l’autenticazione al servizio MonoKee
+\paragraph{Postcondizioni}  L’utente ha eseguito l’operazione di accesso al sistema ed è quindi ora riconosciuto come utente autenticato
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC2.1.1 Inserimento username
+        \item UC2.1.2 Inserimento password
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC2.2.1 – Inserimento username}
+\paragraph{Descrizione}  L’utente non registrato deve inserire un username per l’operazione di autenticazione
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di un username per l’operazione di autenticazione
+\paragraph{Postcondizioni}  L’utente ha inserito l’username per l’autenticazione
+\paragraph{Scenario principale}  
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.2.2 – Inserimento password}
+\paragraph{Descrizione}  L’utente non registrato deve inserire una password per l’operazione di autenticazione
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di una password per l’operazione di autentificazione
+\paragraph{Postcondizioni}  L’utente ha inserito la password per l’autentificazione
+\paragraph{Scenario principale}  
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.3 – Visualizza messaggio di errore registrazione}
+\paragraph{Descrizione}  L’utente non registrato fornisce username già esistente o il doppio inserimento della password non coincide
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un username già esistente o delle password non coincidenti durante la registrazionerichiede l’inserimento di una password per l’operazione di autentificazione
+\paragraph{Postcondizioni}  L’utente ha visualizzato un messaggio di errore relativo all’impossibilità di effettuare la registrazione con i dati forniti
+\paragraph{Scenario principale}  
+L’utente visualizza un messaggio di errore relativo all’impossibilità di effettuare la registrazione con i dati forniti
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2.4 – Visualizza messaggio di errore autenticazione}
+\paragraph{Descrizione}  L’utente non registrato fornisce username e password che non corrispondono a nessun utente registrato al servizio MonoKee
+\paragraph{Attore primario}  Utente non registrato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un username e una password che non corrispondono a nessun utente registrato al servizio MonoKee
+\paragraph{Postcondizioni}  L’utente ha visualizzato un messaggio di errore relativo all’impossibilità di effettuare l’autenticazione
+\paragraph{Scenario principale}  
+L’utente visualizza un messaggio di errore relativo all’impossibilità di effettuare l’autenticazione
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3 – Azioni utente autenticato}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC3-Azioni-utente-autententicato.png} 
+    \caption{Use Case - UC3: Azioni utente autenticato}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente autenticato può eseguire le operazioni legate alla gestione della sua identità e alla presentazione dei propri dati ad un SP
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  ITF
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed è riconosciuto nel sistema come utente di MonoKee
+\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione essere riconosciuto come utente di MonoKee
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC3.1 Visualizza QR dell’informazione certificata
+        \item UC3.2 Visualizza chiave pubblica
+        \item UC3.3 Visualizza chiave privata
+        \item UC3.4 Inserimento informazione personale
+        \item UC3.5 Visualizza lista certificazioni
+        \item UC3.6 Elimina certificazione
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+
+\subsubsection{UC3.1 – Visualizza QR dell’informazione certificata}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare nel proprio schermo un codice QR che rappresenta un’informazione certificata
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto di visualizzare il codice QR di una certificazione precedentemente inserita.
+\paragraph{Postcondizioni}  L’utente ha visualizzato il codice QR che rappresenta la certificazione selezionata
+\paragraph{Scenario principale}  
+L’utente seleziona e poi visualizza il codice QR che rappresenta la certificazione selezionata
+\paragraph{Scenari alternativi}  Nessuno
+
+
+\subsubsection{UC3.2 – Visualizza chiave pubblica}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare la chiave pubblica generata al momento della registrazione
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della chiave pubblica.
+\paragraph{Postcondizioni}  L’utente ha visualizzato la propria chiave pubblica precedentemente generata
+\paragraph{Scenario principale}  
+L’utente visualizza la propria chiave pubblica precedentemente generata
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.2 – Visualizza chiave privata}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare la chiave privata generata al momento della registrazione
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della chiave privata.
+\paragraph{Postcondizioni}  L’utente ha visualizzato la propria chiave privata precedentemente generata
+\paragraph{Scenario principale}  
+L’utente visualizza la propria chiave privata precedentemente generata
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.4 – Inserimento informazione personale}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC3-4-Inserimento-informazione-personale.png} 
+    \caption{Use Case - UC3.4: Inserimento informazione personale}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente autenticato può inserire una certificazione e sottometterla all’ITF
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  ITF
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee, e ha intende inserire una nuova certificazione alla propria identità
+\paragraph{Postcondizioni}  L’utente ha inserito la certificazione e questa è stata presentata all’ITF
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC3.4.1 Inserimento nome certificazione
+        \item UC3.4.2 Inserimento descrizione certificazione
+        \item UC3.4.3 Visualizza resoconto
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.4.1 – Inserimento nome certificazione}
+\paragraph{Descrizione}  L’utente autenticato deve inserire un nome per l’operazione di inserimento certificazione
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema ed il sistema richiede l’inserimento di un nome per l’operazione di inserimento certificazione
+\paragraph{Postcondizioni}  L’utente ha inserito il nome per l’inserimento della certificazione
+\paragraph{Scenario principale}  
+L’utente autenticato inserisce una stringa tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.4.2 – Inserimento descrizione certificazione}
+\paragraph{Descrizione}  L’utente autenticato deve inserire una descrizione per l’operazione di inserimento certificazione
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema ed il sistema richiede l’inserimento di una descrizione per l’operazione di inserimento certificazione
+\paragraph{Postcondizioni}  L’utente ha inserito la descrizione per l’inserimento della certificazione
+\paragraph{Scenario principale}  
+L’utente autenticato inserisce un insieme di stringhe tramite l’utilizzo di una text box
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+\subsubsection{UC3.4.3 – Visualizza resoconto}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare un resoconto dei dati inseriti durante la procedura di inserimento certificazione
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee, ha iniziato una procedura di inserimento certificazione e ha richiesto la visualizzazione del resoconto dei dati inseriti
+\paragraph{Postcondizioni}  L’utente ha visualizzato un resoconto dei dati inseriti durante la procedura di inserimento certificazione
+\paragraph{Scenario principale}  
+L’utente visualizza un resoconto dei dati inseriti durante la procedura di inserimento certificazione
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+
+
+\subsubsection{UC3.5 – Visualizza lista certificazioni}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC3-5-Visualizza-lista-certificazioni.png} 
+    \caption{Use Case - UC3.5: Visualizza lista certificazioni}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente autenticato può visualizzare una lista con il nome e l’identificativo della certificazione associate alla propria identità
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della lista delle certificazioni
+\paragraph{Postcondizioni}  L’utente ha visualizzato la lista delle certificazioni
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC3.5.1 Visualizza singola certificazione
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+
+\subsubsection{UC3.5.1 – Visualizza singola certificazione}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-iw/UC3-5-1-Visualizza-singola-certificazione.png} 
+    \caption{Use Case - UC3.5.1: Visualizza singola certificazione}
+\end{figure}
+
+\paragraph{Descrizione}  L’utente autenticato può visualizzare i dettagli di una certificazione selezionata della lista delle certificazioni
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  ITF
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione di una specifica entry della lista delle certificazioni
+\paragraph{Postcondizioni}  L’utente ha visualizzato i dettagli di una specifica certificazione della lista
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC3.5.1.1 Visualizza nome certificazione
+        \item UC3.5.1.2 Visualizza descrizione certificazione
+        \item UC3.5.1.3 Visualizza stato certificazione
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+\subsubsection{UC3.5.1.1 – Visualizza nome certificazione}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare il nome di una certificazione selezionata della lista delle certificazioni
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione del nome di una specifica entry della lista delle certificazioni
+\paragraph{Postcondizioni}  L’utente ha visualizzato il nome di una specifica certificazione della lista
+\paragraph{Scenario principale}  
+L’utente visualizza il nome di una specifica certificazione della lista
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+\subsubsection{UC3.5.1.2 – Visualizza descrizione certificazione}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare la descrizione di una certificazione selezionata della lista delle certificazioni
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della descrizione di una specifica entry della lista delle certificazioni
+\paragraph{Postcondizioni}  L’utente ha visualizzato la descrizione di una specifica certificazione della lista
+\paragraph{Scenario principale}  
+L’utente visualizza la descrizione di una specifica certificazione della lista
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.5.1.3 – Visualizza stato certificazione}
+\paragraph{Descrizione}  L’utente autenticato può visualizzare lo stato di una certificazione selezionata della lista delle certificazioni. L’informazione proviene dall’ITF.
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  ITF
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione dello stato di una specifica entry della lista delle certificazioni
+\paragraph{Postcondizioni}  L’utente ha visualizzato lo stato di una specifica certificazione della lista
+\paragraph{Scenario principale}  
+L’utente visualizza una stringa che può essere confermata da un TTP o non confermata.
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC3.6 – Elimina certificazione}
+\paragraph{Descrizione}  L’utente autenticato può eliminare una certificazione selezionata
+\paragraph{Attore primario}  Utente Autenticato
+\paragraph{Attore secondario}  ITF
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto l’eliminazione di una specifica certificazione
+\paragraph{Postcondizioni}  La certificazione non è più presente dal sistema e pure dall’ITF
+\paragraph{Scenario principale}  
+L’utente seleziona e poi esprime la volontà di eliminare la certificazione certificata
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \newpage
 \section{Tracciamento dei requisiti}
 
-Da un'attenta analisi dei requisiti e degli use case effettuata sul progetto è stata stilata la tabella che traccia i requisiti in rapporto agli use case.\\
-Sono stati individuati diversi tipi di requisiti e si è quindi fatto utilizzo di un codice identificativo per distinguerli.\\
-Il codice dei requisiti è così strutturato R(F/Q/V)(N/D/O) dove:
-\begin{enumerate}
-	\item[R =] requisito
-    \item[F =] funzionale
-    \item[Q =] qualitativo
-    \item[V =] di vincolo
-    \item[N =] obbligatorio (necessario)
-    \item[D =] desiderabile
-    \item[Z =] opzionale
-\end{enumerate}
+\subsection{Fonti}
+Per la deduzione dei requisiti utente e di sistema, che verranno presentati nelle sezioni a seguire, sono stati usati come fonti lo studio Gartner \footcite{farah:The-Dawn-of-Decentralized-Identity}, il capitolo \emph{Studio di fattibilità IW} e gli Use Case presentati nella sezione \emph{Casi d'uso}. La struttura e le convenzioni usate sono ispirate dal capitolo di \cite{som:swe}. In seguito vengono riportate le categorie che vengono usate per la catalogazione:
+\begin{itemize}
+    \item F: requisito funzionale;
+    \item V: requisito di vincolo;
+    \item Q: requisito di qualità.
+\end{itemize}
+    
+Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli indici usati sono i seguenti:
+\begin{itemize}
+    \item M: must;
+    \item S: should; 
+    \item C: could; 
+    \item W: will.
+\end{itemize} 
+    
 Nelle tabelle \ref{tab:requisiti-funzionali}, \ref{tab:requisiti-qualitativi} e \ref{tab:requisiti-vincolo} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
 
 \newpage
-
 \begin{table}%
 \caption{Tabella del tracciamento dei requisti funzionali}
 \label{tab:requisiti-funzionali}
 \begin{tabularx}{\textwidth}{lXl}
 \hline\hline
-\textbf{Requisito} & \textbf{Descrizione} & \textbf{Use Case}\\
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
 \hline
-RFN-1     & L'interfaccia permette di configurare il tipo di sonde del test & UC1 \\
+R[F][C]0001     & Il sistema potrebbe permettere ad un utente di visualizzare le informazioni dell’applicazione & UC1, UC1.1 \\
+\hline
+R[F][C]0002     & Il sistema potrebbe permettere di visualizzare le info tecniche dell’applicazione & UC1.1.2 \\
+\hline
+R[F][C]0003     & Il sistema potrebbe permettere di visualizzare una descrizione del servizio MonoKee & UC1.1.2 \\
+\hline
+R[F][C]0004     & Il sistema potrebbe permettere di visualizzare un tutorial esplicativo sul suo utilizzo & UC1.1.3 \\
+\hline
+R[F][M]0005     & Il sistema deve permettere di potersi registrare al servizio & UC2, UC2.1 \\
+\hline
+R[F][M]0006     & Il sistema deve permettere di essere riconosciuto dal sistema MonoKee & UC2, UC2.2 \\
+\hline
+R[F][M]0007     & Il sistema deve visualizzare un messaggio di errore in caso i dati forniti durante la registrazione non dovessero essere validi & UC2, UC2.3 \\
+\hline
+R[F][M]0008     & Il sistema deve visualizzare un messaggio di errore in caso i dati forniti durante la procedura di autenticazione non dovessero essere corretti & UC2, UC2.4 \\
+\hline
+R[F][M]0009     & Il sistema deve permettere di inserire uno username nell’ottica della procedura di registrazione  & UC2.1.1\\
+\hline
+R[F][M]0010    & Il sistema deve permettere di inserire una password nell’ottica della procedura di registrazione & UC2.1.2 \\
+\hline
+R[F][M]0011     & Il sistema deve permettere di reinserire la password nell’ottica della procedura di registrazione & UC2.1.3 \\
+\hline
+R[F][M]0012     & Il sistema deve permettere di inserire uno username nell’ottica della procedura di autentificazione & UC2.2.1 \\
+\hline
+R[F][M] 0013     & Il sistema deve permettere di inserire una password nell’ottica della procedura di autentificazione & UC2.2.2 \\
+\hline
+R[F][M] 0014     & Il sistema deve permettere ad un utente autenticato di poter generare un codice QR di un certificato inserito nel sistema & UC3, UC3.1 \\
+\hline
+R[F][M] 0015     & Il sistema deve permettere ad un utente autenticato di visualizzare la chiave pubblica & UC3, UC3.2 \\
+\hline
+R[F][M] 0016     & Il sistema deve permettere ad un utente autenticato di visualizzare la chiave privata & UC3, UC3.3 \\
+\hline
+R[F][M] 0017     & Il sistema deve permettere ad un utente autenticato di inserire un’informazione personale & UC3, UC3.4 \\
+\hline
+R[F][M] 0018     & Il sistema deve permettere ad un utente autenticato di visualizzare una lista di certificazioni associate alla propria identità & UC3, UC3.5 \\
+\hline
+R[F][M] 0019     & Il sistema deve permettere ad un utente autenticato di eliminare una certificazione associata alla propria identità & UC3, UC3.6 \\
+\hline
+R[F][M] 0020     & Il sistema deve permettere ad un utente autenticato di inserire il nome della certificazione nel contesto dell’inserimento di certificazione & UC3.4.1 \\
+\hline
+R[F][M] 0021     & Il sistema deve permettere ad un utente autenticato di una descrizione della certificazione nel contesto dell’inserimento di una certificazione & UC3.4.2 \\
+\hline
+R[F][M] 0022     & Il sistema deve permettere ad un utente autenticato di visualizzare un resoconto dei dati inseriti durante la procedura di inserimento certificato & UC3.4.3 \\
+\hline
+R[F][M] 0023     & Il sistema deve permettere ad un utente autenticato di visualizzare i dettagli di una singola certificazione & UC3.5.1 \\
+\hline
+R[F][M] 0024     & Il sistema deve permettere ad un utente autenticato di visualizzare il nome di una certificazione esistente & UC3.5.1.1 \\
+\hline
+R[F][M] 0025     & Il sistema deve permettere ad un utente autenticato di visualizzare la certificazione di una certificazione esistente & UC3.5.1.2 \\
+\hline
+R[F][S] 0026     & Il sistema dovrebbe permettere ad un utente autenticato di visualizzare lo stato di una certificazione esistente & UC3.5.1.3 \\
 \hline
 \end{tabularx}
 \end{table}%
 
-\begin{table}%
-\caption{Tabella del tracciamento dei requisiti qualitativi}
-\label{tab:requisiti-qualitativi}
-\begin{tabularx}{\textwidth}{lXl}
-\hline\hline
-\textbf{Requisito} & \textbf{Descrizione} & \textbf{Use Case}\\
-\hline
-RQD-1    & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-\hline
-\end{tabularx}
-\end{table}%
+
 
 \begin{table}%
 \caption{Tabella del tracciamento dei requisiti di vincolo}
 \label{tab:requisiti-vincolo}
 \begin{tabularx}{\textwidth}{lXl}
 \hline\hline
-\textbf{Requisito} & \textbf{Descrizione} & \textbf{Use Case}\\
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
 \hline
-RVO-1    & La libreria per l'esecuzione dei test automatici deve essere riutilizzabile & - \\
+R[V][M] 0027    & Il sistema deve offrire le proprie funzionalità come applicazione mobile &  IW Studio di fattibilità \\
+\hline
+R[V][M] 0028    & Il sistema è implementato tramite l’uso di Xamarin & IW Studio di fattibilità \\
+\hline
+R[V][M] 0029    & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: Local, Test, Staging, Production & IW Studio di fattibilità \\
+\hline
+R[V][M] 0030    & Il prodotto è sviluppato utilizzando uno strumento di linting & IW Studio di fattibilità \\
+\hline
+R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale & IW Studio di fattibilità \\
 \hline
 \end{tabularx}
 \end{table}%
+
+
+
+\begin{table}%
+    \caption{Tabella del tracciamento dei requisiti qualitativi}
+    \label{tab:requisiti-qualitativi}
+    \begin{tabularx}{\textwidth}{lXl}
+    \hline\hline
+    \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
+    \hline
+    R[Q][S] 0032    & Il progetto prevede un ragionevole set di test di unità e di test di integrazione & - \\
+    \hline
+    R[Q][S] 0033   & I test possono essere eseguiti localmente o come parte di integrazione continua & - \\
+    \hline
+    R[Q][S] 0034    & Il sistema solo alla fine sarà testato nel network pubblico di prova & - \\
+    \hline
+    R[Q][S] 0035    & Il codice sorgente del prodotto e la documentazione necessaria per l’utilizzo sono versionati in repository pubblici usando GitHub, BitBucket o GitLab & - \\
+    \hline
+    R[Q][C] 0036    & Lo sviluppo si eseguirà utilizzano un approccio incrementale  & IW Studio di fattibilità \\
+    \hline
+    \end{tabularx}
+    \end{table}%
+
+
+\begin{table}%
+    \caption{Tabella del tracciamento dei requisiti con le fonti}
+    \label{tab:requisiti-fonte}
+    \begin{tabularx}{\textwidth}{lX}
+    \hline\hline
+    \textbf{Codice}  & \textbf{Fonte}\\
+    \hline
+    R[F][C]0001    & UC1, UC1.1  \\
+    \hline
+    R[F][C]0002   & UC1.1.2  \\
+    \hline
+    R[F][C]0003    & UC1.1.2  \\
+    \hline
+    R[F][C]0004    & UC1.1.3  \\
+    \hline
+    R[F][M]0005    & UC2, UC2.1  \\
+    \hline
+    R[F][M]0006    & UC2, UC2.2  \\
+    \hline
+    R[F][M]0007    & UC2, UC2.3  \\
+    \hline
+    R[F][M]0008    & UC2, UC2.4  \\
+    \hline
+    R[F][M]0009    & UC2.1.1  \\
+    \hline
+    R[F][M]0010    & UC2.1.2  \\
+    \hline
+    R[F][M]0011    & UC2.1.3  \\
+    \hline
+    R[F][M]0012    & UC2.2.1  \\
+    \hline
+    R[F][M] 0013    & UC2.2.2  \\
+    \hline
+    R[F][M] 0014    & UC3, UC3.1  \\
+    \hline
+    R[F][M] 0015    & UC3, UC3.2  \\
+    \hline
+    R[F][M] 0016    & UC3, UC3.3  \\
+    \hline
+    R[F][M] 0017    & UC3, UC3.4  \\
+    \hline
+    R[F][M] 0018    & UC3, UC3.5  \\
+    \hline
+    R[F][M] 0019    & UC3, UC3.6  \\
+    \hline
+    R[F][M] 0020    & UC3.4.1  \\
+    \hline
+    R[F][M] 0021    & UC3.4.2  \\
+    \hline
+    R[F][M] 0022    & UC3.4.3  \\
+    \hline
+    R[F][M] 0023    & UC3.5.1  \\
+    \hline
+    R[F][M] 0024    & UC3.5.1.1  \\
+    \hline
+    R[F][M] 0025    & UC3.5.1.2  \\
+    \hline
+    R[F][S] 0026    & UC3.5.1.3  \\
+    \hline
+    R[V][M] 0027    & IW Studio di fattibilità  \\
+    \hline
+    R[V][M] 0028    & IW Studio di fattibilità  \\
+    \hline
+    R[V][M] 0029    & IW Studio di fattibilità  \\
+    \hline
+    R[V][M] 0030    & IW Studio di fattibilità  \\
+    \hline
+    R[V][M] 0031    & IW Studio di fattibilità  \\
+    \hline
+    R[Q][S] 0032    & -  \\
+    \hline
+    R[Q][S] 0033    & -  \\
+    \hline
+    R[Q][S] 0034    & -  \\
+    \hline
+    R[Q][S] 0035    & -  \\
+    \hline
+    R[Q][C] 0036    & IW Studio di fattibilità  \\
+    \hline
+    \end{tabularx}
+    \end{table}%
+
+\begin{table}%
+    \caption{Tabella del tracciamento delle fonti con i requisiti}
+    \label{tab:fonte-req}
+    \begin{tabularx}{\textwidth}{lX}
+    \hline\hline
+    \textbf{Fonte}  & \textbf{Codice}\\
+    \hline
+    UC1    & R[F][C]0001  \\
+    \hline
+    UC1.1   & R[F][C]0001  \\
+    \hline
+    UC1.1.2    & R[F][C]0002  \\
+    \hline
+    UC1.1.2    & R[F][C]0003  \\
+    \hline
+    UC2   & R[F][M]0005, R[F][M]0006, R[F][M]0007, R[F][M]0008 \\
+    \hline
+    UC2.1    & R[F][M]0005  \\
+    \hline
+    UC2.2    & R[F][M]0006  \\
+    \hline
+    UC2.3    & R[F][M]0007  \\
+    \hline
+    UC2.4 & R[F][M]0008 \\
+    \hline
+    UC2.1.1 & R[F][M]0009 \\
+    \hline
+    UC2.1.2 & R[F][M]0010 \\
+    \hline
+    UC2.1.3 & R[F][M]0011 \\
+    \hline
+    UC2.2.1 & R[F][M]0012 \\
+    \hline
+    UC2.2.2 & R[F][M] 0013 \\
+    \hline
+    UC3 & R[F][M] 0014, R[F][M] 0015, R[F][M] 0016, R[F][M] 0017, R[F][M] 0018, R[F][M] 0019\\
+    \hline
+    UC3.1 & R[F][M] 0014 \\
+    \hline
+    UC3.2 & R[F][M] 0015 \\
+    \hline
+    UC3.3 & R[F][M] 0016 \\
+    \hline
+    UC3.4 & R[F][M] 0017 \\
+    \hline
+    UC3.5 & R[F][M] 0018 \\
+    \hline
+    UC3.6 & R[F][M] 0019 \\
+    \hline
+    UC3.4.1 & R[F][M] 0020 \\
+    \hline
+    UC3.4.2 & R[F][M] 0021 \\
+    \hline
+    UC3.4.3 & R[F][M] 0022 \\
+    \hline
+    UC3.5.1 & R[F][M] 0023 \\
+    \hline
+    UC3.5.1.1 & R[F][M] 0024 \\
+    \hline
+    UC3.5.1.2 & R[F][M] 0025 \\
+    \hline
+    UC3.5.1.3 & R[F][S] 0026 \\
+    \hline
+    IW Studio di fattibilità & R[V][M] 0027, R[V][M] 0028, R[V][M] 0029, R[V][M] 0030, R[V][M] 0031, R[Q][C] 0036 \\
+    \hline
+    - & R[Q][S] 0032, R[Q][S] 0033, R[Q][S] 0034, R[Q][S] 0035 \\
+    \hline
+    \end{tabularx}
+    \end{table}%
