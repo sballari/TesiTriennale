@@ -366,10 +366,125 @@ La seconda opzione risulta essere una più tradizionale applicazione server che 
 \end{itemize}
 Data l’alta diffusione di Javascript e NodeJS nella comunità Ethereum si consigliano pure questi.
 In base al linguaggio scelto e alla tecnologia blockchain scelta, si dovranno utilizzare differenti librerie per effettuare la comunicazione tra la rete e l’applicativo. Nel caso di Ethereum si propongono le seguenti librerie:
+\begin{table}[!h] %
+    \caption{Tabella comparivi linguaggio per sviluppo SP}
+    \label{tab:comp-ling}
+    \begin{tabularx}{\textwidth}{|l|l|l|X|}
+    \hline
+    \textbf{Linguaggio} & \textbf{Libreria} & \textbf{Note}\\
+    \hline
+    C++   & cpp-ethereum & - \\
+    \hline
+    C Sharp   & Nethereum & Questa soluzione si collega particolarmente bene alla scelta di Xamarin per l’IW. \\
+    \hline
+    JS e NodeJS   & Web3 & -\\
+    \hline
+    Java  & Web3j & -\\
+    \hline
+    \end{tabularx}
+\end{table}%
+
+Di seguito si procederà alla trattazione di alcuni degli strumenti che si ritengono più utili.
+\paragraph{Nethereum}:è un tool che permette una facile integrazione con il client in applicazioni .NET. Fornisce una suite di librerie open source che aiutano a prototipare applicazione .NET velocemente. E’ disponibile anche nel sotto insieme Xamarin.  La documentazione è presente è sembra ben strutturata e di ottima qualità. Inoltre potrebbe rappresentare una buona soluzione in caso di scelta di Microsoft Azure Blockchain. Il sito del progetto è il seguente www.nethereum.com.   
+\paragraph{Web3}: è una collezione di librerie che permettono di interagire con un nodo remoto o locale usando una connessione HTTP o IPC. Web3 è presente in npm, meteor, pure js. Per il suo funzionamento è necessario avere un client attivo nel proprio computer. Web3 supporta Mist e Metamask. Il sito del progetto è il seguente: web3js.readthedocs.io.
+\paragraph{Web3J}: si tratta di una libreria analoga a Web3 per Java.
+\paragraph{Mist}: è un browser sviluppato direttamente dal team Ethereum in grado di operare transazioni direttamente nella blockchain senza la necessità di possedere un intero nodo. È estremamente immaturo e non utilizzabile in produzione. Si riporta di seguito il sito del progetto: github.com/ethereum/mist.
+\paragraph{Metamask}: è uno plugin disponibile per i browser Chrome, Firefox e Opera che permette di interfacciarsi alla rete Ethereum senza la necessità di eseguire in intero nodo della rete. Il plugin include un wallet con cui l’utente può inserire il proprio account tramite la chiave privata. Una volta inserito l’account il plugin farà da tramite tra l’applicazione e la rete.
+In caso, invece, si opti per la scelta di Hyperledger la scelta risulterebbe molto più semplice in quanto la blockchain in questione fornisce un’API per la comunicazione REST.
+
+
+\subsubsection{Scelta del client Ethereum}
+Il client è un componente che implementa il protocollo di comunicazione di Ethereum. Ethereum diversamente da Hyperledger presenta una realtà molto varia e frattagliata. Solo dal punto di vista del client ci sono multiple implementazioni per differenti sistemi operativi ed in differenti linguaggi. Questa diversità viene vista dalla community come un indicatore di salute per l’intero ecosistema. Il protocollo in ogni caso è sempre lo stesso ed è definito nel così detto Yellow Paper in nota 5, in sostanza si basa sull’utilizzo di file Json. 
+Fino al settembre 2016 erano presente le alternative esposte in tabella \ref{tab:comp-client}.
+\begin{table}[!h] %
+    \caption{Tabella comparivi client Ethereum}
+    \label{tab:comp-client}
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+    \hline
+    \textbf{Client} & \textbf{Linguaggio} & \textbf{Sviluppatore}\\
+    \hline
+    Go-ethereum   & Go & Ethereum Foundation \\
+    \hline
+    Parity   & Rust & Ethcore \\
+    \hline
+    Cpp-ethereum   & C++ & Ethereum Foundation\\
+    \hline
+    Pyethapp  & Python & Ethereum Foundation\\
+    \hline
+    Ethereumjs-lib  & Javascript & Ethereum Foundation\\
+    \hline
+    Ethereum(J)  & Java & <ether.camp>\\
+    \hline
+    Ruby-ethereum  & Ruby & Jan Xie\\
+    \hline
+    EthereumH  & Haskell & BlockApps\\
+    \hline
+    \end{tabularx}
+\end{table}%
+I client appena citati sono accessibili tramite apposite librerie, un buon esempio potrebbe essere web3 per Javascript.
+\subsubsection{Scelta del client Hyperledger}
+In caso si dovesse optare per una scelta basata su Hyperledger quale base dell’ITF bisognerà ricadere sull’unica soluzione proposta dal team di sviluppo, cioè quella di utilizzare direttamente una comunicazione REST. Il team offre uno strumento detto Composer con il quale si potrà definire un’interfaccia per operare la comunicazione REST. Al fine di poter gestire efficientemente queste chiamate lato applicazione SP si consigliano le librerie esposte in tabella \ref{tab:comp-client-hyp}.
+\begin{table}[!h] %
+    \caption{Tabella comparivi client Ethereum}
+    \label{tab:comp-client-hyp}
+    \begin{tabularx}{\textwidth}{|X|X|X|}
+    \hline
+    \textbf{Linguaggio} & \textbf{Librerie} & \textbf{Sito}\\
+    \hline
+    .NET   & WCF REST Starter Kit  & \url{www.asp.net/downloads/starter-kits/wcf-rest} \\
+    \hline
+    .NET   & OpenRasta & \url{www.openrasta.org} \\
+    \hline
+    .NET   & Service Stack  & \url{www.servicestack.net} \\
+    \hline
+    Java  & Jersey & \url{www.jersey.java.net} \\
+    \hline
+    Java  & RESREasy & \url{www.jboss.org/resteasy}\\
+    \hline
+    Java  & Restlet & \url{www.restlet.org}\\
+    \hline
+    C++  & linavajo & \url{www.libnavajo.org}\\
+    \hline
+    C++  & C++ RESTful framework & \url{www.github.com/corvusoft/restbed}\\
+    \hline
+    C++  & C++ REST SDK & \url{www.github.com/Microsoft/cpprestsdk}\\
+    \hline
+    \end{tabularx}
+\end{table}%
+Data l’amplissima diffusione delle API REST e di queste librerie non si procede ad una trattazione analitica.
+\subsection{Conclusioni scelta sviluppo}
+Considerando quanto precedentemente detto lo sviluppo tradizionale sembrerebbe avrebbe meno incognite e un ampio repertorio di librerie utilizzabili. Si propone, quindi un’architettura del secondo tipo.
+Inoltre, si vuole fare notare come l’utilizzo delle soluzioni .NET potrebbero rivelarsi molto vantaggioso in quanto facilmente integrabili con il componente IW e Azure Blockchain.
+\subsection{Motivazioni}
+\subsubsection{Aspetti positivi}
+A seguito dell’analisi sopra proposta sono stati individuati i seguenti aspetti positivi:
+\begin{itemize}
+    \item lo sviluppo di un’applicazione server tradizionale comporta uno sviluppo molto semplice e immediato, grazie anche alla disponibilità di un ampio repertorio di librerie;
+    \item la comunicazione con la blockchain risulta in ogni caso facilmente implementabile grazie all’utilizzo di apposite librerie.
+    \item esiste un’ampia scelta di librerie front end per ogni possibile linguaggio di sviluppo.
+\end{itemize}
+    
+\subsubsection{Fattori di rischio}
+\begin{risk}{Inesperienza nello sviluppo C Sharp}
+    \riskdescription{Non si ha esperienza nello sviluppo di applicazioni C Sharp.}
+    \risksolution{Rendere edotto il responsabili del progetto, il quale mettera a disposizione del personale per impartire supporto su C Sharp.}
+    \label{risk:centralization-vision-from-user} 
+\end{risk}
+\begin{risk}{difficoltà di integrazione con Monokee}
+    \riskdescription{Il componete SP è il componente che deve essere integrato in Monokee}
+    \risksolution{Rendere edotto il responsabili del progetto, il quale mettera a disposizione del personale.}
+    \label{risk:centralization-vision-from-user} 
+\end{risk}
+\begin{risk}{Prestazioni chiamate alla rete blockchain}
+    \riskdescription{Il componete SP deve interrogare la rete blockchain, questo potrebbe rappresentare un problema di performance}
+    \risksolution{Rendere edotto il responsabili del progetto, valutare soluzioni alternative.}
+    \label{risk:centralization-vision-from-user} 
+\end{risk}
+\subsection{Conclusioni}
+Dal presente studio emerge come la creazione di un SP sviluppato come applicativo server e non come applicazione distribuita possa essere un’ottima opzione implementativa. Lo studio non presenta particolari rischi. Si ritiene, quindi,che un approccio di questo tipo sia fattibile nei tempi dello stage.
 %**************************************************************
 
 \section{Requisiti e obiettivi}
-
 
 %**************************************************************
 \section{Pianificazione}
