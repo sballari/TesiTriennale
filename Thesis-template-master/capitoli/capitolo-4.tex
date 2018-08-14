@@ -914,3 +914,33 @@ Il sistema riceve l’esito della verificata ed in caso le PII necessarie per l�
 \paragraph{Scenario principale}  
 Il sistema accende la webcam del computer e cattura il codice QR che presenta l’utente.
 \paragraph{Scenari alternativi}  Nessuno
+
+
+\subsection{Diagramma delle attività}
+Al fine di descrivere il corretto flusso che il componente deve utilizzare viene utilizzato un diagramma di attività. L’unica operazione che il componente dovrà gestire al fine di garantire gli scopi che si prefigge è la gestione di un inoltro d'accesso da parte di un RSP. 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=1\columnwidth]{accesso.png} 
+    \caption{Diagramma attività procedura di accesso}
+    \label{fig:act-login} 
+\end{figure}
+
+Ora si procederà ad una breve descrizione del diagramma in figura ~\ref{fig:act-login}. 
+Il flusso parte con l’arrivo di una richiesta di accesso da parte di un RSP, questo le seguenti operazioni in maniera sequenziale: 
+\begin{itemize}
+    \item inoltro della richiesta verso il nostro sistema SP;
+    \item il sistema visualizza una schermata dove richiede la sottomissione del codice QR;
+    \item cattura del codice QR;
+    \item decodifica le PII in chiaro dal codice QR.
+\end{itemize}
+
+
+Poi il flusso si divide in tre operazioni differenti:
+\begin{itemize}
+    \item la prima con il compito di inviare una richiesta di verifica all’ITF per ogni PII decodificato dal codice QR;
+    \item la seconda con il compito di interfacciarsi al sistema MonoKee per ottenere l’associazione tra account e servizio e la lista dei PII necessari;
+    \item il terzo con il compito di aspettare gli esiti delle verifiche dall’ITF.
+\end{itemize}
+In caso l’associazione sia presente e corretta e tutte le PII necessarie sono verificate allora si procede con la comunicazione dei dati verso il reale fornitore del servizio.
+In caso, o si riceva un esito negativo di una PII necessaria, o non tutte quelle necessarie siano state presentate tramite il codice QR, si procede alla comunicazione dell’errore di autentificazione ed alla conclusione del flusso.
+In ogni caso se dopo 40 secondi dalla decodifica del codice QR il sistema non ha effettuato l’accesso viene visualizzato un messaggio di errore ed il flusso termina.
