@@ -818,7 +818,7 @@ I tipi di utente che andranno ad interagire direttamente con il sistema si divid
 \end{itemize}
 Tra gli attori precedentemente citati non è però prevista alcuna funzionalità in comune e non emerge quindi la necessità di avere una gerarchia. In immagine \ref{fig:ger-actors-sp} è proposta una visualizzazione grafica di quanto detto.
 Non sono stati individuati, invece, attori secondari che partecipano al sistema.
-\begin{figure}[!h]    
+\begin{figure}[!htbp]    
     \centering
     \includegraphics[width=0.5\columnwidth]{usecase/use-case-sp/attori.png} 
     \caption{Gerarchia utenti user case}
@@ -944,3 +944,275 @@ Poi il flusso si divide in tre operazioni differenti:
 In caso l’associazione sia presente e corretta e tutte le PII necessarie sono verificate allora si procede con la comunicazione dei dati verso il reale fornitore del servizio.
 In caso, o si riceva un esito negativo di una PII necessaria, o non tutte quelle necessarie siano state presentate tramite il codice QR, si procede alla comunicazione dell’errore di autentificazione ed alla conclusione del flusso.
 In ogni caso se dopo 40 secondi dalla decodifica del codice QR il sistema non ha effettuato l’accesso viene visualizzato un messaggio di errore ed il flusso termina.
+
+\subsection{Tracciamento dei requisiti}
+\subsubsection{Fonti}
+Per la deduzione dei requisiti utente e di sistema, che verranno presentati nelle sezioni a seguire, sono stati usati come fonti lo studio Gartner \footcite{farah:The-Dawn-of-Decentralized-Identity}, il capitolo \emph{Studio di fattibilità SP} e gli Use Case presentati nella sezione \emph{Casi d'uso}. La struttura e le convenzioni usate sono ispirate dal capitolo di \cite{som:swe}. In seguito vengono riportate le categorie che vengono usate per la catalogazione:
+\begin{itemize}
+    \item F: requisito funzionale;
+    \item V: requisito di vincolo;
+    \item Q: requisito di qualità.
+\end{itemize}
+    
+Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli indici usati sono i seguenti:
+\begin{itemize}
+    \item M: must;
+    \item S: should; 
+    \item C: could; 
+    \item W: will.
+\end{itemize} 
+    
+Nelle tabelle \ref{tab:requisiti-funzionali-sp}, \ref{tab:requisiti-qualitativi-sp} e \ref{tab:requisiti-vincolo-sp} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
+
+\newpage
+\begin{center}
+\begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
+\caption{Tabella del tracciamento dei requisti funzionali}
+\label{tab:requisiti-funzionali-sp}
+\endfirsthead
+\endhead
+\hline
+\textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
+\hline
+R[F][M]0001     & Il sistema deve permettere ad un servizio convenzionato di inoltrare le richieste di accesso ricevute al nostro sistema & UC1, UC1.1, DA1 \\
+\hline
+R[F][M]0002     & Il sistema deve inviare l’esito della verifica al reale fornitore del servizio & UC1, UC1.2, DA1 \\
+\hline
+R[F][M]0003     & Il sistema deve inviare i PII in chiaro in caso di verifica positiva al reale fornitore del servizio & UC1, UC1.2, DA1 \\
+\hline
+R[F][M]0004     & Il sistema deve permettere ad un utente dell’IW di sottomettere un codice QR generato dall’applicazione IW. & UC2, UC2.1, DA1 \\
+\hline
+R[F][M]0005     & Il sistema deve visualizzare una schermata di accesso & DA1 \\
+\hline
+R[F][M]0006     & Il sistema deve catturare nella schermata di accesso il codice QR attraverso l’uso della webcam & DA1 \\
+\hline
+R[F][M]0007     & Il sistema deve essere in grado di decodificare le informazioni contenute in un codice QR & DA1 \\
+\hline
+R[F][M]0008     & Il sistema deve essere in grado di fare l’hash di una PII & DA1 \\
+\hline
+R[F][M]0009     & Il sistema deve essere in grado di inviare una richiesta di verifica per un particolare PII  & DA1 \\
+\hline
+R[F][M]0010     & Il sistema deve essere in grado di eseguire l’operazione di hash e invio richiesta verifica per ogni PII presenta in un codice QR & DA1 \\
+\hline
+R[F][M]0011     & Il sistema deve inviare una richiesta dell’associazione utente-servizio a Monokee classico & DA1 \\
+\hline
+R[F][M]0012     & Il sistema deve essere in grado di ricevere le informazioni richiesta dell’associazione utente servizio da Monokee classico & DA1 \\
+\hline
+R[F][M]0013     & Il sistema deve visualizzare un messaggio di errore in caso cui l’associazione utente-servizio non sia presente per il servizio richiesto & DA1 \\
+\hline
+R[F][M]0014     & Il sistema deve essere in grado di ricevere l’esito della verifica di un singolo PII proveniente dall’ITF  & DA1 \\
+\hline
+R[F][M]0015     & Il sistema deve visualizzare un messaggio di errore in caso cui la verifica di una PII richiesta sia negativa & DA1 \\
+\hline
+R[F][M]0016     & Il sistema deve visualizzare un messaggio di errore in caso non tutte le verifiche delle PII necessarie tornino in 40 secondi. & DA1 \\
+\hline
+R[F][M]0017     & Il sistema deve in caso di presenza dell’associazione e del ritorno positivo di tutte le verifiche necessarie inviare i dati PII al SP reale & DA1 \\
+\hline
+\end{longtable}
+\end{center}
+
+
+
+
+
+
+\begin{center}
+    \begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
+    \caption{Tabella del tracciamento dei requisti di vincolo}
+    \label{tab:requisiti-vincolo-sp}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
+    \hline
+    R[V][M] 0018     & Il sistema deve offrire le proprie funzionalità come applicazione server centralizzata & SP Studio di fattibilità \\
+    \hline
+    B     & Il sistema è implementato tramite in linguaggi .NET & SP Studio di fattibilità \\
+    \hline
+    B     & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: Local, Test, Staging, Production & SP Studio di fattibilità \\
+    \hline
+    B     & Il prodotto è sviluppato utilizzando uno strumento di linting & SP Studio di fattibilità \\
+    \hline
+    B     & Il sistema deve comunicare con la rete blockchain tramite un client Ethereum. & SP Studio di fattibilità \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+    \begin{center}
+        \begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
+        \caption{Tabella del tracciamento dei requisiti qualitativi}
+        \label{tab:requisiti-qualitativi-sp}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
+        \hline
+        R[Q][S] 0023    & Il progetto prevede un ragionevole set di test di unità e di test di integrazione & - \\
+        \hline
+        R[Q][S] 0024   & I test possono essere eseguiti localmente o come parte di integrazione continua & - \\
+        \hline
+        R[Q][S] 0025    & Il sistema solo alla fine sarà testato nel server di prova & - \\
+        \hline
+        R[Q][S] 0026    & Il codice sorgente del prodotto e la documentazione necessaria per l’utilizzo sono versionati in repository pubblici usando GitHub, BitBucket o GitLab & - \\
+        \hline
+        R[Q][C] 0027    & Lo sviluppo si eseguirà utilizzano un approccio incrementale  & SP Studio di fattibilità \\
+        \hline
+        R[Q][C] 0028    & Il sistema potrebbe essere testato con l’ITF migrato nella rete di prova Ropsten  & ITF Studio tecnologico \\
+        \hline
+        \end{longtable}
+        \end{center}%
+
+
+
+
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{3cm}|}%
+            \caption{Tabella del tracciamento dei requisiti con le fonti}
+            \label{tab:requisiti-fonte-sp}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Codice}  & \textbf{Fonte}\\
+            \hline
+            R[F][M]0001    & UC1, UC1.1, DA1  \\
+            \hline
+            R[F][M]0002    & UC1, UC1.1, DA1  \\
+            \hline
+            R[F][M]0003    & UC1, UC1.1, DA1  \\
+            \hline
+            R[F][M]0004    & UC2, UC2.1, DA1  \\
+            \hline
+            R[F][M]0005    & DA1  \\
+            \hline
+            R[F][M]0006    & DA1  \\
+            \hline
+            R[F][M]0007    & DA1  \\
+            \hline
+            R[F][M]0008    & DA1  \\
+            \hline
+            R[F][M]0009    & DA1  \\
+            \hline
+            R[F][M]0010    & DA1  \\
+            \hline
+            R[F][M]0011    & DA1  \\
+            \hline
+            R[F][M]0012    & DA1  \\
+            \hline
+            R[F][M]0013    & DA1  \\
+            \hline
+            R[F][M]0014    & DA1  \\
+            \hline
+            R[F][M]0015    & DA1  \\
+            \hline
+            R[F][M]0016    & DA1  \\
+            \hline
+            R[F][M]0017    & DA1  \\
+            \hline
+            R[V][M] 0018    & SP Studio di fattibilità  \\
+            \hline
+            R[V][M] 0019    & SP Studio di fattibilità  \\
+            \hline
+            R[V][M] 0020    & SP Studio di fattibilità  \\
+            \hline
+            R[V][M] 0021    & SP Studio di fattibilità  \\
+            \hline
+            R[V][C] 0022    & SP Studio di fattibilità  \\
+            \hline
+            R[Q][S] 0023    & -  \\
+            \hline
+            R[Q][S] 0024    & -  \\
+            \hline
+            R[Q][S] 0025    & -  \\
+            \hline
+            R[Q][S] 0026    & -  \\
+            \hline
+            R[Q][C] 0027    & SP Studio di fattibilità  \\
+            \hline
+            R[Q][C] 0028    & ITF Studio tecnologico  \\
+            \hline
+            \end{longtable}
+            \end{center}%
+
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{3cm}|}%
+        \caption{Tabella del tracciamento dei fonte con requisiti}
+        \label{tab:fonti-req-sp}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Fonte}  & \textbf{Requisiti}\\
+        \hline
+        UC1    & R[F][M]0001
+        R[F][M]0002
+        R[F][M]0003  \\
+        \hline
+        UC2    & R[F][M]0004  \\
+        \hline
+        UC1.1    & R[F][M]0001  \\
+        \hline
+        UC1.2    & 
+        R[F][M]0002
+        R[F][M]0003  \\
+        \hline
+        UC2.1    & R[F][M]0004  \\
+        \hline
+        DA1    & R[F][M]0001
+        R[F][M]0002
+        R[F][M]0003
+        R[F][M]0004
+        R[F][M]0005
+        R[F][M]0006
+        R[F][M]0007
+        R[F][M]0008
+        R[F][M]0009
+        R[F][M]0010
+        R[F][M]0011
+        R[F][M]0012
+        R[F][M]0013
+        R[F][M]0014
+        R[F][M]0015
+        R[F][M]0016
+        R[F][M]0017  \\
+        \hline
+        SP Studio di fattibilità    & 
+        R[V][M]0018
+        R[V][M]0019
+        R[V][M]0020
+        R[V][M]0021
+        R[V][M]0022
+        R[Q][C]0027  \\
+        \hline
+        -    & 
+        R[Q][S]0023
+        R[Q][S]0024
+        R[Q][S]0025
+        R[Q][S]0026  \\
+        \hline
+        ITF Studio tecnologico    & R[Q][C]0028  \\
+        \hline
+
+        \end{longtable}
+        \end{center}%
+
+\section{Riepilogo requisiti}
+\subsection{Riepilogo requisiti IW}
+% \begin{center}
+%     \begin{longtable}{|p{3cm}|p{3cm}|}%
+%     \caption{Riepilogo requisiti IW}
+%     \label{tab:fonti-req-sp}
+%     \endfirsthead
+%     \endhead
+%     \hline
+%     \textbf{Fonte}  & \textbf{Requisiti}\\
+%     \hline
+%     UC1    & R[F][M]0001
+%     R[F][M]0002
+%     R[F][M]0003  \\
+%     \hline
+%     UC2    & R[F][M]0004  \\
+%     \hline
+%     \end{longtable}
+%     \end{center}%
+\subsection{Riepilogo requisiti SP}
