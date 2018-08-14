@@ -46,14 +46,14 @@ Tra di essi è presente una relazione di generalizzazione che vede l’attore ut
     \label{fig:ger-actors} 
 \end{figure}
 Sono stati individuati i seguenti attori secondari: ITF, MonoKee.
-\subsubsection{Attori principali}
+\paragraph{Attori principali}
 \begin{itemize}
     \item \textbf{Utente}: l’attore utente è un fruitore generico del sistema. Potrebbe avere o non avere effettuato l’accesso all’applicazione. Da lui derivano gli attori utente non registrato e utente autenticato.	
     \item \textbf{Utente non registrato}: l’attore utente non registrato è una particolare specializzazione dell’attore utente. Unica sua caratteristica è quella di non essere riconosciuto come utente di MonoKee.
     \item \textbf{Utente autenticato}: l’attore utente autenticato è una particolare specializzazione dell’attore utente. Rappresenta un utente che ha effettuato l’accesso al sistema e che è stato riconosciuto all’interno del sistema MonoKee.
 \end{itemize}
       
-\subsubsection{Attori secondari}
+\paragraph{Attori secondari}
 \begin{itemize}
     \item \textbf{ITF}: è il componente dell’estensione che ha il compito di conservare e convalidare tutte le informazioni provenienti dall’IW.
     \item \textbf{MonoKee}: è il componente centrare dell’attuale servizio MonoKee. Ha il compito di fornire le informazioni di accesso del servizio MonoKee. 
@@ -824,3 +824,93 @@ Non sono stati individuati, invece, attori secondari che partecipano al sistema.
     \caption{Gerarchia utenti user case}
     \label{fig:ger-actors-sp} 
 \end{figure}
+\paragraph{Attori principali}
+\begin{itemize}
+    \item Servizio convenzionato: l’attore servizio convenzionato è quello che nell’analisi del dominio è stato definito come Real Service Provider (RSP). Si tratta del fornitore reale del servizio.
+    \item Utente IW: l’attore utente IW è una persona fisica che utilizza la nostra applicazione mobile al fine di operare l’accesso ad un servizio convenzionato in MonoKee.
+\end{itemize}
+
+\paragraph{Attori secondari}
+Non sono presenti attori secondari.
+
+
+
+
+\subsubsection{UC1: Azioni servizio convenzionato}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-sp/UC1-Azioni-servizio-convenzionato.png} 
+    \caption{Use Case - UC1: Azioni servizio convenzionato}
+\end{figure}
+
+\paragraph{Descrizione}  Il servizio convenzionato può reindirizzare verso al sistema una richiesta di accesso e ricevere i dati di accesso PII verificati.
+\paragraph{Attore primario}  Servizio convenzionato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  Il servizio convenzionato ha richiesto una richiesta di accesso e l’utente che l’ha effettuata a richiesto l’accesso tramite il nostro servizio.
+\paragraph{Postcondizioni}  Il servizio ha eseguito le azioni che desiderava compiere in relazione alle sue possibilità
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC1.1 Reindirizzamento accesso
+        \item UC1.2 Ricezione PII verificati
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+\subsubsection{UC1.1: Reindirizzamento accesso}
+\paragraph{Descrizione}  Un servizio convenzionato può inoltrare al sistema richieste di accesso
+\paragraph{Attore primario}  Servizio convenzionato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  Il servizio convenzionato ha ricevuto una richiesta di accesso
+\paragraph{Postcondizioni}  Il sistema ha ricevuto la richiesta di accesso e procederà ad eseguirla
+\paragraph{Scenario principale}  
+Il servizio convenzionato inoltra la richiesta di accesso ed il sistema la immagazzina per prendersene carico
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC1.2: Ricezione PII verificate}
+\paragraph{Descrizione}  Il sistema deve, in risposta ad un inoltro di richiesta di accesso, inviare al servizio convenzionato l’esito della verifica e, in caso di successo, le PII in chiaro necessarie per effettuare l’oggetto
+\paragraph{Attore primario}  Servizio convenzionato
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni}  Il servizio convenzionato ha precedentemente inoltrato una richiesta di accesso al sistema
+\paragraph{Postcondizioni} Il sistema ha ricevuto l’esito della verificata ed in caso le PII necessarie per l’accesso in chiaro
+\paragraph{Scenario principale}  
+Il sistema riceve l’esito della verificata ed in caso le PII necessarie per l’accesso in chiaro
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+\subsubsection{UC2: Azioni utente IW}
+\begin{figure}[!htbp] 
+    \centering 
+    \includegraphics[width=0.7\columnwidth]{usecase/use-case-sp/UC2-Azioni-utente-SP.png} 
+    \caption{Use Case - UC2: Azioni utente IW}
+\end{figure}
+
+\paragraph{Descrizione} L’utente IW può eseguire le operazioni per l’accesso
+\paragraph{Attore primario}  Utente IW
+\paragraph{Attore secondario}  MonoKee
+\paragraph{Precondizioni} Nessuna
+\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione.
+\paragraph{Scenario principale}  
+    \begin{enumerate}
+        \item UC2.1 Sottomissione codice QR
+    \end{enumerate}
+\paragraph{Scenari alternativi}  Nessuno
+
+
+
+
+
+
+\subsubsection{UC2.1: Sottomissione codice QR}
+\paragraph{Descrizione}  L’utente IW può eseguire l’operazione di sottomissione di codice QR
+\paragraph{Attore primario}  Utente IW
+\paragraph{Attore secondario}  Nessuno
+\paragraph{Precondizioni} Il servizio convenzionato ha inoltrato l’utente al nostro sistema di accesso e l’utente ha generato il codice QR dall’IW
+\paragraph{Postcondizioni} Il sistema ha catturato il codice QR
+\paragraph{Scenario principale}  
+Il sistema accende la webcam del computer e cattura il codice QR che presenta l’utente.
+\paragraph{Scenari alternativi}  Nessuno
