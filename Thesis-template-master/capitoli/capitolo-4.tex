@@ -3,7 +3,7 @@
 % !TEX root = ../tesi.tex
 
 %**************************************************************
-\chapter{Analisi dei requisiti IW}
+\chapter{Analisi dei requisiti}
 \label{cap:analisi-requisiti}
 %**************************************************************
 
@@ -24,13 +24,13 @@ Il linguaggio strutturato mantiene gran parte dell’espressività del linguaggi
 \section{Specifiche in Linguaggio UML Use Case}
 Per la definizione dei diagrammi UML dei casi d’uso, viene utilizzato lo standard UML 2.0 \footcite{site:uml}. Nei diagrammi dei casi d’uso vengono mostrati gli attori coinvolti in un’interazione con il sistema in modo schematico, indicando i nomi delle parti coinvolte. Eventuali informazioni aggiuntive possono essere espresse testualmente.
 
-
-\section{Casi d'uso}
+\section{Analisi dei requisiti IW}
+\subsection{Casi d'uso}
 
 Per lo studio dei casi di utilizzo del prodotto sono stati creati dei diagrammi.
 I diagrammi dei casi d'uso (in inglese \emph{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
 
-\subsection{Descrizione Attori}
+\subsubsection{Descrizione Attori}
 I tipi di attori principali che andranno ad interagire direttamente con il sistema sono essenzialmente tre: 
 \begin{itemize}
     \item utente;
@@ -59,9 +59,6 @@ Sono stati individuati i seguenti attori secondari: ITF, MonoKee.
     \item \textbf{MonoKee}: è il componente centrare dell’attuale servizio MonoKee. Ha il compito di fornire le informazioni di accesso del servizio MonoKee. 
 \end{itemize}
     
-
-
-\subsection{Elenco casi d'uso}
 
 
 \subsubsection{UC1: Azioni utente generico}
@@ -519,9 +516,9 @@ L’utente seleziona e poi esprime la volontà di eliminare la certificazione ce
 
 
 \newpage
-\section{Tracciamento dei requisiti}
+\subsection{Tracciamento dei requisiti}
 
-\subsection{Fonti}
+\subsubsection{Fonti}
 Per la deduzione dei requisiti utente e di sistema, che verranno presentati nelle sezioni a seguire, sono stati usati come fonti lo studio Gartner \footcite{farah:The-Dawn-of-Decentralized-Identity}, il capitolo \emph{Studio di fattibilità IW} e gli Use Case presentati nella sezione \emph{Casi d'uso}. La struttura e le convenzioni usate sono ispirate dal capitolo di \cite{som:swe}. In seguito vengono riportate le categorie che vengono usate per la catalogazione:
 \begin{itemize}
     \item F: requisito funzionale;
@@ -540,11 +537,13 @@ Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli i
 Nelle tabelle \ref{tab:requisiti-funzionali}, \ref{tab:requisiti-qualitativi} e \ref{tab:requisiti-vincolo} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
 
 \newpage
-\begin{table}%
+\begin{center}
+\begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
 \caption{Tabella del tracciamento dei requisti funzionali}
 \label{tab:requisiti-funzionali}
-\begin{tabularx}{\textwidth}{lXl}
-\hline\hline
+\endfirsthead
+\endhead
+\hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
 \hline
 R[F][C]0001     & Il sistema potrebbe permettere ad un utente di visualizzare le informazioni dell’applicazione & UC1, UC1.1 \\
@@ -599,16 +598,17 @@ R[F][M] 0025     & Il sistema deve permettere ad un utente autenticato di visual
 \hline
 R[F][S] 0026     & Il sistema dovrebbe permettere ad un utente autenticato di visualizzare lo stato di una certificazione esistente & UC3.5.1.3 \\
 \hline
-\end{tabularx}
-\end{table}%
+\end{longtable}%
+\end{center}
 
 
-
-\begin{table}%
+\begin{center}
+\begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
 \caption{Tabella del tracciamento dei requisiti di vincolo}
 \label{tab:requisiti-vincolo}
-\begin{tabularx}{\textwidth}{lXl}
-\hline\hline
+\endfirsthead
+\endhead
+\hline
 \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
 \hline
 R[V][M] 0027    & Il sistema deve offrire le proprie funzionalità come applicazione mobile &  IW Studio di fattibilità \\
@@ -621,16 +621,18 @@ R[V][M] 0030    & Il prodotto è sviluppato utilizzando uno strumento di linting
 \hline
 R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale & IW Studio di fattibilità \\
 \hline
-\end{tabularx}
-\end{table}%
+\end{longtable}
+\end{center}%
 
 
 
-\begin{table}%
+\begin{center}
+    \begin{longtable}{|p{2cm}|p{9cm}|p{2cm}|}%
     \caption{Tabella del tracciamento dei requisiti qualitativi}
     \label{tab:requisiti-qualitativi}
-    \begin{tabularx}{\textwidth}{lXl}
-    \hline\hline
+    \endfirsthead
+    \endhead
+    \hline
     \textbf{Codice} & \textbf{Descrizione} & \textbf{Fonte}\\
     \hline
     R[Q][S] 0032    & Il progetto prevede un ragionevole set di test di unità e di test di integrazione & - \\
@@ -643,15 +645,16 @@ R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale &
     \hline
     R[Q][C] 0036    & Lo sviluppo si eseguirà utilizzano un approccio incrementale  & IW Studio di fattibilità \\
     \hline
-    \end{tabularx}
-    \end{table}%
+    \end{longtable}
+    \end{center}%
 
-
-\begin{table}%
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{3cm}|}%
     \caption{Tabella del tracciamento dei requisiti con le fonti}
     \label{tab:requisiti-fonte}
-    \begin{tabularx}{\textwidth}{lX}
-    \hline\hline
+    \endfirsthead
+    \endhead
+    \hline
     \textbf{Codice}  & \textbf{Fonte}\\
     \hline
     R[F][C]0001    & UC1, UC1.1  \\
@@ -726,14 +729,16 @@ R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale &
     \hline
     R[Q][C] 0036    & IW Studio di fattibilità  \\
     \hline
-    \end{tabularx}
-    \end{table}%
+    \end{longtable}
+    \end{center}%
 
-\begin{table}%
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{3cm}|}%
     \caption{Tabella del tracciamento delle fonti con i requisiti}
     \label{tab:fonte-req}
-    \begin{tabularx}{\textwidth}{lX}
-    \hline\hline
+    \endfirsthead
+    \endhead
+    \hline
     \textbf{Fonte}  & \textbf{Codice}\\
     \hline
     UC1    & R[F][C]0001  \\
@@ -796,5 +801,26 @@ R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale &
     \hline
     - & R[Q][S] 0032, R[Q][S] 0033, R[Q][S] 0034, R[Q][S] 0035 \\
     \hline
-    \end{tabularx}
-    \end{table}%
+    \end{longtable}
+    \end{center}%
+
+\section{Analisi dei requisiti SP}
+\subsection{Casi d'uso}
+
+Per lo studio dei casi di utilizzo del prodotto sono stati creati dei diagrammi.
+I diagrammi dei casi d'uso (in inglese \emph{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
+
+\subsubsection{Descrizione Attori}
+I tipi di utente che andranno ad interagire direttamente con il sistema si dividono in due categorie: 
+\begin{itemize}
+    \item Servizio convenzionato;
+    \item Utente IW.
+\end{itemize}
+Tra gli attori precedentemente citati non è però prevista alcuna funzionalità in comune e non emerge quindi la necessità di avere una gerarchia. In immagine \ref{fig:ger-actors-sp} è proposta una visualizzazione grafica di quanto detto.
+Non sono stati individuati, invece, attori secondari che partecipano al sistema.
+\begin{figure}[!h]    
+    \centering
+    \includegraphics[width=0.5\columnwidth]{usecase/use-case-sp/attori.png} 
+    \caption{Gerarchia utenti user case}
+    \label{fig:ger-actors-sp} 
+\end{figure}
