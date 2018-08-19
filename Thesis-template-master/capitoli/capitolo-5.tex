@@ -68,21 +68,37 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
 \paragraph{BusinessLogic} %**************************
 \begin{namespacedesc}
     \classdesc{IWApplication}{questa classe ha il compito di fornire una facade per i vari ViewModel. Tutte le azioni possibile tramite l’interfaccia sono quindi implementate da questa classe.}
+
     \classdesc{Monokee}{ si tratta di un’interfaccia con il compito di fornire un’astrazione del servizio Monokee. Questa interfaccia con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+
     \classdesc{RealMonokee}{è una classe che rappresenta il reale oggetto Monokee, questa classe poi dialoga con RESTComp per ottenere i dati. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+
     \classdesc{ProxyMonokee}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+
     \classdesc{KeyGen}{è un’interfaccia che ha lo scopo di definire una strategia di generazione chiavi, fa parte di un’applicazione dello Strategy Pattern. È stata pensata in un’ottica in cui ci possono essere vari modi per generare una chiave a seconda del sistema operativo usato.}
+
     \classdesc{KeyGenImpl}{questa classe rappresenta una possibile implementazione dell’interfaccia KeyGen. Fa parte di un’applicazione dello Strategy pattern.}
+
     \classdesc{Session}{è una classe con lo scopo di immagazzinare tutti i dati di una sessione attiva, questa può essere generata dal file system o creata da zero. Deve essere presente in istanza singola e contiene le informazioni utente.}
+
     \classdesc{UserInt}{questa interfaccia rappresenta un qualsiasi utente dell’applicazione. È implementata solamente da UserMonokee. Questo oggetto viene creato dall’interfaccia Monokee.}
+
     \classdesc{UserMonokee}{è una classe che rappresenta un utente proveniente dal server Monokee. Implementa l’interfaccia Monokee. Un utente di questo tipo possiede un aggregato di servizi, potenzialmente contiene le chiavi e possiede una lista di PII.}
+
     \classdesc{Service}{è una classe che rappresenta un servizio di cui l’utente ha diritto, possiede un ID e fornisce una lista di PII che dovranno essere presentati al fine di eseguire l’accesso.}
+
     \classdesc{KeyProv}{è una classe che ha il compito di occuparsi della generazione delle chiavi private e pubbliche. Questa classe viene usata da UserInt e a sua volta usa LocalDataProvider.}
+
     \classdesc{LocalDataProvider}{è un’interfaccia che ha il compito di fornire in singolo punto dove ottenere informazione dal file system locale. Questa classe poi deve venire implementata in base al sistema operativo su cui girerà. }
+
     \classdesc{iOSLDImp}{ rappresenta l’implementazione per iOS di LocalDataProvider.}
+
     \classdesc{DroidLDImp}{rappresenta l’implementazione Android di LocalDataProvider.}
+
     \classdesc{AbsPII}{è un’interfaccia che rappresenta una generica PII, questa per ora ha una sola possibile implementazione, ma un’interfaccia di questo tipo renderà più semplice l’implementazione di future PII.}
+
     \classdesc{PIIImpl}{è una classe che rappresenta l’attuale ed unica PII. Consiste di un nome, un identificativo e una descrizione. Una PII può essere verificata o meno tramite l’uso di PIIChecker. }
+
     \classdesc{ITF}{si tratta di un’interfaccia con il compito di fornire un’astrazione del componente Identity Trust Fabric. Questa interfaccia con ITFReal e ProxyITF rappresenta un’applicazione del pattern Proxy.}
     \classdesc{RealITF}{è una classe che rappresenta il reale oggetto ITF, questa classe poi dialoga con il BlockchainClient per ottenere i dati. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
     \classdesc{ProxyITF}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
@@ -128,13 +144,954 @@ Al fine di garantire elevate doti di qualità e manutenibilità dell’architett
 \paragraph{Model-View-Controller}: separa il codice per l’interfaccia grafica in tre componenti separati: Modello (il dato), Vista (l’interfaccia), and Controllore (il responsabile della logica), con particolare attenzione alla vista. Nel progetto viene usata una sua particolare declinazione chiamata MVVM. 
 
 %**************************************************************
-\subsection{Codifica}
+\subsection{Progettazzione di dettaglio}
+Si ricorda come l’architettura scelta in IW – Architettura di massima fosse una N-tier con tre strati. Questi sono: DataAccess Layer, BusinessLogic Layer, VMLayer. Nei prossimi capitoli verrà presentato ogni layer in maniera analitica e precisa. In figura \ref{fig:ark-dett-iw} si mostra il diagramma totale che verrà seguito durante la codifica.
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{iw-complete-uml.png} 
+    \caption{Architettura dettagliata IW}
+    \label{fig:ark-dett-iw} 
+\end{figure}
+\subsubsection{DataAccess Layer}
+Nel contesto dell’architettura N-tier adottata il BusinessLogic layer è un gruppo di classi che si occupano di interfacciarsi con gli strumenti di persistenza utilizzati dall’applicazione. Questi sono: Monokee (tramite RESTful), ITF e una base di dati locale al dispositivo. 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{dla-iw.png} 
+    \caption{Diagramma DataAccess Layer IW}
+    \label{fig:dla-iw} 
+\end{figure}
+\paragraph{Comunicator (interfaccia)}
+Questa classe fornisce un’interfaccia per gestire tutte le informazioni attraverso fonti esterne. Deve essere usata per comunicare con Monokee.
+\paragraph{Metodi:}
+
+\paragraph{Public Listener createListener()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public Listener createListener()}
+    \label{tab:public-void-createListener}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di restituire un oggetto listener che ascolto le richieste da parte di Monokee.\\
+    \hline
+    \textbf{Parametri} &  - \\
+    \hline
+    \textbf{Pseudo Codice} & Non presente \\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{Public bool verifyUserMonokee(usr:string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public Listener createListener()}
+    \label{tab:public-bool-verifyUserMonokee}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine di verificare i dati forniti dall’utente. Ritorna true le l’autenticazione ha avuto successo altrimenti false.\\
+    \hline
+    \textbf{Parametri} &      
+        \begin{itemize}
+            \item usr: string che rappresenta la chiave dell’utente
+            \item pass: string che rappresenta la password con cui l’utente usr tenta di effettuare l’accesso. Verificare poi come trasportare la password.
+        \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & Non presente \\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+
+
+
+\paragraph{Public string askUserBCID(usr:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public string askUserBCID(usr:string)}
+    \label{tab:public-string-askUserBCID}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine di restituire una stringa contenente l’ID sull’ITFdell’utente.\\
+    \hline
+    \textbf{Parametri} &      
+        \begin{itemize}
+            \item usr: string che rappresenta la chiave dell’utente
+        \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & Non presente \\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{Public bool userCreationRequest(usr: userModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public bool userCreationRequest(usr: userModel)}
+    \label{tab:public-bool-userCreationRequest}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine creare un utente all’interno del servizio Monokee. Questo metodo invia solo la richiesta e non ha modo di sapere il reale inserimento dell’utente. L’operazione in Monokee non è immediata.\\
+    \hline
+    \textbf{Parametri} &      
+        \begin{itemize}
+            \item usr: riferimento ad un oggetto UserModel che contiene i dati che l'utente vuole creare.
+        \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & Non presente \\
+    \hline
+    \textbf{Note} & Non bisogna dare per scontato che la richiesta riceva esito positivo o che venga eseguita in maniera immediata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{Public ServiceModel[] getServiceList(usrID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public ServiceModel[] getServiceList(usrID:string)}
+    \label{tab:public-ServiceModel[]-getServiceList}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la lista dei servizi associati all’utente indicato in Monokee.  \\
+    \hline
+    \textbf{Parametri} &      
+        \begin{itemize}
+            \item usrID: stringa che rappresenta la chiave dell’utente in Monokee.
+        \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+            Var com = App.getComunicator();\newline
+            Return serList = await com.askServiceList(this.id);
+    \\
+    \hline
+    \textbf{Note} & Questa informazione deve essere richiesta ogni volta, in quanto l’unico gestore di utenti e servizi e Monokee. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{AspRestCom (implementa Comunicator)}
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item \textbf{uriPrefixes}: lista stringhe che rappresentano gli uri a cui il listener ascolta. 
+\end{itemize}
+
+\paragraph{Metodi:}
+\paragraph{Public Listener createListener()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public Listener createListener()}
+    \label{tab:public-listner-createListener}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di restituire un oggetto listener che ascolto le richieste da parte di Monokee.  \\
+    \hline
+    \textbf{Parametri} &      
+        -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+        check (uriPrefixes not null); \newline
+        check(uriPrefixes not empty) \newline
+        listener = HttpListener; \newline
+        foreach (uri in uriPrefixes) {
+            listener.add(uri); \newline
+        }
+        listener.start(); \newline
+        return new AspRest( listener); \newline
+    \\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{Public bool verifyUserMonokee(usr:string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public bool verifyUserMonokee(usr:string, pass:string)}
+    \label{tab:public-bool-verifyUserMonokeeImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine di verificare i dati forniti dall’utente. Ritorna true le l’autenticazione ha avuto successo altrimenti false.  \\
+    \hline
+    \textbf{Parametri} &      
+        \begin{itemize}
+            \item usr: long che rappresenta la chiave dell’utente
+            \item pass: string che rappresenta la password con cui l’utente usr tenta di effettuare l’accesso. Verificare poi come trasportare la password.
+        \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    string content =” accessReq”+usr+pass; \newline
+    ASCIIEncoding encoding=new ASCIIEncoding(); \newline
+    byte[]  buffer =encoding.GetBytes(content); \newline
+    request.ContentType="application/x-www-IWAccessRequest "; \newline
+    request.ContentLength=content.Length; \newline
+    Stream newStream=request.GetRequestStream(); \newline
+    newStream.Write(buffer,0,buffer.Length); \newline
+    newStream.Close();
+    \\
+    \hline
+    \textbf{Note} & \url{http://www.dotnethell.it/tips/SendPOSTHttp.aspx} \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+    \paragraph{Public string askUserBCID(usr:string)}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{Public string askUserBCID(usr:string)}
+        \label{tab:public-string-askUserBCIDImpl}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine di restituire una stringa contenente l’ID sull’ITF dell’utente. \\
+        \hline
+        \textbf{Parametri} &      
+            \begin{itemize}
+                \item usr: string che rappresenta la chiave dell’utente
+            \end{itemize}
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+        string content =”ITF ID request”+usr;\newline
+        ASCIIEncoding encoding=new ASCIIEncoding();\newline
+        byte[]  buffer =encoding.GetBytes(content);\newline
+        request.ContentType="application/x-www-ITFIDrequest ";\newline.
+        request.ContentLength=content.Length;\newline
+        Stream newStream=request.GetRequestStream();\newline
+        newStream.Write(buffer,0,buffer.Length);\newline
+        newStream.Close();\newline
+        if (response != no pass) return response;\newline
+        else return null;\newline
+        \\
+        \hline
+        \textbf{Note} & \url{http://www.dotnethell.it/tips/SendPOSTHttp.aspx} \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+
+    \paragraph{Public bool userCreationRequest(usr: userModel)}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{Public bool userCreationRequest(usr: userModel)}
+        \label{tab:public-boll-userCreationRequestImpl}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta a Monokee al fine creare un utente all’interno del servizio Monokee. Questo metodo invia solo la richiesta e non ha modo di sapere il reale inserimento dell’utente. L’operazione in Monokee non è immediata. \\
+        \hline
+        \textbf{Parametri} &      
+            \begin{itemize}
+                \item usr: riferimento ad un oggetto UserModel che contiene i dati che l'utente vuole creare.
+            \end{itemize}
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+        string content =”Monokee user creation request”+usr;\newline
+        ASCIIEncoding encoding=new ASCIIEncoding();\newline
+        byte[]  buffer =encoding.GetBytes(content);\newline
+        request.ContentType="application/x-www-MONK-creationReq ";\newline.
+        request.ContentLength=content.Length;\newline
+        Stream newStream=request.GetRequestStream();\newline
+        newStream.Write(buffer,0,buffer.Length);\newline
+        newStream.Close();\newline
+        if (response != no pass) return response;\newline
+        else return null;\newline
+        \\
+        \hline
+        \textbf{Note} & Non bisogna dare per scontato che la richiesta riceva esito positivo o che venga eseguita in maniera immediata. \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+\paragraph{Listener (interfaccia)}
+È un oggetto con il compito di rimanere in ascolto su determinati uri. È un oggetto non mutabile.
+\paragraph{Metodi:}
+\paragraph{Public void getContext()}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{Public void getContext()}
+        \label{tab:public-void-getContext}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito di ritornare appena arriva un messaggio inviato da uno degli uri specificati nella AspRestComp. \\
+        \hline
+        \textbf{Parametri} &      
+            -
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+         Non presente \\
+        \hline
+        \textbf{Note} & - \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+
+\paragraph{AspRestList (implementa Listerner)}
+È un oggetto con il compito di rimanere in ascolto su determinati uri. È un oggetto non mutabile. Questa classe rappresenta un wrapper del listener di \emph{System.Net}.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item listener: è il listener fornito dal System.Net. Creato da AspRestComp
+\end{itemize}
+
+\paragraph{Metodi:}
+\paragraph{Public constructor()}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{Public constructor()}
+        \label{tab:public-list-constructor}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito di costruire l’oggetto Listener da un’istanza del listener fornito da System.Net \\
+        \hline
+        \textbf{Parametri} &      
+            \begin{itemize}
+                \item List: è un’implementazione di System.Net listener.
+            \end{itemize}
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+            This.listener = List; \\
+        \hline
+        \textbf{Note} & - \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+
+\paragraph{Public void getContext()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public void getContext()}
+    \label{tab:public-void-getContextImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di ritornare appena arriva un messaggio inviato da uno degli uri specificati nella AspRestComp. \\
+    \hline
+    \textbf{Parametri} &      
+     - \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Listener.getContext();\\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{BlockchainClient (interfaccia)}
+Questa interfaccia ha il compito di rappresentare un canale di comunicazione verso gli SmartContract. Deve essere atea rispetto alla tipologia di \gls{blockchaing} usata.
+
+\paragraph{Metodi:}
+\paragraph{public bool verifyPII(pii: HashedPII[])}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool verifyPII(pii: HashedPII[])}
+    \label{tab:public-bool-verifyPII}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che verifica i dati. \\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è una lista di oggetti hashedPII da verificare nell’ITF.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente\\
+    \hline
+    \textbf{Note} & L’implementazione sarà sensibilmente diversa in base alla specifica blockchain usata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{public bool createID(publicK : long)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool createID(publicK : long)}
+    \label{tab:public-bool-createID}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che inserisce un utente nell’ITF. \\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item publicK: è un long che rappresenta la chiave pubblica dell’utente creato. La chiave privata deve rimanere solo in locale nell’IW.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente\\
+    \hline
+    \textbf{Note} & L’implementazione sarà sensibilmente diversa in base alla specifica blockchain usata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{public bool addPII(usrID:string, pii:AbsPII)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool addPII(usrID:string, pii:AbsPII)}
+    \label{tab:public-bool-addPII}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che inserisce una nuova PII ad un utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usrID: è una stringa che rappresenta la chiave pubblica dell’utente a cui si vuole creare.
+        \item Pii: è una lista di oggetti AbsPII che si vuole aggiungere all’utente identificato dalla chiave.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente\\
+    \hline
+    \textbf{Note} & L’implementazione sarà sensibilmente diversa in base alla specifica blockchain usata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public bool removePII(piiID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool removePII(piiID:string)}
+    \label{tab:public-bool-removePII}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che elimina una determinata PII ad un utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item piiID: è una stringa che rappresenta la chiave della PII che si vuole elimare.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente\\
+    \hline
+    \textbf{Note} & L’implementazione sarà sensibilmente diversa in base alla specifica blockchain usata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{public bool removeID(usrID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool removeID(usrID:string)}
+    \label{tab:public-bool-removeID}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che elimina un determinato utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usrID: è una stringa che rappresenta la chiave dell’utente che si vuole eliminare.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente\\
+    \hline
+    \textbf{Note} & L’implementazione sarà sensibilmente diversa in base alla specifica blockchain usata. \\
+    \hline
+    \end{longtable}
+    \end{center}
+    
+\paragraph{NethereumClient (implementa BlockchainClient)}
+Questa classe rappresentare un canale di comunicazione verso gli \gls{SmartContractg} di una rete Ethereum. Fa uso della libreria .NET Nethereum per instaurare la comunicazione. 
+\paragraph{Campi dati}
+\begin{itemize}
+    \item walletHandler: è una stringa che rappresenta l’indirizzo del contratto WalletHandler all’interno della blockchain. 
+\end{itemize}
+\paragraph{Metodi:}
+
+
+\paragraph{public constructor(walletHandler: string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public constructor(walletHandler: string)}
+    \label{tab:public-nethclient-constructor}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di costruire l’oggetto Ethereum client.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item walletHandler: è una stringa che rappresenta l’indirizzo del contratto WalletHandler.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    This.walletHandler = walletHandler;\\
+    \hline
+    \textbf{Note} & - \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{Public bool verifyPII(pii: HashedPII[])}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public bool verifyPII(pii: HashedPII[])}
+    \label{tab:public-bool-verifyPIIImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che verifica i dati.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è una lista di oggetti hashedPII da verificare nell’ITF.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    web3. Eth. Transactions.verifyMethod.Call;\newline
+    web3. Eth. Transactions.GetTransactionReceipt;\newline
+    return result;\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/} \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{public bool createID(publicK : long)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool createID(publicK : long)}
+    \label{tab:public-bool-createIDImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che inserisce un utente nell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item publicK: è un long che rappresenta la chiave pubblica dell’utente creato. La chiave privata deve rimanere solo in locale nell’IW.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    trova abi;\newline
+    var contract = web3.Eth.GetContract(abi, walletHandler);\newline
+    var createFunction = contract.GetFunction("createUser");\newline
+    var result = await createFunction.CallAsync<string>(id);\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/} \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public bool createID(publicK : long)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool createID(publicK : long)}
+    \label{tab:public-bool-createIDImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che inserisce un utente nell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item publicK: è un long che rappresenta la chiave pubblica dell’utente creato. La chiave privata deve rimanere solo in locale nell’IW.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    trova abi;\newline
+    var contract = web3.Eth.GetContract(abi, walletHandler);\newline
+    var createFunction = contract.GetFunction("createUser");\newline
+    var result = await createFunction.CallAsync<string>(id);\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/} \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public bool addPII(usrID:string, pii:AbsPII)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool addPII(usrID:string, pii:AbsPII)}
+    \label{tab:public-bool-addPIIImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che inserisce una nuova PII ad un utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usrID: è una stringa che rappresenta la chiave pubblica dell’utente a cui si vuole creare.
+        \item Pii: è una lista di oggetti AbsPII che si vuole aggiungere all’utente identificato dalla chiave.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    Trova abi;\newline 
+    Var contract= web3.Eth.GetContract(abi, walletHandler);\newline
+    Var addPIIFunction =  contract.GetFunction(“addPII”);\newline
+    Var result = await addPIIFunction.CallAsync<PII>(pii);\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/}, la chiave deve essere fornita in quanto questa verrà usata anche nel contesto dell’ITF. \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public bool removePII(piiID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool removePII(piiID:string)}
+    \label{tab:public-bool-removePIIImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che elimina una determinata PII ad un utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item piiID: è una stringa che rappresenta la chiave della PII che si vuole elimare.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    trova abi(walletHandler);\newline
+    var contract = web3.Eth.GetContract(abi, walletHandler);\newline
+    var removeFuncition = contract.GetFunction(“removePII”);\newline
+    var result = await removeFunction.CallAsync<string>(piiID);\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/}\\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{public bool removeID(usrID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool removeID(usrID:string)}
+    \label{tab:public-bool-removeIDImpl}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di chiamare il metodo presente negli smartContract che elimina un determinato utente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usrID: è una stringa che rappresenta la chiave dell’utente che si vuole eliminare.
+    \end{itemize} 
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Nethereum.Web3.Web3();\newline
+    trova abi(walletHandler);\newline
+    var contract = web3.Eth.GetContract(abi, walletHandler);\newline
+    var removeFuncition = contract.GetFunction(“removeID”);\newline
+    var result = await removeFunction.CallAsync<string>(usrID);\newline
+    \\
+    \hline
+    \textbf{Note} & \url{http://nethereum.com/}\\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{DBDao}
+Questa classe ha il compito di fare da tramite per gli accessi al database. Rappresenta quindi il data access object relativo al database. Per effettuare la connessione viene usata la classe LocalDataProvider.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item database: è un oggetto di tipo SQLiteConnection che rappresenta la connessione con il database
+    \item static collisionLock: è un oggetto di qualsiasi tipo con lo scopo di fornire un lock all’oggetto per non permettere usi concorrenti della risorsa.
+\end{itemize}
+
+\paragraph{Metodi:}
+
+
+\paragraph{public constructor()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public constructor()}
+    \label{tab:public-dao-constructor}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito costruire l’oggetto DBDao\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    database = DependencyService.Get<IRecipesDatabaseConnection>().GetConnection();\newline
+    database.CreateTable<PIIModel>();\newline
+    database.CreateTable<SessionModel>();\newline
+    database.CreateTable<UserModel>();\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    Questo metodo deve essere chiamato nella classe App del progetto nel seguente modo. 
+    public static DBDao Database \newline
+    { \newline
+        get \newline
+        { \newline
+            if (database == null) \newline
+            { \newline
+                database = new DBDao(); \newline
+            }
+            return database;\newline
+        }\newline
+    }\newline
+    Questo serve per creare l’unica istanza della base di dati all’avvio dell’applicazione.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public saveCurrentSession()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public saveCurrentSession()}
+    \label{tab:public-savecurrentsession}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito salvare all’interno del database la sessione corrente\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    var sessionModel = ((IW)Application).currentSession;\newline
+    lock (collisionLock)\newline
+    {\newline
+        if (sessionModel.Id != 0)\newline
+        {\newline
+            database.Update(sessionModel);\newline
+            return sessionModel.Id;\newline
+        }\newline
+        else\newline
+        {\newline
+            return database.Insert(sessionModel);\newline
+        }\newline
+    }\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    Il controllo è utile nel contesto in cui id è auto incrementale, infatti in un model creato non dal database questo viene settato a 0 di default. Anche usando gli ID provenienti dalla blockchain la cosa rimane vera in quanto non esisterebbe l’indirizzo 0.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public sessionModel getLastSession()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public sessionModel getLastSession()}
+    \label{tab:public-sessionModel-getLastSession}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare l’ultima sessione avviata\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var last id = codice che trova il last id;\newline
+    lock (collisionLock)\newline
+    \{\newline
+        return database.Table<sessionModel>().FirstOrDefault(x => x.Id == id);\newline
+    \}\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public UserKeyModel getKeys(userID:long)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public UserKeyModel getKeys(userID:long)}
+    \label{tab:public-userkeymodel-getKeys}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la coppia di chiavi generate per l’utente specificato nel primo parametro.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item userID: è un long che rappresenta la chiave dell’ID presente nella base di dati.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var last id = codice che trova il last id;\newline
+    lock (collisionLock)\newline
+    \{\newline
+        return database.Table<sessionModel>().FirstOrDefault(x => x.Id == userID);\newline
+    \}\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{Public void SaveUserKeys(usrID:string, keyPub:string, keyPriv:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public void SaveUserKeys(usrID:string, keyPub:string, keyPriv:string)}
+    \label{tab:public-void-SaveUserKeys}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito salvare all’interno del database la sessione corrente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usrID: stringa che rappresenta l’utente a cui fanno riferimento le chiavi
+        \item keyPub: stringa che contiene la chiave pubblica che si vuole attribuire
+        \item keyPriv: stringa che contiene la chiave privata che si vuole attribuire
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    var keys = new UserKeysModel(usrID,keyPub,keyPriv);\newline
+    lock (collisionLock)\newline
+    \{\newline
+        if (keys.userId non presente)\newline
+        \{\newline
+            database.Update(keys);\newline
+            return keys.Id;\newline
+        \}\newline
+        else\newline
+        \{\newline
+            return database.Insert(keys);\newline
+        \}\newline
+    \}\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    Il controllo è utile nel contesto in cui id è auto incrementale, infatti in un model creato non dal database questo viene settato a 0 di default. Anche usando gli ID provenienti dalla blockchain la cosa rimane vera in quanto non esisterebbe l’indirizzo 0.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+
+\paragraph{Public long addPII(pii: PIIModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public long addPII(pii: PIIModel)}
+    \label{tab:public-long-addPII}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito salvare una PII all’interno del database. La chiave ritornata è quella decisa dall’auto incremento del database. \\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è un riferimento ad un oggetto PIIModel che contiene le informazioni che si vogliono inserire all’interno della base di dati.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    lock (collisionLock)\newline
+    \{\newline
+        if (pii.ID non presente)\newline
+        \{\newline
+            database.Update(pii);\newline
+            return pii.Id;\newline
+        \}\newline
+        else\newline
+        \{\newline
+            database.Insert(pii);\newline
+            return pii.Id;\newline
+        \} \newline
+    \}\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    Questa chiave identifica la PII e deve essere comunicata all’ITF.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
 
 %COMPONENTE SP ********************************************************************
 \newpage
 \section{Componente Service Provider}
 Questa sezione inizia con una generica introduzione alle architetture Event Driven. Viene poi scelto di utilizzare un approccio Broken topology, la scelta è motivata dalla maggiore indipendenza tra i vari componenti rispetto ad un approccio Mediator topology. Infine si conclude presentando una prima ipotesi di architettura in formato UML 2.0.
+
+
+
 \subsection{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
 Il componente Service Provider è sviluppato come applicazione server, questo implica possibili accessi multipli al servizio da parte di vari Real Service Provider (RSP) che inoltrano le loro richieste di accesso. L’applicativo fa uso di diverse fonti per espletare le proprie funzioni. Più dettagliatamente queste sono: Monokee, RSP e ITF. Da questo primo studio architetturale non sembrerebbe necessario l’uso di una base di dati locale.  Considerato quanto appena detto si è ritenuta particolarmente adatta un’architettura Event Driven basata sull’utilizzo di code. Per la comunicazione con il RSP e con Monokee si è deciso di utilizzare un approccio basato sulle API RESTful. Invece per la comunicazione verso l’ITF si è deciso di utilizzare un client Ethereum.
@@ -256,7 +1213,7 @@ In figura \ref{fig:sp-uml-diag} si presenta un diagramma delle classi che attua 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\columnwidth]{SPdiagram.png} 
-    \caption{Flusso eventi SP}
+    \caption{diagramma classi SP}
     \label{fig:sp-uml-diag} 
 \end{figure}
 
