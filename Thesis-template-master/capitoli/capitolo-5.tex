@@ -1085,6 +1085,1207 @@ Questa classe ha il compito di fare da tramite per gli accessi al database. Rapp
     \end{longtable}
     \end{center}
 
+
+
+
+
+
+    \paragraph{Public long removePII(piiID: string)}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{Public long removePII(piiID: string)}
+        \label{tab:public-long-removepii}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito rimuovere una PII all’interno del database. \\
+        \hline
+        \textbf{Parametri} &      
+        \begin{itemize}
+            \item piiID: è un riferimento ad una stringa che identifica la chiave della PII.
+        \end{itemize}
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+        lock (collisionLock)\newline
+        \{\newline
+            return database.Delete<PIIModel>(piiID);\newline
+        \}\newline
+        \\
+        \hline
+        \textbf{Note} & 
+        La chiave è usata anche nel contesto dell’ITF.
+        \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+\paragraph{LocalDataProvider (interfaccia, singleton)}
+Questa interfaccia una connessione con un database locale SQLite, Questa interfaccia deve poi essere implementata a seconda della piattaforma.
+\paragraph{Metodi:}
+
+\paragraph{public SQLiteConnection GetConnection()}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{public SQLiteConnection GetConnection()}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito di stabilire la connessione con il database SQLite residente nel dispositivo. Questo metodo restituisce una connessione al database.\\
+        \hline
+        \textbf{Parametri} &      
+        -
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+        -
+        \\
+        \hline
+        \textbf{Note} & 
+        \url{https://developer.xamarin.com/guides/android/data-and-cloud-services/data-access/part-3-using-sqlite-orm/}
+        \\
+        \hline
+        \end{longtable}
+        \end{center}
+
+\paragraph{DroidLDImpl (implementa LocalDataProvider)}
+Questa classe fornisce un’implementazione di LocalDataProvider per il sistema Android.
+\paragraph{Metodi:}
+        \paragraph{public SQLiteConnection GetConnection()}
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{9cm}|}%
+            \caption{public SQLiteConnection GetConnection()}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Descrizione} & Il metodo ha il compito di stabilire la connessione con il database SQLite residente nel dispositivo. Questo metodo restituisce una connessione al database.\\
+            \hline
+            \textbf{Parametri} &      
+            -
+            \\
+            \hline
+            \textbf{Pseudo Codice} & 
+            Var sqliteFilename = “RecipesDB.db3”;\newline
+            String documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);\newline
+            String libraryPath = Path.Combine(documets,”..”,”Library”);\newline
+            Var path = path.Combine(libraryPath, sqliteFilename);\newline
+            Var conn = new SQLite.SQLiteConnection(path);\newline
+            Return conn;\newline
+            \\
+            \hline
+            \textbf{Note} & 
+            \url{https://developer.xamarin.com/guides/android/data-and-cloud-services/data-access/part-3-using-sqlite-orm/}
+            \\
+            \hline
+            \end{longtable}
+            \end{center}
+\paragraph{PIIModel (implementa INotifyPropertyChanged)}
+Questa classe rappresenta un elemento della tabella nella base di dati delle PII inserite nel dispositivo.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item name: rappresenta il nome della PII [NotNull]
+    \item desc: rappresenta una string con la descrizione della PII.
+    \item ID: rappresenta la chiave della PII nella base di dati e nell’ITF. [PrimaryKey, AutoIncrement] La chiave viene decisa dal database e sarà la stessa usata anche nel ITF.
+    \item status: è un bool che se a true indica che la PII è stata verificata nell’ITF, se a false indica che la PII o non è stata validata.
+\end{itemize}
+[Table(“PIIs”)]\\
+\paragraph{Metodi:}
+Ogni attributo deve avere un \emph{getter} e un \emph{setter}, questi andranno implementati seguendo le funzionalità che offre C\#. Ogni setter deve chiamare \emph{PropertyChanged} al fine di garantire un corretto data binding.
+
+
+
+\paragraph{private void PropertyChanged (propertyName)}
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{9cm}|}%
+            \caption{private void PropertyChanged (propertyName)}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Descrizione} & Il metodo ha il compito di effettuare il databinding con gli oggetti che modellano la vista e il database.\\
+            \hline
+            \textbf{Parametri} &      
+            \begin{itemize}
+                \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+            \end{itemize}
+            \\
+            \hline
+            \textbf{Pseudo Codice} & 
+            this.PropertyChanged?.Invoke(this, 
+                new PropertyChangedEventArgs(propertyName));\newline
+            \\
+            \hline
+            \textbf{Note} & 
+            Questo metodo deve essere chiamato da ogni set presente nel seguente modo 
+            OnPropertyChanged(nameof(nome));
+            \\
+            \hline
+            \end{longtable}
+            \end{center}
+
+\paragraph{SessionModel (implementa INotifyPropertyChanged)}
+Questa classe rappresenta un elemento della tabella nella base di dati delle Sessions inserite nel dispositivo.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item activeUser: è un long che rappresenta la chiave all’interno del database dell’ID che ha effettuato il login nella sessione. [Foreignkey User.id]
+    \item ID: rappresenta la chiave della sessione nella base di dati locale. [PrimaryKey, AutoIncrement]
+\end{itemize}
+
+In questa prima fase non sono stati definiti altri attributi, ma potrebbero essere inseriti informazioni di log quali timestamp di accesso e di log out.  
+
+[Table(“Users”)]\\
+
+\paragraph{Metodi:}
+
+Ogni attributo deve avere un \emph{getter} e un \emph{setter}, questi andranno implementati seguendo le funzionalità che offre C\#. Ogni setter deve chiamare PropertyChanged al fine di garantire un corretto data binding.
+
+\paragraph{private void PropertyChanged (propertyName)}
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{9cm}|}%
+            \caption{private void PropertyChanged (propertyName)}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Descrizione} & Il metodo ha il compito di effettuare il databinding con gli oggetti che modellano la vista e il database.\\
+            \hline
+            \textbf{Parametri} &      
+            \begin{itemize}
+                \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+            \end{itemize}
+            \\
+            \hline
+            \textbf{Pseudo Codice} & 
+            this.PropertyChanged?.Invoke(this, 
+                new PropertyChangedEventArgs(propertyName));\newline
+            \\
+            \hline
+            \textbf{Note} & 
+            Questo metodo deve essere chiamato da ogni set presente nel seguente modo 
+            OnPropertyChanged(nameof(nome));
+            \\
+            \hline
+            \end{longtable}
+            \end{center}
+
+
+\paragraph{public void getPrivKey()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPrivKey()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave privata presenta nella base di dati se presente. Se non presente genera la coppia e la ritorna.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var dbDao = App.getDBDao();\newline
+    lock (collisionLock)\newline
+        \{\newline
+            Keys = dbDao.getKeys(id);\newline
+        \}\newline
+    If Keys == null \{\newline
+        Var gen =DependencyService.Get<KeyGen>();\newline
+        Long[] keys =  gen.createKeys();\newline
+    dbDao.saveKeys(id, keys[0],keys[1]);\newline
+    \} \newline
+    return Keys[0];\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+\paragraph{public void getPubKey()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPubKey()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave pubblica presenta nella base di dati se presente. Se non presente genera la coppia e la ritorna.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var dbDao = App.getDBDao();\newline
+    lock (collisionLock)\newline
+        \{\newline
+            Keys = dbDao.getKeys(id);\newline
+        \}\newline
+    If Keys == null \{\newline
+        Var gen =DependencyService.Get<KeyGen>();\newline
+        Long[] keys =  gen.createKeys();\newline
+    dbDao.saveKeys(id, keys[0],keys[1]);\newline
+    \} \newline
+    return Keys[1];\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{Public ServiceModel[] getServiceList()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public ServiceModel[] getServiceList()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la lista dei servizi associati all’utente impostato come active user in Monokee.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var com = App.getComunicator();\newline
+    var id = App.currentSession.activeUser.id;\newline
+    Return serList = await com.askServiceList(this.id);\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    Questa informazione deve essere richiesta ogni volta, in quanto l’unico gestore di utenti e servizi e Monokee.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{UserKeyModel (implementa INotifyPropertyChanged)}
+Questa classe rappresenta un elemento della tabella nella base di dati delle Sessions inserite nel dispositivo.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item user: è un long che rappresenta la chiave dell’utente all’interno del database di cui fanno riferimento le informazioni. [Foreignkey User.id, PrimaryKey]
+    \item KeyPriv: rappresenta la chiave pubblica. [NotNull]
+    \item KeyPriv: rappresenta la chiave privata. [NotNull]
+\end{itemize}
+[Table(“UserKeys”)]\\
+\paragraph{Metodi:}
+Ogni attributo deve avere un \emph{getter} e un \emph{setter}, questi andranno implementati seguendo le funzionalità che offre C\#. Ogni setter deve chiamare PropertyChanged al fine di garantire un corretto data binding.
+
+
+\paragraph{private void PropertyChanged (propertyName)}
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{9cm}|}%
+            \caption{private void PropertyChanged (propertyName)}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Descrizione} & Il metodo ha il compito di effettuare il databinding con gli oggetti che modellano la vista e il database.\\
+            \hline
+            \textbf{Parametri} &      
+            \begin{itemize}
+                \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+            \end{itemize}
+            \\
+            \hline
+            \textbf{Pseudo Codice} & 
+            this.PropertyChanged?.Invoke(this, 
+                new PropertyChangedEventArgs(propertyName));\newline
+            \\
+            \hline
+            \textbf{Note} & 
+            Questo metodo deve essere chiamato da ogni set presente nel seguente modo 
+            OnPropertyChanged(nameof(nome));
+            \\
+            \hline
+            \end{longtable}
+            \end{center}
+
+
+
+
+
+
+\subsubsection{BusinessLogic layer}
+Nel contesto dell’architettura N-tier adottata il BusinessLogic layer è un gruppo di classi che si occupano di effettuare e di mantenere tutte le regole definite dai documenti IW - Analisi di massima, IW – Studio di fattibilità.  
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{bl-lay-iw.png} 
+    \caption{Diagramma BusinessLogic Layer IW}
+    \label{fig:bl-lay-iw} 
+\end{figure}
+
+\paragraph{Monokee (interfaccia)}
+Questa interfaccia rappresenta l’entità Monokee, con le classi RealMonokee e MonokeeProxy partecipa ad un’applicazione di un proxy pattern.
+
+\paragraph{Metodi:}
+\paragraph{Public async bool sendAccessInfo(userID: string, pass:string)}
+        \begin{center}
+            \begin{longtable}{|p{3cm}|p{9cm}|}%
+            \caption{Public async bool sendAccessInfo(userID: string, pass:string)}
+            \endfirsthead
+            \endhead
+            \hline
+            \textbf{Descrizione} & Il metodo ha il compito di restituire true in caso i parametri passati corrispondano ad un username e una password di un utente presente nel servizio Monokee. False altrimenti. La chiamata è asincrona.\\
+            \hline
+            \textbf{Parametri} &      
+            \begin{itemize}
+                \item userID: stringa che rappresenta la chiave dell’utente
+                \item pass: stringa che rappresenta la password dell’utente in chiaro.
+            \end{itemize}
+            \\
+            \hline
+            \textbf{Pseudo Codice} & 
+            Non presente
+            \\
+            \hline
+            \textbf{Note} & 
+            -
+            \\
+            \hline
+            \end{longtable}
+            \end{center}
+
+
+
+
+\paragraph{Public void newUserRequest(user:UserModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public void newUserRequest(user:UserModel)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una richiesta di creazione utente in Monokee. Il metodo invia solo la richiesta, non ha modo di sapere se l’utente venga creato o meno.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item user: è un riferimento ad un oggetto userModel che contiene i dati con cui si vuole inviare la richiesta di creazione l’utente.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{RealMonokee (implementa Monokee)}
+Rappresenta una reale istanza del servizio Monokee. Con Monokee e MonokeeProxy rappresenta un’applicazione del pattern Proxy.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item comunicator: è un riferimento di un oggetto che implementa l’interfaccia Comunicator.
+\end{itemize}
+\paragraph{Metodi:}
+
+
+
+
+\paragraph{Public async bool sendAccessInfo (userID: string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public async bool sendAccessInfo (userID: string, pass:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di restituire true in caso i parametri passati corrispondano ad un username e una password di un utente presente nel servizio Monokee. False altrimenti.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item userID: long che rappresenta la chiave dell’utente
+        \item serviceID: long che rappresenta la chiave del servizio richiesto
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return Async Communicator.verifyUserMonokee(userID,serviceID);
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{Public void newUserRequest(user:UserModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public void newUserRequest(user:UserModel)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una richiesta di creazione utente in Monokee. Il metodo invia solo la richiesta, non ha modo di sapere se l’utente venga creato o meno.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item user: è un riferimento ad un oggetto userModel che contiene i dati con cui si vuole inviare la richiesta di creazione l’utente.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Communicator.userCreationReq(user:UserModel);
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{MonokeeProxy (implementa Monokee)}
+Rappresenta un proxy remoto del servizio Monokee. Applica una politica di acquisizione pigra. Con Monokee e RealMonokee rappresenta un’applicazione del pattern Proxy.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item realMonokee: è un riferimento di un oggetto RealMonokee.
+\end{itemize}
+
+\paragraph{Metodi:}
+
+\paragraph{Public async bool sendAccessInfo (userID: string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public async bool sendAccessInfo (userID: string, pass:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di restituire true in caso i parametri passati corrispondano ad un username e una password di un utente presente nel servizio Monokee. False altrimenti.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item userID: long che rappresenta la chiave dell’utente
+        \item serviceID: long che rappresenta la chiave del servizio richiesto
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    applyPolicy1;\newline
+    applyPolicy2;\newline
+    … \newline
+    applyPolicyN;\newline
+    realMonokee.sendAccessInfo(userID, pass);\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{Public void newUserRequest(user:UserModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{Public void newUserRequest(user:UserModel)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una richiesta di creazione utente in Monokee. Il metodo invia solo la richiesta, non ha modo di sapere se l’utente venga creato o meno.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item user: è un riferimento ad un oggetto userModel che contiene i dati con cui si vuole inviare la richiesta di creazione l’utente.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    applyPolicy1;\newline
+    applyPolicy2;\newline
+    …\newline
+    applyPolicyN;\newline
+    realMonokee.newUserRequest(user);\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{UserInt (interfaccia)}
+Questa interfaccia definisce le caratteristiche minime che deve avere un utente generico dell’applicazione. Queste proprietà sono le chiavi private e pubbliche. UserModel implementa questa interfaccia. Questo ADT è stato pensato in un’ottica futura in cui ci potrebbero essere utenti non di Monokee.
+
+\paragraph{Metodi:}
+\paragraph{public void getPrivKey()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPrivKey()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave privata presenta nella base di dati se presente. Se non presente genera la coppia e la ritorna.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public void getPubKey()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPubKey()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave privata presenta nella base di dati se presente. Se non presente genera la coppia e la ritorna.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{ServiceModel (implementa INotifyPropertyChanged)}
+Questa classe rappresenta un servizio a cui l’utente può avere accesso. È definito dalla un codice e da una lista di PII richieste per effettuare l’accesso. Questo oggetto dovrà essere sempre generato da Monokee e mai salvato in locale. Questo al fine di evitare dati discordanti.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item serviceID: è una stringa che rappresenta una chiave del servizio all’interno di Monokee.
+    \item requiredPII[]: è un array di stringhe che rappresentano gli ID delle PII necessarie per effettuare il login al servizio identificato da serviceID
+\end{itemize}
+
+\paragraph{Metodi:}
+Ogni attributo deve avere un \emph{getter} e un \emph{setter}, questi andranno implementati seguendo le funzionalità che offre C\#. Ogni \emph{setter} deve chiamare PropertyChanged al fine di garantire un corretto data binding.
+
+\paragraph{private void PropertyChanged (propertyName)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{private void PropertyChanged (propertyName)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di effettuare il databinding con gli oggetti che modellano la vista e il database.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item propertyName: il nome della variabile a cui è stato effettuato il cambiamento.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    this.PropertyChanged?.Invoke(this, 
+    new PropertyChangedEventArgs(propertyName));
+    \\
+    \hline
+    \textbf{Note} & 
+    Questo metodo deve essere chiamato da ogni set presente nel seguente modo OnPropertyChanged(nameof(nome));
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{Keygen (interfaccia)}
+Questa interfaccia rappresenta un Strategy pattern per nascondere l’implementazione della reale libreria che effettua la generazione delle chiavi. Ha anche il compito di criptare e decriptare i dati.
+\paragraph{Metodi:}
+\paragraph{public long [] createKeys()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public long [] createKeys()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una coppia di chiavi pubbliche e private e quindi di restituirle. Ritorna un array di string di due elementi. Il primo elemento è la chiave pubblica, il secondo la privata.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public long [] createKeys()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public long [] createKeys()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una coppia di chiavi pubbliche e private e quindi di restituirle. Ritorna un array di string di due elementi. Il primo elemento è la chiave pubblica, il secondo la privata.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public static byte[] Encrypt(string publicKey, string data)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public static byte[] Encrypt(string publicKey, string data)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di firmare i dati forniti con la chiave pubblica fornita.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item publicKey: stringa che rappresenta la chiave pubblica
+        \item Data: stringa che rappresenta i dati che si vogliono firmare
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di decriptare i dati forniti con la chiave privata fornita.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item privateKey: stringa che rappresenta la chiave privata
+        \item encryptedBytes: array di byte che rappresentano i dati che si vogliono decriptare.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{KeygenImpl (implementa KeyGen)}
+Questa interfaccia rappresenta un template pattern per nascondere l’implementazione della reale libreria che effettua la generazione delle chiavi.
+\paragraph{Metodi:}
+
+\paragraph{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare una coppia di chiavi pubbliche e private e quindi di restituirle. Ritorna un array di string di due elementi. Il primo elemento è la chiave pubblica, il secondo la privata.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    CspParameters cspParams = new CspParameters { ProviderType = 1 };\newline
+
+    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider(1024, cspParams);\newline
+
+    string publicKey = Convert.ToBase64String(rsaProvider.ExportCspBlob(false));\newline
+    string privateKey = Convert.ToBase64String(rsaProvider.ExportCspBlob(true));\newline
+
+    return new array = {privateKey, publicKey};\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    \url{https://stackoverflow.com/questions/18850030/aes-256-encryption-public-and-private-key-how-can-i-generate-and-use-it-net}
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public static byte[] Encrypt(string publicKey, string data)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public static byte[] Encrypt(string publicKey, string data)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di firmare i dati forniti con la chiave pubblica fornita.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item publicKey: stringa che rappresenta la chiave pubblica
+        \item Data: stringa che rappresenta i dati che si vogliono firmare
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    CspParameters cspParams = new CspParameters { ProviderType = 1 };\newline
+    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider(cspParams);\newline
+    rsaProvider.ImportCspBlob(Convert.FromBase64String(publicKey));\newline
+    byte[] plainBytes = Encoding.UTF8.GetBytes(data);\newline
+    byte[] encryptedBytes = rsaProvider.Encrypt(plainBytes, false);\newline
+    return encryptedBytes;\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    \url{https://stackoverflow.com/questions/18850030/aes-256-encryption-public-and-private-key-how-can-i-generate-and-use-it-net}
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public static string Decrypt(string privateKey, byte[] encryptedBytes)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di decriptare i dati forniti con la chiave privata fornita.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item privateKey: stringa che rappresenta la chiave privata
+        \item encryptedBytes: array di byte che rappresentano i dati che si vogliono decriptare.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    CspParameters cspParams = new CspParameters { ProviderType = 1 };\item
+    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider(cspParams);\item
+
+    rsaProvider.ImportCspBlob(Convert.FromBase64String(privateKey));\item
+
+    byte[] plainBytes = rsaProvider.Decrypt(encryptedBytes, false);\item
+
+    string plainText = Encoding.UTF8.GetString(plainBytes, 0, plainBytes.Length);\item
+
+    return plainText;\item
+    \\
+    \hline
+    \textbf{Note} & 
+    \url{https://stackoverflow.com/questions/18850030/aes-256-encryption-public-and-private-key-how-can-i-generate-and-use-it-net}
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{ITF (interfaccia)}
+Questa interfaccia rappresenta il componente ITF. Con RealITF e ITFProxy partecipano ad un’applicazione del Proxy Pattern.
+\paragraph{Metodi:}
+
+
+\paragraph{public verifyPII(pii: PIIModel[]):bool}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public verifyPII(pii: PIIModel[]):bool}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di verificare presso l’ITF le informazioni PII. Il metodo si occupa della creazione dell’Hash.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è una lista di oggetti PIIModel da verificare nell’ITF.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public requestUser(usr: userModel[]):bool}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public requestUser(usr: userModel[]):bool}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito creare un utente all’interno dell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usr: rappresenta l’utente che si vuole immettere nell’ITF
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente.
+    \\
+    \hline
+    \textbf{Note} & 
+    La chiave pubblica rappresenta l’ID dell’utente.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{RealITF (implementa ITF)}
+Questa interfaccia rappresenta il reale componente ITF. Si occupa di instaurare la comunicazione tramite l’uso di un BlockchainClient. Con ITF e ITFProxy partecipano ad un’applicazione del Proxy Pattern.
+
+\paragraph{Campi dati:}
+tutti gli oggetti necessari vengono ottenuti tramite l’uso del DependencyService.
+
+\paragraph{Metodi:}
+
+\paragraph{public verifyPII(pii: PIIModel []):bool}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public verifyPII(pii: PIIModel []):bool}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di verificare presso l’ITF le informazioni PII\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è una lista di oggetti hashedPII da verificare nell’ITF.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var blockClient = DependencyService.Get<BlockchainClient>();\newline
+    HashAlgorithm algorithm = SHA256.Create();\newline
+    Var hasedDesc = algorithm.ComputeHash(Encoding.UTF8.GetBytes(pii.desc));\newline
+    Var hashedName = algorithm.ComputeHash(Encoding.UTF8.GetBytes(pii.name));\newline
+
+    Return blockClient.createID(piiModel.id,hashedName, hashedDesc);\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public bool requestUser(usr: userModel[])}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool requestUser(usr: userModel[])}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito creare un utente all’interno dell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usr: rappresenta l’utente che si vuole immettere nell’ITF
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var blockClient = DependencyService.Get<BlockchainClient>();\newline
+    Return blockClient.createID(usr.getPublicKey());\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    La chiave pubblica rappresenta l’ID dell’utente.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{ITFProxy (implementa ITF)}
+Questa interfaccia rappresenta un remote proxy del componente ITF. Si occupa applicare una serie di politiche. Con ITF e ITFProxy partecipano ad un’applicazione del Proxy Pattern.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item realITF: è un riferimento ad un oggetto RealITF. 
+\end{itemize}
+
+
+
+\paragraph{Metodi:}
+
+\paragraph{public verifyPII(pii: PIIModel []):bool}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public verifyPII(pii: PIIModel []):bool}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di verificare presso l’ITF le informazioni PII\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: è una lista di oggetti hashedPII da verificare nell’ITF.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return realITF.verifyPII(pii);
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public bool requestUser(usr: userModel[])}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool requestUser(usr: userModel[])}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito creare un utente all’interno dell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item usr: rappresenta l’utente che si vuole immettere nell’ITF
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    realITF. requestUser(usr: userModel[]);
+    \\
+    \hline
+    \textbf{Note} & 
+    La chiave pubblica rappresenta l’ID dell’utente.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+\paragraph{IWApplication}
+Questa classe rappresenta un facade che espone tutte le funzioni che può compiere un utente attraverso le varie viste.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item monokee: è un riferimento ad un oggetto che implementa l’interfaccia Monokee.
+    \item database: è un riferimento ad un oggetto DBDao ottenuto tramite l’uso di DependecyService.
+\end{itemize}
+
+\paragraph{Metodi:}
+
+\paragraph{public bool logIn(usr: string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public bool logIn(usr: string, pass:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di verificare che le credenziali fornite dall’utente corrispondano anche nel servizio Monokee.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item  usr: rappresenta la chiave dell’utente
+        \item Pass: è una stringa che rappresenta la password dell’utente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var b = Monokee.sendAccessInfo(usr, pass);\newline
+    Return b;\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public void creation(usr: string, pass:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void creation(usr: string, pass:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di inviare una richiesta di creazione utente di un utente. Questo metodo invia solo una richiesta, non a modo di sapere se l’utente verrà effettivamente creato.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item  usr: rappresenta la chiave dell’utente
+        \item Pass: è una stringa che rappresenta la password dell’utente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var b = Monokee.newUserRequest(usr, pass);\newline
+    Return b;\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+\paragraph{public void createSession(activeUser: string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void createSession(activeUser: string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito creare la sessione e di inserirla nel database come lastSession.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item  usr: rappresenta la chiave dell’utente
+        \item Pass: è una stringa che rappresenta la password dell’utente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    currentSession = new SessionModel(activeUser.id);\newline
+    App.currentSession = currentSession;\newline
+    Database.saveCurrentSession();\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    La current session è mantenuta nell’oggetto App.
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public void reloadLastSession()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void reloadLastSession()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ricaricare l’ultima sessione dal database e ritornala.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item  usr: rappresenta la chiave dell’utente
+        \item Pass: è una stringa che rappresenta la password dell’utente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return database.getLastSession();
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
+
+\paragraph{public void insertPII(pii:PIIModel)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void insertPII(pii:PIIModel)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito inserire la pii all’utente corrente e anche all’interno dell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: rappresenta la PII che si vuole inserire all’utente corrente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return database.getLastSession();
+    \\
+    \hline
+    \textbf{Note} & 
+    Database.addPII(pii,status = false)\newline
+    BlockchainClient.addPII\newline
+    (App.currentSession.activeUser, pii);\newline
+    \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+
 %COMPONENTE SP ********************************************************************
 \newpage
 \section{Componente Service Provider}
