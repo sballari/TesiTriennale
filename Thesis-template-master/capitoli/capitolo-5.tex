@@ -2273,18 +2273,651 @@ Questa classe rappresenta un facade che espone tutte le funzioni che può compie
     \\
     \hline
     \textbf{Pseudo Codice} & 
-    Return database.getLastSession();
-    \\
-    \hline
-    \textbf{Note} & 
     Database.addPII(pii,status = false)\newline
     BlockchainClient.addPII\newline
     (App.currentSession.activeUser, pii);\newline
     \\
     \hline
+    \textbf{Note} & 
+    \\
+    \hline
     \end{longtable}
     \end{center}
 
+    \paragraph{public void getPrivKey()}
+    \begin{center}
+        \begin{longtable}{|p{3cm}|p{9cm}|}%
+        \caption{public void getPrivKey()}
+        \endfirsthead
+        \endhead
+        \hline
+        \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave privata dell’utente che indicato come active user nella sessione corrente.\\
+        \hline
+        \textbf{Parametri} &      
+        \begin{itemize}
+            \item pii: rappresenta la PII che si vuole inserire all’utente corrente
+        \end{itemize}
+        \\
+        \hline
+        \textbf{Pseudo Codice} & 
+        Return BlockchainClient\newline
+        .addPII(App.currentSession\newline
+        .activeUser.getPrivKey();\newline
+        \\
+        \hline
+        \textbf{Note} & 
+        -
+        \\
+        \hline
+        \end{longtable}
+        \end{center}
+    
+\paragraph{public void getPubKey()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPubKey()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la chiave Pubblica dell’utente che indicato come active user nella sessione corrente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: rappresenta la PII che si vuole inserire all’utente corrente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return BlockchainClient\newline
+    .addPII(App.currentSession\newline
+    .activeUser.getPUBKey();\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+\paragraph{public void getPIIList()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void getPIIList()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito ritornare la lista di PII dell’utente che è indicato come active user nella sessione corrente.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: rappresenta la PII che si vuole inserire all’utente corrente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Return \newline
+    App.currentSession \newline
+    .activeUser.getPIIList(); \newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+\paragraph{public void removePII(pii:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void removePII(pii:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito inserire la pii all’utente corrente e anche all’interno dell’ITF.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: rappresenta la chiave dellla PII che si vuole inserire all’utente corrente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Database.removePII(pii,status = false)\newline
+    BlockchainClient.removePII(pii);\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+\paragraph{public Tuple<string,string> createKeys()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public Tuple<string,string> createKeys()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare all’utente corrente un paio di chiavi asincrone.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item pii: rappresenta la chiave dellla PII che si vuole inserire all’utente corrente
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var a = BlockchainClient \newline
+    .addPII(App.currentSession.activeUser.getPriv(); \newline
+    Var b = BlockchainClient \newline
+    .addPII(App.currentSession.activeUser.getPubl(); \newline
+    Return new Tuple<string,string>(a,b); \newline
+    \\
+    \hline
+    \textbf{Note} & 
+    L’algoritmo usato è SHA3 per questione di compatibilità con l'ITF.
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+\paragraph{IQRGenerator (interfaccia)}
+Questa interfaccia rappresenta uno strategy Pattern per accomunare le varie implementazioni di algoritmi che generano una lista di byte che rappresentano immagini di codici QR.
+\paragraph{Metodi:}
+
+\paragraph{public byte[] generateQR(value: string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public byte[] generateQR(value: string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare un’array di byte che rappresentano un’immagine del codice QR contenente la stringa definita in value.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item value: è una stringa che rappresenta il testo che si vuole inserire dentro il QR.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Non presente
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+\paragraph{IQRGenerator (implementa IQRgenerator)}
+Questa classe rappresenta un’implementazione dell’algoritmo di generazione QR per Android.
+\paragraph{Metodi:}
+
+\paragraph{public byte[] generateQR(value: string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public byte[] generateQR(value: string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di creare un’array di byte che rappresentano un’immagine del codice QR contenente la stringa definita in value.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item value: è una stringa che rappresenta il testo che si vuole inserire dentro il QR.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    var writer = \newline
+    new BarcodeWriter \newline
+    \{\newline
+        Format = BarcodeFormat.QRCODE,\newline
+        Options = new EncodingOptions\newline
+        \{\newline
+            Height = 1600,\newline
+            Width = 1600\newline
+        \}\newline
+    \};\newline
+    Android.Graphics.Bitmap bm =  writer.Write(value);\newline
+    MemoryStream stream = new MemoryStream();\newline
+    bm.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);\newline
+    var arr =  stream.ToArray();\newline
+    stream.Close();\newline
+    return arr;\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+\subsubsection{VM Layer}
+Questo layer contiene i vari controllori che gestiscono le viste. Si è previsto di creare un controller per ogni pagina dell’applicazione. L’applicazione utilizza il pattern MVVM, quindi, i controlli sono delle ViewModel (VM) che contengono i dati e le operazioni. Tra i dati e la vista sono presenti dei binding da realizzare utilizzando gli strumenti forniti da Xamarin. Le VM operano le loro azioni tramite l’utilizzo della classe IWFacade. 
+
+Esiste un controllore per ogni vista prevista dall’applicazione. Le seguenti sono:
+\begin{itemize}
+    \item LoginPageVM;
+    \item MenuVM;
+    \item ServiceListVM;
+    \item ServicePageVM;
+    \item PIIListVM;
+    \item PIIPage;
+    \item AddPIIPageVM.
+\end{itemize}
+Tutte queste classi devono estendere da INotifyPropertyChanged.
+In figura \ref{fig:vm-layer-iw} il diagramma esplicativo del \emph{layer}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{VMlayer-iw.png} 
+    \caption{Diagramma UML VM Layer}
+    \label{fig:vm-layer-iw} 
+\end{figure}
+
+\paragraph{LoginPageVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina di login.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item DisplayInvalidLoginPrompt: è un rifermento ad un oggetto Action (Xamarin) che definisce l’azione da intaprendere in caso di credenziali errate. Questo oggetto è definito nel code-behind della vista e deve essere richiamato tramite una delegate.
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item email: è una stringa in databing con la form presente nella vista. 
+    \item password: è una stringa in databing con la form presente nella vista.
+    \item SubmitCommand: e un riferimento ad un oggeto ICommand(Xamarin). Deve avere setter e getter pubblici.
+\end{itemize}
+
+I campi dati email, password devono avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+
+\paragraph{Metodi:}
+\paragraph{public void OnSubmit()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnSubmit()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito definire le procedure da intraprendere la verifica di email e password.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var result = App.IWFacade.LogIn(email, password);\newline
+    If result \{\newline
+        Navigation.PushAsync (new ServiceListPage());\newline
+    \}\newline
+    Else DisplayInvalidLoginPrompt();\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    \url{https://www.c-sharpcorner.com/article/xamarin-forms-create-a-login-page-mvvm/}
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+\paragraph{Metodi:}
+\paragraph{public void OnSubmit()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnSubmit()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in InfoPage.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new InfoPage());
+    \\
+    \hline
+    \textbf{Note} & 
+    \url{https://www.c-sharpcorner.com/article/xamarin-forms-create-a-login-page-mvvm/}
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+\paragraph{MenuVM (implementa INotifyPropertyChanged)}
+È il controllore del menu visualizzato nelle MasterDetaildePage
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+\end{itemize}
+Il campo dati email deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+
+\paragraph{Metodi:}
+
+\paragraph{Metodi:}
+\paragraph{public void OnClickPIIList()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnClickPIIList()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in PIIListPage.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new PIIListPage());
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+\paragraph{public void OnClickKeys()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnClickKeys()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in KeysPage.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new KeysPage());
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+\paragraph{public void OnClickInfoPage()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnClickInfoPage()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in InfoPage.\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new InfoPage());
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+\paragraph{KeysPageVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina che mostra le chiavi pubbliche e private.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+    \item keyPriv: è una stringa in databing, da visualizzare per mostrare la chiave privata dell’active user attuale. 
+    \item keyPub: è una stringa in databing, da visualizzare per mostrare la chiave pubblica dell’active user attuale. 
+\end{itemize}
+
+Il campo dati email, keyPriv, keyPub deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+
+
+\paragraph{Metodi:}
+Questa pagina non prevede interazione con l’utente, quindi non prevede metodi.
+
+\paragraph{PiiListVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina che mostra la lista dei servizi disponibili.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+    \item piiList: è una lista di oggetti piiModel in databing con la vista.
+\end{itemize}
+
+Il campo dati email deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+\paragraph{Metodi:}
+
+
+
+\paragraph{public void OnClickPII(piiID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnClickPII(piiID:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in PIIPage.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item piiID: è una stringa che rappresenta la chiave della PII che ha generato l’evento.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new PIIPage(piiID));
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+
+\paragraph{ServiceListVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina che mostra la lista dei servizi disponibili.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+    \item serviceList: è una lista di oggetti ServiceModel in databing con la vista.
+\end{itemize}
+
+Il campo dati email deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+\paragraph{Metodi:}
+
+
+
+
+\paragraph{public void OnClickService(piiID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnClickService(piiID:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito di eseguire le operazioni che portano al cambio della pagina in ServicePage.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item serviceID: è una stringa che rappresenta la chiave del  servizio che ha generato l’evento.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Navigation.PushAsync (new ServicePage(serviceID));
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+\paragraph{PIIPageVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina che mostra la lista dei servizi disponibili.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item piiID: è una stringa che rappresenta la chiave della pii da visualizzare, deve essere passata tramite il costruttore dell’oggetto e messa in databing con la vista.
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+    \item Pii: è un riferimento ad un oggetto PIIModel che contiene I dati relative alla PII identificata dal piiID fornito nel costruttore. Le informazioni sono visualizzate nella vista.
+\end{itemize}
+
+Il campo dati email deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+
+\paragraph{Metodi:}
+\paragraph{public void OnRemovePII(piiID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnRemovePII(piiID:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito rimuove la pii a cui fa riferimento la pagina.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item PiiID: è una stringa che rappresenta la chiave della PII che si vuole eliminare.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    App.IWApplication.removePII(piiID);\newline
+    Navigation.PushAsync (new PIIListPage(piiID));\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+
+\paragraph{ServicePage (implementa INotifyPropertyChanged)}
+È il controllore della pagina che mostra la lista dei servizi disponibili.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item serviceID: è una stringa che rappresenta la chiave del Servizio da visualizzare, deve essere passata tramite il costruttore dell’oggetto e messa in databing con la vista.
+    \item email: è una stringa in databing, da visualizzare per mostrare l’active user attuale. 
+    \item serviceModel: è un riferimento ad un oggetto ServiceModel che contiene I dati relative alla PII identificata dal serviceID fornito nel costruttore. Le informazioni sono visualizzate nella vista.
+\end{itemize}
+
+Il campo dati email deve avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+\paragraph{Metodi:}
+
+\paragraph{private void showQR(serviceID:string)}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{private void showQR(serviceID:string)}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito mostrare nell’applicazione il QR con le informazioni necessarie per effettuare il login al servizio.\\
+    \hline
+    \textbf{Parametri} &      
+    \begin{itemize}
+        \item serviceID: è una stringa che rappresenta la chiave della PII che si vuole eliminare.
+    \end{itemize}
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var services = App.currentSession.activeUser.getServiceList;\newline
+    Var ser = Services[serviceID];\newline
+    If ser != null \{\newline
+    s = serviceName.toString() + ser.requiredPII;\newline
+    \}\newline
+    var qrwr = DependencyService.Get<Iqr>();\newline
+    s = qrwr.GenQR(stringaInfo);\newline
+    imaInVista.Source = ImageSource.FromStream(()=>new MemoryStream(s));\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
+
+
+
+
+\paragraph{AddPIIPageVM (implementa INotifyPropertyChanged)}
+È il controllore della pagina di login.
+\paragraph{Campi dati:}
+\begin{itemize}
+    \item PropertyChanged: è un riferimento ad un oggetto Event (Xamarin).
+    \item piiName: è una stringa in databing con la form presente nella vista. 
+    \item piiDesc: è una stringa in databing con la form presente nella vista.
+    \item SubmitCommand: e un riferimento ad un oggeto ICommand(Xamarin). Deve avere setter e getter pubblici.
+\end{itemize}
+
+I campi dati email, password devono avere i \emph{getter} e \emph{setter} tipici di C\#. Il \emph{setter} deve chiamare l’evento \emph{PropertyChanged}.
+\paragraph{Metodi:}
+
+\paragraph{public void OnSubmit()}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{9cm}|}%
+    \caption{public void OnSubmit()}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Descrizione} & Il metodo ha il compito definire le procedure da intraprendere per inserire la PII sia nella base di dati, sia nell’ITF\\
+    \hline
+    \textbf{Parametri} &      
+    -
+    \\
+    \hline
+    \textbf{Pseudo Codice} & 
+    Var pii = new AbsPII(piiName, piiDesc);\newline
+    Var result = App.IWApplication.insertPII(pii);\newline
+    If result \{\newline
+        Navigation.PushAsync (new PIIListPage());\newline
+    \}\newline
+    Else displayAllertError();\newline
+    \\
+    \hline
+    \textbf{Note} & 
+    -
+    \\
+    \hline
+    \end{longtable}
+\end{center}
 
 %COMPONENTE SP ********************************************************************
 \newpage
