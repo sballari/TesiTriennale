@@ -19,7 +19,7 @@ Il progetto ha come scopo la creazione di un’estensione del servizio MonoKee b
         \item \textbf{Identity Trust Fabric} (ITF);
         \item \textbf{Trusted Third Party} (TTP);
     \end{itemize} 
-In sintesi l’estensione dovrà operare al fine di fornire la possibilità ad un utente di registrare e gestire la propria identità autonomamente tramite l’IW, mandare i propri dati (PII) all’ITF, il quale custodirà la sua identità e farà da garante per le asserzioni proveniente dai TTP. Inoltre il SP dovrà essere in grado con le informazioni provenienti da IW e ITF di verificare o meno l’accesso ai propri servizi.
+In sintesi l’estensione dovrà operare al fine di fornire la possibilità ad un utente di registrare e gestire la propria identità autonomamente tramite l’IW e mandare i propri dati (PII) all’ITF, il quale custodirà la sua identità e farà da garante per le asserzioni proveniente dai TTP. Inoltre il SP dovrà essere in grado con le informazioni provenienti da IW e ITF di verificare o meno l’accesso ai propri servizi.
 L'immagine in figura \ref{fig:diag-mod} dovrebbe chiarificare i vari componenti in gioco.
 \begin{figure}[!h]
     \centering
@@ -31,13 +31,13 @@ L'immagine in figura \ref{fig:diag-mod} dovrebbe chiarificare i vari componenti 
 \section{Studio Tecnologico Identity Trust Fabric}
 
 \subsection{Sintesi dello studio tecnologico}
-Il capitolo procede descrivendo le caratteristiche del prodotto MonoKee e di come la tecnologia \gls{blockchaing} si possa collocare in un tale contesto. Vengono poi trattati i principali strumenti e librerie disponibili per sviluppare in Ethereum. L’analisi conclude facendo emergere come un utilizzo di Ethereum sia possibile, ma comunque non consigliato a causa di questioni prettamente legate alla scalabilità del sistema. Per ragioni di facilità di sviluppo e di time to market si è ritenuto comunque di adottare la scelta di Ethereum come base del componente ITF.
+Il capitolo procede descrivendo le caratteristiche del prodotto MonoKee e di come la tecnologia \gls{blockchaing} si possa collocare in tale contesto; vengono poi trattati i principali strumenti e librerie disponibili per sviluppare in Ethereum. L’analisi si conclude facendo emergere come un utilizzo di Ethereum sia possibile, ma non consigliato; le ragioni sono prettamente legate alla scalabilità del sistema. Per ragioni di facilità di sviluppo e di time to market si è ritenuto ad ogni modo di adottare la scelta di Ethereum come base del componente ITF.
 
 \subsection{ITF – Identity Trust Fabric}
-Sulla base di un primo studio di fattibilità l’unico componente coinvolto nell’uso \gls{blockchaing} è l’Identity Trust Fabric. La sua principale funzione è quella di poter permettere ai vari Service Provider aderenti al servizio di poter verificare le informazioni rilasciate dai vari utenti tramite l’utilizzo del loro personale Identity Wallet (IW). Il componente mantiene al suo interno l’hash della chiave pubblica degli utenti (che rappresenta la loro identità) e le asserzioni fornite dai vari IW che possono essere potenzialmente certificate da una TTP (tramite una firma con la loro chiave privata). Le asserzioni devono poter essere modificate o eliminate in ogni momento, ovviamente ogni alterazione deve essere ogni volta certificata nuovamente. Anche da parte del TTP ci dev’essere la possibilità di revocare la certificazione di un’asserzione. 
+Sulla base di un primo studio di fattibilità l’unico componente coinvolto nell’uso \gls{blockchaing} è l’Identity Trust Fabric. La sua principale funzione è quella di poter permettere ai vari Service Provider aderenti al servizio di poter verificare le informazioni rilasciate dai vari utenti tramite l’utilizzo del loro personale Identity Wallet (IW). Il componente mantiene al suo interno l’hash della chiave pubblica degli utenti (che rappresenta la loro identità) e le asserzioni fornite dai vari IW che possono essere potenzialmente certificate da una TTP (tramite una firma con la loro chiave privata). Le asserzioni devono poter essere modificate o eliminate in ogni momento, naturalmente ogni alterazione deve essere di volta in volta certificata nuovamente. Anche da parte del TTP ci dev’essere la possibilità di revocare la certificazione di un’asserzione. 
 Secondo lo studio Gartner in nota \footcite{farah:The-Dawn-of-Decentralized-Identity} una buona implementazione di una ITF deve possedere le seguenti caratteristiche:
 \begin{itemize}
-    \item \textbf{Fiducia}: il contenuto presente nella ITF deve essere solo quello autorizzato, non ci devono poter essere manomissioni malevoli da parte degli utilizzatori della rete. Ogni componente deve potere aver fiducia nella veridicità dei dati.
+    \item \textbf{Fiducia}: il contenuto presente nella ITF deve essere solo quello autorizzato e non ci devono poter essere manomissioni malevoli da parte degli utilizzatori della rete. Ogni componente deve potere aver fiducia nella veridicità dei dati.
     \item \textbf{Garanzia}: le regole logiche della ITF non devono poter essere manomesse. Deve essere possibile applicare le varie policy aziendali in ambito di gestione dei rischi.
     \item \textbf{Tracciabilità}: ogni informazione e cambio di stato relativo alle identità e alle asserzioni deve poter essere tracciato e verificabile sia in termini cronologici sia in termini di provenienza. 
     \item \textbf{Sicurezza}: intesa come CIA. L’ITF deve rispettare i vincoli di confidenzialità, inalterabilità e disponibilità delle informazioni dentro lei contenute.
@@ -481,7 +481,7 @@ A seguito dell’analisi sopra proposta sono stati individuati i seguenti aspett
     \label{risk:centralization-vision-from-user} 
 \end{risk}
 \subsection{Conclusioni}
-Dal presente studio emerge come la creazione di un SP sviluppato come applicativo server e non come applicazione distribuita possa essere un’ottima opzione implementativa. Lo studio non presenta particolari rischi. Si ritiene, quindi,che un approccio di questo tipo sia fattibile nei tempi dello stage.
+Dal presente studio emerge come la creazione di un SP sviluppato come applicativo server, e non come applicazione distribuita, possa essere un’ottima opzione implementativa. Lo studio non presenta particolari rischi. In definitiva, si ritiene che un approccio di questo tipo sia fattibile nei tempi dello stage.
 %**************************************************************
 
 \section{Requisiti e obiettivi}
