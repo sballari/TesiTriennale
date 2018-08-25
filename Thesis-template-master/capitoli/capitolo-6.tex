@@ -54,6 +54,7 @@ Il componente IW è un'applicazione mobile le cui interazioni con elementi ester
 
 \section{Validazione}
 La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfa il cliente e gli utenti finali. La principale attività di validazione è stata svolta l'ultima settimana di lavoro tramite prove e dimostrazioni del prodotto. In quei giorni si è verificato con la presenza del tutor aziendale la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
+
 L'esito, seppur non vedendo la totalità dei requisiti soddisfatti, è stato soddisfacente. Si preme di tenere conto che molto requisiti sono stati ritenuti di importanza accessoria dall'azienda e sostituiti con altre funzionalità non previste inizialmente.
 
 
@@ -147,7 +148,28 @@ In tabella \ref{tab:validazione-iw} si mostra lo stato di validazione di ogni re
     R[Q][C] 0036    & implementato  \\
     \hline
     \end{longtable}
-    \end{center}%
+    \end{center}
+
+I requisiti:
+\begin{itemize}
+    \item R[F][C]001;
+    \item R[F][C]002;
+    \item R[F][C]003;
+    \item R[F][C]004
+\end{itemize}
+non sono stati implementati in quanto questi sono stati pensati in un'ottica che prevedeva la distribuzione al grande pubblico dell'applicazione. Questi requisiti sono stati quindi ritenuti dal tutor aziendale non importanti e rimanabili a successivi rilasci.
+
+I requisiti: 
+\begin{itemize}
+    \item R[F][M]0005; 
+    \item R[F][M]0007; 
+    \item R[F][M]0009; 
+    \item R[F][M]0010; 
+    \item R[F][M]0011 
+\end{itemize}
+sono stati cancellati in quanto si è deciso che le funzionalità che proponevano non dovessero essere offerte dall'applicazione, ma dal portale attualmente esistente di Monokee.
+
+Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche push. Si è ritenuto, in accordo con il tutor aziendale, che lo sforzo sarebbe stato eccessivo rispletto al valore che avrebbe apportato la funzionalità. Per questo si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
 
 \subsection{Validazione requisiti compoente SP}
 In tabella \ref{tab:validazione-sp} si mostra lo stato di validazione di ogni requisiti del componente SP, questi possono essere:
@@ -163,7 +185,7 @@ In tabella \ref{tab:validazione-sp} si mostra lo stato di validazione di ogni re
     \endfirsthead
     \endhead
     \hline
-    \textbf{Codice}  & \textbf{Fonte}\\
+    \textbf{Codice}  & \textbf{Stato}\\
     \hline
     R[F][M]0001    & implementato  \\
     \hline
@@ -223,3 +245,5 @@ In tabella \ref{tab:validazione-sp} si mostra lo stato di validazione di ogni re
     \hline
     \end{longtable}
     \end{center}%
+
+I requistiti relativi al componente SP sono stati complementamente implementati e validati dal tutor aziendale.
