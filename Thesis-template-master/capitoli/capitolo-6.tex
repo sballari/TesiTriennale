@@ -7,8 +7,35 @@
 \label{cap:verifica-validazione}
 %************************************************************
 \section{Verifica}
-Secondo lo stardard ISO/IEC 12207:2008\footcite{ISO:Systems-and-software-engineering} La verifica è un processo di supporto che si occupa di accertarsi che l’esecuzione di un'attività non abbia introdotto errori durante il periodo in esame. Questo è stato fatto per ogni attività del progetto in maniera sistematica, disciplinata e controllata. Ci sono due tecniche di verifica, queste sono:
+Secondo lo stardard ISO/IEC 12207:2008\footcite{ISO:Systems-and-software-engineering} la verifica è un processo di supporto che si occupa di accertarsi che l’esecuzione di un'attività non abbia introdotto errori durante il periodo in esame. 
+Ci sono due tipi di verifica: \textbf{statica} e \textbf{dinamica}.
+La verifica statica, è estremamente utile in quanto non richiede che il prodotto sia eseguibile, può essere effettuata tramite due tecniche. Queste sono:
 \begin{itemize}
     \item ispezione;
     \item analisi a pettine.
 \end{itemize}
+La verifica dinamica richiede l'esecuzione del codice, questa può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante le attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente allora venivano prima redatti i test riguardo a questo e solo in seguito veniva fatta la progettazione in dettaglio. Questo permetteva in maniera immediata di progettare ad alto livello pensando al requisito astratto, ma permetteva anche di progettare in dettaglio con i test.
+I test dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
+Per permettere uno sviluppo agevole si è utilizzata una tecnica di gestione del repository detta \emph{branch-pull}.
+Questa prevedeva che ogni attivita’ di codifica dovesse essere eseguita in un branch creato appositamente allo scopo. Alla fine dell'attività si procedeva con una pull request verso il \emph{branch} principale, questa veniva accettata se e solo se i test passavano completamente. 
+
+Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi: 
+\begin{itemize}
+    \item rilevazione di errori di codifica;
+    \item rilevazione di modifiche nei requisiti;
+    \item rilevazione di modifiche nella progettazione;
+    \item individuazione dell’uso di componenti di cui non si conosce chiaramente il comportamento;
+    \item rilevazione di integrazioni tra componenti non adatte.
+\end{itemize}
+Un punto critico è stato quello di trovare un giusto quantitativo di test da produrre. Esagerando avremmo rischiato di superare la scadenza inerenti alle attività di codifica.
+Abbiamo quindi deciso di produrre almeno un test per metodo ed un test per classe. 
+Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo deciso di farli solo in caso ci fosse stato tempo. 
+L'uso di queste tecniche ha inoltre permesso di avere una certa libertà nelle modifiche a codice già integrato nel sistema, in quanto ha fornito almeno in parte anche dei test di regressione. 
+
+Lo svolgimento di questo processo ha permesso di ottenere varie metriche quali:
+\begin{itemize}
+    \item test coverage;
+    \item percentuale di test passati;
+    \item copertura dei requisiti.
+\end{itemize}
+
