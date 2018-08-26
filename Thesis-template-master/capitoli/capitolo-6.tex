@@ -7,8 +7,243 @@
 \label{cap:verifica-validazione}
 %************************************************************
 \section{Verifica}
-Secondo lo stardard ISO/IEC 12207:2008\footcite{ISO:Systems-and-software-engineering} La verifica è un processo di supporto che si occupa di accertarsi che l’esecuzione di un'attività non abbia introdotto errori durante il periodo in esame. Questo è stato fatto per ogni attività del progetto in maniera sistematica, disciplinata e controllata. Ci sono due tecniche di verifica, queste sono:
+Secondo lo stardard ISO/IEC 12207:2008\footcite{ISO:Systems-and-software-engineering} la verifica è un processo di supporto che si occupa di accertarsi che l’esecuzione di un'attività non abbia introdotto errori durante il periodo in esame. 
+Ci sono due tipi di verifica: \textbf{statica} e \textbf{dinamica}.
+La verifica statica, è estremamente utile in quanto non richiede che il prodotto sia eseguibile, può essere effettuata tramite due tecniche. Queste sono:
 \begin{itemize}
     \item ispezione;
     \item analisi a pettine.
 \end{itemize}
+La verifica dinamica richiede l'esecuzione del codice, questa può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante le attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente allora venivano prima redatti i test riguardo a questo e solo in seguito veniva fatta la progettazione in dettaglio. Questo permetteva in maniera immediata di progettare ad alto livello pensando al requisito astratto, ma permetteva anche di progettare in dettaglio con i test.
+I test dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
+Per permettere uno sviluppo agevole si è utilizzata una tecnica di gestione del repository detta \emph{branch-pull}.\\
+Questa prevedeva che ogni attivita’ di codifica dovesse essere eseguita in un branch creato appositamente allo scopo. Alla fine dell'attività si procedeva con una pull request verso il \emph{branch} principale, questa veniva accettata se e solo se i test passavano completamente. \\
+
+Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi: 
+\begin{itemize}
+    \item rilevazione di errori di codifica;
+    \item rilevazione di modifiche nei requisiti;
+    \item rilevazione di modifiche nella progettazione;
+    \item individuazione dell’uso di componenti di cui non si conosce chiaramente il comportamento;
+    \item rilevazione di integrazioni tra componenti non adatte.
+\end{itemize}
+\medskip
+Un punto critico è stato quello di trovare un giusto quantitativo di test da produrre. Esagerando avremmo rischiato di superare la scadenza inerenti alle attività di codifica.
+Abbiamo quindi deciso di produrre almeno un test per metodo ed un test per classe. 
+Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo deciso di farli solo in caso ci fosse stato tempo. 
+L'uso di queste tecniche ha inoltre permesso di avere una certa libertà nelle modifiche a codice già integrato nel sistema, in quanto ha fornito almeno in parte anche dei test di regressione. 
+
+Lo svolgimento di questo processo ha permesso di ottenere varie metriche quali:
+\begin{itemize}
+    \item test coverage;
+    \item percentuale di test passati;
+    \item copertura dei requisiti.
+\end{itemize}
+
+\subsection{Attività di verifica statica}
+I componenti basandosi sullo stesso linguaggio hanno condiviso le procedure per la verifica statica. Il principale strumento di utilizzato è stato il linter \emph{SonarLint}. Questo strumento ha permesso di mantenere lo stesso stile di scrittura in ogni parte del progetto, inoltre aveva funzioni che permettevano l'individuazine di potenziali errori logici e cattive pratiche. 
+Inoltre sono state utilizzate numerose funzionalità presenti in \emph{Visul Studio} che permettevano refactoring automatici del codice e strumenti di analisi statica.
+
+\subsection{Realizzazione dei test}
+Entrambi i componente codificati durante le 320 ore di stage condividevano lo stesso linguaggio di programmazione, ma utilizzavano \gls{frameworkg} diversi. Nonostante molte librerie fossero in comune questo non lo era per i framework di test. Il test per il componente SP sono stati codificati usando \emph{MSTest}, mentre quelli per il componente IW hanno usato \emph{Xamarin.UITest}
+
+Particolare difficoltà è stata riscontrata nei test di integrazione del componente SP. Questo infatti lavora in stretto conttato con l'applicativo Monokee e con i componenti IW e ITF. Data l'elevata mutabilità dell'applicativo Monokee si è deciso di realizzare doppie versioni di ogni test; la prima prevedento l'uso di \emph{mock}, la seconda  effettuando una reale comunicazione con i componenti precedentemente citati. Questo ha permesso una più semplice localizzazione dei problemi.
+
+Il componente IW è un'applicazione mobile le cui interazioni con elementi esterni sono di natura occasionale e al solo fine di ottenere informazioni verificabili. Per questa ragione si è ritenuto di non usare dei \emph{mock}, ma di prevedere direttamente test che comunicassero con gli elementi esterni.
+
+
+\section{Validazione}
+La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfa il cliente e gli utenti finali. La principale attività di validazione è stata svolta l'ultima settimana di lavoro tramite prove e dimostrazioni del prodotto. In quei giorni si è verificato con la presenza del tutor aziendale la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
+
+L'esito, seppur non vedendo la totalità dei requisiti soddisfatti, è stato soddisfacente. Si preme di tenere conto che molto requisiti sono stati ritenuti di importanza accessoria dall'azienda e sostituiti con altre funzionalità non previste inizialmente.
+
+
+\subsection{Validazione requisiti compoente IW}
+In tabella \ref{tab:validazione-iw} si mostra lo stato di validazione di ogni requisiti del componente IW, questi possono essere:
+\begin{itemize}
+    \item implementati: se il requisito è stato implementato correttamente e riconosciuto come tale dal tutor aziendale;
+    \item non implementato: se il requisito non è stato inserito nel progetto o non funziona come aspettato;
+    \item cancellato: se il requisito è stato ritenuto non più di interesse o non più compatibile con il progetto da parte del tutor aziendali.
+\end{itemize}
+
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{3cm}|}%
+    \caption{Tabella validazione IW}
+    \label{tab:validazione-iw}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Codice}  & \textbf{Stato}\\
+    \hline
+    R[F][C]0001    & non implementato  \\
+    \hline
+    R[F][C]0002   & non implementato  \\
+    \hline
+    R[F][C]0003    & non implementato  \\
+    \hline
+    R[F][C]0004    & non implementato \\
+    \hline
+    R[F][M]0005    & annullato  \\
+    \hline
+    R[F][M]0006    & implementato  \\
+    \hline
+    R[F][M]0007    & annullato \\
+    \hline
+    R[F][M]0008    & implementato  \\
+    \hline
+    R[F][M]0009    & annullato  \\
+    \hline
+    R[F][M]0010    & annullato  \\
+    \hline
+    R[F][M]0011    & annullato  \\
+    \hline
+    R[F][M]0012    &  implementato\\
+    \hline
+    R[F][M] 0013    &  implementato\\
+    \hline
+    R[F][M] 0014    &  implementato  \\
+    \hline
+    R[F][M] 0015    &  implementato  \\
+    \hline
+    R[F][M] 0016    &  implementato  \\
+    \hline
+    R[F][M] 0017    &  implementato  \\
+    \hline
+    R[F][M] 0018    &  implementato  \\
+    \hline
+    R[F][M] 0019    &  implementato  \\
+    \hline
+    R[F][M] 0020    &  implementato \\
+    \hline
+    R[F][M] 0021    &  implementato \\
+    \hline
+    R[F][M] 0022    &  implementato \\
+    \hline
+    R[F][M] 0023    &  implementato \\
+    \hline
+    R[F][M] 0024    &  implementato  \\
+    \hline
+    R[F][M] 0025    &  implementato  \\
+    \hline
+    R[F][S] 0026    &  non implementato  \\
+    \hline
+    R[V][M] 0027    & implementato  \\
+    \hline
+    R[V][M] 0028    & implementato  \\
+    \hline
+    R[V][M] 0029    & implementato  \\
+    \hline
+    R[V][M] 0030    & implementato  \\
+    \hline
+    R[V][M] 0031    & implementato  \\
+    \hline
+    R[Q][S] 0032    & implementato  \\
+    \hline
+    R[Q][S] 0033    & implementato  \\
+    \hline
+    R[Q][S] 0034    & implementato  \\
+    \hline
+    R[Q][S] 0035    & implementato  \\
+    \hline
+    R[Q][C] 0036    & implementato  \\
+    \hline
+    \end{longtable}
+    \end{center}
+
+I requisiti:
+\begin{itemize}
+    \item R[F][C]001;
+    \item R[F][C]002;
+    \item R[F][C]003;
+    \item R[F][C]004
+\end{itemize}
+non sono stati implementati in quanto questi sono stati pensati in un'ottica che prevedeva la distribuzione al grande pubblico dell'applicazione. Questi requisiti sono stati quindi ritenuti dal tutor aziendale non importanti e rimanabili a successivi rilasci.
+
+I requisiti: 
+\begin{itemize}
+    \item R[F][M]0005; 
+    \item R[F][M]0007; 
+    \item R[F][M]0009; 
+    \item R[F][M]0010; 
+    \item R[F][M]0011 
+\end{itemize}
+sono stati cancellati in quanto si è deciso che le funzionalità che proponevano non dovessero essere offerte dall'applicazione, ma dal portale attualmente esistente di Monokee.
+
+Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche push. Si è ritenuto, in accordo con il tutor aziendale, che lo sforzo sarebbe stato eccessivo rispletto al valore che avrebbe apportato la funzionalità. Per questo si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
+
+\subsection{Validazione requisiti compoente SP}
+In tabella \ref{tab:validazione-sp} si mostra lo stato di validazione di ogni requisiti del componente SP, questi possono essere:
+\begin{itemize}
+    \item implementati: se il requisito è stato implementato correttamente e riconosciuto come tale dal tutor aziendale;
+    \item non implementato: se il requisito non è stato inserito nel progetto o non funziona come aspettato;
+    \item cancellato: se il requisito è stato ritenuto non più di interesse o non più compatibile con il progetto da parte del tutor aziendali.
+\end{itemize}
+\begin{center}
+    \begin{longtable}{|p{3cm}|p{3cm}|}%
+    \caption{Tabella di validazione SP}
+    \label{tab:validazione-sp}
+    \endfirsthead
+    \endhead
+    \hline
+    \textbf{Codice}  & \textbf{Stato}\\
+    \hline
+    R[F][M]0001    & implementato  \\
+    \hline
+    R[F][M]0002    & implementato  \\
+    \hline
+    R[F][M]0003    & implementato  \\
+    \hline
+    R[F][M]0004    & implementato  \\
+    \hline
+    R[F][M]0005    & implementato  \\
+    \hline
+    R[F][M]0006    & implementato  \\
+    \hline
+    R[F][M]0007    & implementato  \\
+    \hline
+    R[F][M]0008    & implementato  \\
+    \hline
+    R[F][M]0009    & implementato  \\
+    \hline
+    R[F][M]0010    & implementato  \\
+    \hline
+    R[F][M]0011    & implementato  \\
+    \hline
+    R[F][M]0012    & implementato  \\
+    \hline
+    R[F][M]0013    & implementato  \\
+    \hline
+    R[F][M]0014    & implementato  \\
+    \hline
+    R[F][M]0015    & implementato  \\
+    \hline
+    R[F][M]0016    & implementato  \\
+    \hline
+    R[F][M]0017    & implementato  \\
+    \hline
+    R[V][M] 0018    & implementato  \\
+    \hline
+    R[V][M] 0019    & implementato  \\
+    \hline
+    R[V][M] 0020    & implementato  \\
+    \hline
+    R[V][M] 0021    & implementato  \\
+    \hline
+    R[V][C] 0022    & implementato  \\
+    \hline
+    R[Q][S] 0023    & implementato  \\
+    \hline
+    R[Q][S] 0024    & implementato  \\
+    \hline
+    R[Q][S] 0025    & implementato  \\
+    \hline
+    R[Q][S] 0026    & implementato  \\
+    \hline
+    R[Q][C] 0027    & implementato  \\
+    \hline
+    R[Q][C] 0028    & implementato  \\
+    \hline
+    \end{longtable}
+    \end{center}%
+
+I requistiti relativi al componente SP sono stati complementamente implementati e validati dal tutor aziendale.
