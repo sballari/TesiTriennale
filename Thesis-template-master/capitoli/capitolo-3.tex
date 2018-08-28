@@ -45,6 +45,92 @@ Secondo lo studio Gartner in nota \footcite{farah:The-Dawn-of-Decentralized-Iden
     \item \textbf{Efficienza}: il funzionamento dell’ITF deve richiedere la minima quantità di risorse possibili.
 \end{itemize}
 
+\subsection{Introduzione alla tecnologia \gls{blockchaing}}
+Al fine di rendere più consapevoli ai lettori le seguenti trattazioni si procede ad una esposizione ad alto livello dei principali concetti inerenti alla blockchain.
+\emph{Blockchain} è comunenente definita come una base di dati distribuita composta da una serie di blocchi i quali possono contenere insiemi di dati o codice. In entrambi i casi questi sono temporalmente firmati.
+Ogni blocco contiene l'hash del blocco precedente. In questo modo si crea una sorta di collegamento fra i blocchi che forma una catena, la cosidetta \emph{blockchain}. In questa catena solo il blocco successore può collegarsi al predecessore
+
+Consideriamo, quindi, \emph{blockchain} una qualsiasi piattaforma informatica \textbf{distribuita} che possiede almeno le seguenti tre caratteristiche tecniche al fine di fornire un registro a prova di manomissioni: 
+\begin{itemize}
+    \item uso di funzioni crittografiche di \gls{hashg};
+    \item uso di strutture dati con \emph{hash pointer};
+    \item uso di protocolli di consenso distribuito.
+\end{itemize}
+
+L'uso di funzioni di hash e di strutture dati basate su \emph{hash pointers} conferisco a questa particolare tecnologia le sue peculiari caratteristiche di immutabilità dei dati e di conseguenza la rendono abile a fornire un registro a prova di manomissioni. Un registro con queste caratteristiche costituisce a sua volta un'affidabile struttura dati in grado di immaganizzare qualsiasi tipo di dato. Questo rende anche possibile l'aggiungere di nuovi dati in coda al registro. 
+
+Chiunque tenti di modificare un qualsiasi punto della blockchain, renderà in questo modo l'\emph{hash pointers} presente nel nodo successore errato. Se costudiamo la testa della catena, anche se l'attacante modifica i nodi successivi della catena in modo da renderli consistenti all'alterazione che ha cercato di intrurre, saremmo comunque in grado di identificare la manomissione verificando la corretezza del puntatore di testa.
+
+Altra caratteristica fondamentale è l'uso di un alogoritmo di consenso distribuito, questo rende possibile lo sviluppo di applicazioni distribuite; le cosidette \emph{dapp}. Una \emph{dapp} imaggazzina i propri dati e i propri registri delle operazioni in una \emph{blockchain} in modo di evitare qualsiasi qualsiasi punto di vulnerabiltà singolo (\emph{single point of failure}). Un ottimo esempio di \emph{dapp} può essere una qualsiasi cripto-moneta.
+
+\subsubsection{Funzione crittografica di hash}
+Una funzione di hash è una funzione matematica che converte un input di qualsiasi lunghezza in un output di lunghezza definita efficacemente. Una funzione di hash per essere considerata sicura deve possedere almeno le seguenti caratteristiche:
+\begin{itemize}
+    \item essere invertibile;
+    \item resistente alle collisioni;
+    \item essere puzzle-friendly.
+\end{itemize}
+Essere invertibile significa che non ci dev'essere nessun algoritmo tecnicamente fattibile in grado di identificare l'input dall'output.
+Essere resistente alle collisioni significa che non ci dev'essere nessuna tecnica in grado di individuare casi in cui a due input differenti corrispenda uno stesso output. Questo non inplica che la funzione debba essere iniettiva.
+Essere puzzle-friendly significa che la tecniche più facile per inveritire una funzione di hash è quella del \emph{brute forcing}. Questa ultima caratteristicha risulta fondamentale nel contesto dell'algoritmo di consenso.
+
+\subsubsection{Puzzle di ricerca}
+Il puzzle di ricerca consiste in un problema matematico che per essere risolto necessità di una ricerca della soluzione in un vasto dominio. Si dice che un puzzle di ricerca è puzzle-friendly quando non è presente nessuna strategia migliore rispetto al provare valori casuali. Questo tipo di problemi computazionali vengono adottati da alcune \emph{blockchain} come base delle cosidette \gls{powg}, particolari algoritmi di consenso nei quali i vari nodi della rete competono per la risoluzione del problema. L'attuazione di questo algoritmo rende possibile la decentralizzazione. Nelle \emph{blockchain} basate su \gls{powg} il nodo che riesce a risolvere il puzzle per primo viene riconosciuto come prossimo nodo che inserirà un blocco nella catena 
+
+\subsubsection{Commitment}
+Un \emph{commitment} è l'equivalente digitale di leggere un valore, sigillarlo in una busta e poi metterla in un luogo sicuro. Il valore prelevato rimane segreto agli altri nodi fino a che il nodo che ha effettuato il \emph{commitement} non decida di rivelarlo. Le due funzioni che rendona questo possibile sono il \textbf{commit} e la \textbf{verify}.
+
+Il \emph{commit} è una funzione che prende un messaggio e un numero randomico secrete ( \gls{nonceg}\glsfirstoccur) come input e ritorna un  \emph{commitment}.
+
+La \emph{verify} è una funzione che prende \emph{commitment}, \gls{nonceg} e messaggio come input. Restituisce \emph{true} in caso la funzione di \emph{commit} con input il messaggio e il nonce passati abbia un output corrispondente al commitment fornito. In tutti gli altri casi ritorna \emph{false}.
+
+Per usare questo schema abbiamo come primo passo quello di generare un numero randomico in qualità di nonce. Poi ci usando la funzione \emph{commit} pubblichiamo un \emph{commitment} usando il nonce appena generato. In un secondo momento, quando vogliamo rivelare il valore commitato in precedenza, pubblicheremo il nonce e il messaggio usati con la funzione di \emph{commit}. Una terza parte potrà poi essere in grado di verificare il messaggio tramite l'uso della funzione \emph{verify}.
+Questa particolare tecnica risulta particolarmente utile al fine di immaganizzare le identità o attributi su di essa all'interno della \emph{blockchain}. Un \emph{commitment} per essere tale deve nascondere le informazioni. Questa significa che non potranno più essere alterate. 
+
+\subsubsection{Strutture dati con hash pointer}
+Un \emph{hash pointer} è un puntatore verso il posto dove un dato è contenuto, unito al valore del dato sotto forma di hash. A differenza di un normale puntatore che è solo in grado di fornirti un modo per ottenere l'informazione, un \emph{hash pointer} permette anche di essere in grado di capire se il particolare dato è stato alterato dalla creazione del puntatore. Questo particolare puntato può essere usato per la creazione di tipiche strutture dati concatenate, quali liste e alberi. La \emph{blockchain} è una lista concatenata(\emph{linked list}) costruita usando \emph{hash pointer} in vece ai classici puntatori. In una \emph{blockchain}, ogni blocco non solo ci dice dove si trova il blocco precedente, ma ci fornisce anche il valore dell'hash di questo blocco permettendoci quindi di poter verificare qualsiasi alterazione. Le particolari caratteristiche degli \emph{hasp pointer} usati ci permette di verificare l'intera catena a partire dal blocco di testa del quale ci dobbiamo fidare. 
+Un'immagine esplicativa di quanto appena detto è presente in figura \ref{fig:linked-list}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{linked-list.png}
+    \caption{Lista concatenato con \emph{hash pointer}}
+    \label{fig:linked-list} 
+\end{figure}
+
+\subsubsection{Albero di Merkle}
+Comunamente le principali \emph{blockchain} fanno uso di una particolare struttura dati per immagazzinare la loro componente di dati, l'albero di Merkle. L'albero di Merkle è un albero binario che usa \emph{hash pointer} in sostituzione dei classici puntatori. I record in quest'albero sono strutturati in coppie, e i loro hash conservati un livello superiore. Questa definizione si applica ad ogni livello del nodo fino al raggiungimento della radice. Le foglie rappresentano i dati. La figura \ref{fig:markle-tree} dovrebbe esporre con chiarezza il concetto.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{merkle-tree.png}
+    \caption{Albero di Merkle}
+    \label{fig:merkle-tree} 
+\end{figure}
+
+In caso di alterazioni in un qualsiasi nodo dell'albero queste sarebbero rilevabile in quanto causerebbero delle incoerenze nei puntatori presenti nei nodi al livello superiore. L'uso di questa struttura nel contesto di una \emph{blockchain} semplifica la verifica dell'attribuzione dei blocchi e permette di dover conservare solo la radice nel blocco di testa.
+
+\subsubsection{Algoritmo di consenso}
+Abbiamo visto come l'uso di funzioni di hash e di strutture dati particolari rendono la \emph{blockchain} un'affidabile e verificabile base di dati centralizzata. Uno dei principali fattori di successo della tecnologia è stata però la natura decentralizzata di essa. Questa è possibile grazie all'uso di molteplici nodi in sostituzione ad un server centralizzato. La presenza di un algoritmo di consenso rende possibile ai vari nodi partecipanti accordarsi su cosa debba essere scritto o meno nella catena. Assumento che i vari nodi (anche malevoli) ricevano un input valido l'algoritmo di consenso assicura le seguenti proprietà:
+\begin{itemize}
+    \item l'algoritmo termina quando tutti i nodi onesti sono in accordo sul valore;
+    \item l'algoritmo assicura che il valore è stato prodotto da un nodo onesto. 
+\end{itemize}
+
+In questo caso, un nodo onesto viene scelto per inserire il proprio blocco in cosa alla catena. In questo modo, l'algoritmo permette al sistema di generare fiducia in un contesto in cui nessun nodo si fida dell'altro.
+
+Tipicamente in una \emph{blockchain} avvengono le seguenti operazioni. A intervalli regolari, ogni nodo propone le proprie transazioni in sospeso per essere inserite come prossimo blocco. Successivamente si attua l'algoritmo di consenso in cui ogni nodo proprone come input il blocco che intendono inserire. Alcuni nodi potrebbero essere malevoli e inserire transazioni non valide nei proprio blocco di input, ma possiamo assumere che gli altri nodi sono onesto. Se l'algoritmo di consenso ha successo viene selezionato il blocco da inserire in coda. Nessuno decide quale sarà il prossimo nodo ad essere inserito nella blockchain.
+
+C'è comunque da ricordare che la presente è una trattazione ad alto livello, e quindi non verranno presentati particolari algoritmi di consenso. Mi limito quindi a presentare le principali carattestiche che questo deve avere:
+\begin{itemize}
+    \item equità;
+    \item velocità;
+    \item dimostrabilità;
+    \item resistenze al problema dei generali bizantini;
+    \item efficente;
+    \item resistente ad attacchi Dos e DDos.
+\end{itemize}
+
 \subsection{Permissionless e Permissioned \gls{blockchaing}}
 Al fine di poter valutare la fattibilità dell’utilizzo di Ethereum quale \gls{blockchaing} sottostante all’ITF è necessario avere in mente le due principali categorie di \gls{blockchaing}: \textbf{permissionless} e \textbf{permissioned}.
 
