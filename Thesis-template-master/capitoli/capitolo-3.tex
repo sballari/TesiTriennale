@@ -572,15 +572,15 @@ Dal presente studio emerge come la creazione di un SP sviluppato come applicativ
 
 \section{Obiettivi}
 
-Scopo delle attività di stage è il raggiungimento dei seguenti obiettivi.
-Obiettivi minimi: 
+Scopo delle attività di stage è il raggiungimento dei seguenti obiettivi.\\
+\paragraph{Obiettivi minimi}
 \begin{itemize}
     \item codifica dei moduli SP e IW;
     \item documenti di analisi dei requisiti;
     \item documenti di architettura.
 \end{itemize}
     
-Obiettivi opzionali: 
+\paragraph{Obiettivi opzionali}
 \begin{itemize}
     \item documenti di progettazione;
     \item documenti di testing;
@@ -590,4 +590,71 @@ Obiettivi opzionali:
 
 %**************************************************************
 \section{Pianificazione}
+Il lavoro durante lo stage è stato svolto seguendo la seguente pianificazione iniziale:
+\begin{itemize}
+    
 
+\item \textbf{Studio Fattibilità} (40 ore): questa fase è focalizzata allo studio della tecnologia Blockchain da adottare e il suo impiego nello specifico caso d’uso.  La valutazione verrà effettuata valutando le capacità di utilizzo delle tecnologie e interpretazione delle informazioni.
+
+    Prodotti attesi: 
+    \begin{enumerate}
+        \item Documento: Monokee – Identity Wallet, studio di Fattibilità
+        \item Documento: Monokee – Service Provider, studio di fattibilità
+    \end{enumerate}
+        
+
+\item \textbf{Analisi requisiti} (40 ore): al termine di questo periodo i casi d'uso saranno definiti e si avrà il tracciamento requisiti-casi d'uso.
+    I requisiti saranno una rappresentazione delle 5 funzionalità core che i moduli dovranno erogare:
+    \begin{enumerate}
+        \item Registrazione: il wallet crea l’identità digitale dell’utente e ne associa una chiave privata e pubblica; interagisce quindi con il componente ITF per registrare l’associazione Identità-Service Provider . 
+        \item Certificazione (da capire il coinvolgimento del Wallet e del Service Provider): un ente terzo può validare l’identità dell’utente tramite un processo di “identity proofing);  in caso di validazione positiva l’ente terzo può certificare l’identità (o una parte degli attributi del profilo) firmandoli con la propria chiave privata
+        \item Presentazione: la chiave pubblica e il riferimento a dove trovarne l’hash viene inviato al Service Provider; il fornitore del servizio a questo punto può chiedere l’invio di ulteriori attributi dell’utente che possono essere presenti nel suo wallet; gli attributi verranno inviati firmati tramite QR-Code
+        \item Verifica: il Service Provider utilizza le informazioni ricevute per verificare l’identità e gli attributi tramite un confronto dei valori hash nell’ITF.
+        \item Access: a seguito di una verifica positiva dell’identità il provider dei servizi concede l’accesso all’applicazione/servizio.
+    \end{enumerate}
+    
+    
+
+
+ 
+    Prodotti attesi: 
+    \begin{enumerate}
+        \item Documento: Monokee – Identity Wallet,  analisi e specifica dei requisiti
+        \item Documento: Monokee – Service Provider,  analisi e specifica dei requisiti
+    \end{enumerate}
+    
+
+\item \textbf{Progettazione architetturale} (40 ore): avrà come risultato l'architettura generale che implementa le funzionalità rilevate dai casi d'uso. La valutazione verrà effettuata valutando le capacità di progettazione di un'architettura a partire dalle funzionalità individuate;
+Prodotti attesi: 
+    \begin{enumerate}
+        \item Documento: Monokee – Identity Wallet, architettura
+        \item Documento: Monokee – Service provider, architettura
+    \end{enumerate}
+    
+
+\item \textbf{Progettazione dettaglio} (60 ore): come risultato si avrà la definizione dei metodi in pseudo-codice. La valutazione verrà effettuata valutando le capacità di traduzione in pseudo-codice dell'architettura progettata
+        Prodotti attesi:
+        \begin{enumerate}
+            \item Documento: Monokee – Identity Wallet, progettazione
+            \item Documento: Monokee – Service Provider, progettazione
+        \end{enumerate}
+            
+
+\item \textbf{Codifica e Verifica} (120 ore): sarà realizzata la codifica dei metodi e saranno effettuati i test di unità e integrazione. La valutazione verrà effettuata valutando l'apprendimento e la capacità di implementazione della tecnologia scelta;
+Prodotti attesi: 
+        \begin{enumerate}
+            \item Sorgenti del modulo Identity Wallet basati su tecnologia mobile (da valutare l’implementazione tramite Xamarin o strumenti nativi)
+            \item Sorgenti del modulo Service Provider
+            \item Documento: Monokee – Identity Wallet, testing
+            \item Documento: Monokee – Service Provider, testing
+        \end{enumerate}
+    
+
+\item \textbf{Validazione} (20 ore): al termine si avrà il prodotto software richiesto. Verrà valutato il software risultante tramite fase di testing.
+    Prodotti attesi: 
+    \begin{enumerate}
+        \item Documento: Monokee – Identity Wallet, anomalie e bug
+        \item Documento: Monokee – Service Provider, anomalie e bug 
+    \end{enumerate}
+    
+\end{itemize}
