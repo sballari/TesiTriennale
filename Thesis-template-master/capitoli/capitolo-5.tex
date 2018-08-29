@@ -3127,22 +3127,22 @@ La suddetta procedura consiste principalmente in due chiamate HTTPS, la prima co
 
 La prima fase era attuata da un metodo chiamato \textbf{Task<string> RetriveUserID(string usr)}. Questo metodo inviava tramite una POST il seguente json, con il quale forniva le informazioni necessarie ad ottenere l'id :
 
-\begin{verbatim}
+\begin{lstlisting}[caption={Json della prima request di login}]
     {
         email = "user@dominio.com",
         mobile = "false",
     }
-\end{verbatim}
+\end{lstlisting}
 
 La risposta doveva invece seguire il seguente schema:
 
-\begin{verbatim}
+\begin{lstlisting}[caption={Json risposta user\_id}]
     {
         success = "true",
         message = "ok",
         user_id = "df3c92kzz1",
     }
-\end{verbatim}
+\end{lstlisting}
 
 La risposta in alcuni casi poteva presentare altri campi dati, ma questi venivano ignorati dall'applicativo. Risposte che non presentavano le precedentemente citate tre informazione o che non riportavano i valori "true" ed "ok" rispettivamente su "success" e "message" causavano il lancio di un'eccezzione che faceva comparire un messaggio di fallimento a schermo.
 
@@ -3150,7 +3150,7 @@ Una volta ottenuto il valore "user\_id" si procedeva alla verifica della passwor
 \textbf{getTokenID(string userId, string password)}.
 Questo avveniva sempre tramite l'uso di una comunicazione POST. Nella request veniva mandato il seguente json:
 
-\begin{verbatim}
+\begin{lstlisting}[caption={Json richiesta token}]
     {
         user_id = "df3c92kzz1",
         password = "Passw0rd",
@@ -3160,20 +3160,20 @@ Questo avveniva sempre tramite l'uso di una comunicazione POST. Nella request ve
         salt = "salt",
         domain_id = "5b475bd150e783334b5bb861",
     }
-\end{verbatim}
+\end{lstlisting}
 
 Il campo "persistence" è utile alla gestione interna del dato e non rientra in nessun modo nel progetto.
 I parametri "cc\_keys" e "salt" invece sono due valori tipici delle procedure di login. Questi servono a rendere più complessi gli attacchi a dizionario verso il sistema, infatti i due valori per essere generati richiedono un elevato onere computazionale sia in termini di spazio che di tempo, in quanto devono rispettare delle determinate condizioni. La codifica del codice per generare questi due valori ha richiesto innumerevoli sforzi e si è rivelata essere non banale.
 L'applicativo Monokee ha la caratteristica di offrire ai propri utenti domini seperati, un tipico utilizzo di questi è per esempio il dominio aziendale e quello personale. Il "domain\_id" fornito da rappresenta il dominio personale. L'applicativo per ragioni di semplicità faceva l'accesso sempre allo stesso dominio. 
 
 La risposta doveva seguire il seguente schema:
-\begin{verbatim}
+\begin{lstlisting}[caption={Json risposta token}]
     {
         success = "true",
         message = "ok",
         token = "qrdj99d7f9da0b2nf93Kd9LL"
     }
-\end{verbatim}
+\end{lstlisting}
 
 Il significato di "success" e "message" rimane analogo a quello precedentemente descritto, mentre il valore "token" rappresenta un codice da inserire nell'header sotto il nome di "Authorization" nelle successive chiamata in modo tale da essere risposto. Questo codice ha validità di 24 ore, al seguito delle quali scade ed è necessario rieffettuare la procedura di login. Risulta estremamente importante al momento del logout rimuovere dall'header il token, in quando una successiva operazione di login ne avrebbe aggiunto un altro causando un doppio token. Questo avrebbe fatto fallire le successive richiesta, seppur consentendo l'accesso.
 
@@ -3187,7 +3187,7 @@ Nel contesto dell'applicazione mobile per effettuare la persistenza dei dati si 
 
 A titolo di esempio si discute ora della memorizzazione di un PII.
 
-\begin{verbatim}
+\begin{lstlisting}[caption={codice creazione DAO}]
     public DBDao()
     {
         database = DependencyService
@@ -3196,14 +3196,14 @@ A titolo di esempio si discute ora della memorizzazione di un PII.
         database.CreateTable<PIIModel>();
         database.CreateTable<UserModel>();
     }
-\end{verbatim}
+\end{lstlisting}
 
 Il codice appena presentato rappresenta la creazione dell'oggetto che fornisce l'accesso alla base di dati, come si può notare il corpo del costrutture crea una connessione tramite l'uso di \emph{DependencyService}, successivamente crea le tabelle. Ovviamente in caso le tabelle siano già presenti, le istruzioni non alterano la base di dati. 
 
 A differenza di quanto uno si potrebbe aspettare, la funzione \emph{CreateTable} non richiede informazione sui tipi di dato e/o sulle colonne da creare. Queste informazione vengono dedotte dal tipo che gli viene fornito, il quale andrà a rappresentare il modello di una tupla della tabella.
 
 Si propone adesso il codice di \emph{PIIModel}:
-\begin{verbatim}
+\begin{lstlisting}[caption={codice PIIModel}]
     [Table("PIIModel")]
     public class PIIModel
     {
@@ -3219,13 +3219,13 @@ Si propone adesso il codice di \emph{PIIModel}:
         [NotNull]
 
         //continua ...
-\end{verbatim}
+\end{lstlisting}
 
 I campi dati pubblici vengono considerati come i valori delle colonne, mentre altre informazioni necessarie vengono fornite tra parentesi quadre. Queste sono per esempio le chiavi, i valori non nulli, i vincoli di integrità, il nome della tabella etc...
 
 Sequendo questa tecnica la gestione del database risulta particolarmente semplice. Vengono ora riportati degli esempi di codice per l'inserimento e la rimozione di una PII dalla base di dati:
 
-\begin{verbatim}
+\begin{lstlisting}[caption={codice aggiunta e rimozione PIIModel}]
 public int AddPII(PIIModel pii)
     {
         lock (collisionLock)
@@ -3246,11 +3246,11 @@ public int DeletePII(int piiID)
         return database.Delete<PIIModel>(piiID);
     }
 }
-\end{verbatim}
+\end{lstlisting}
 
 Ovviamente query più complicate risultano non essere possibile tramite funzioni di libreria, per queste particolari occassioni si è dovuto utilizzare del codice sql.
 
-\begin{verbatim}
+\begin{lstlisting}[caption={Esempio di query sql}]
 public List<PIIModel> GetPIIs(string name, string user\_id)
     {
         lock (collisionLock)
@@ -3260,7 +3260,7 @@ public List<PIIModel> GetPIIs(string name, string user\_id)
                     select i).ToList();
         }
     }
-\end{verbatim}
+\end{lstlisting}
 
 L'uso di queste tecniche e dei modelli ha permesso di limitare al massimo l'utilizzo di codice sql, inoltre ha permesso una più facile gestione del dato in quanto la risposta ad una query veniva già presentata in forma di oggetto.
 
@@ -3269,7 +3269,7 @@ L'applicaione mobile richiedeva la creazione di molteplici schermate che dovevan
 
 A questi scopi \emph{Xamarin} offre la cosidetta tecnica del databinding tra intefaccia e oggetto. Ora si ripropone l'oggetto PIIModel, questa volta però non omettendo il codice necessario per il databinding.
 
-\begin{verbatim}
+\begin{lstlisting}[caption={esempio di oggetto in databinding}]
 [Table("PIIModel")]
 public class PIIModel : INotifyPropertyChanged
 {
@@ -3292,20 +3292,20 @@ public class PIIModel : INotifyPropertyChanged
             new PropertyChangedEventArgs(propertyName));
     }
 }
-\end{verbatim}
+\end{lstlisting}
 
 Come si può notare per poter effettuare il databinding è necessario che la classe PIIModel implementi l’interfaccia INotifyPropertyChanged, che definisce l’evento PropertyChanged di tipo PropertyChangedEventHandler. Questo evento prende un’istanza della classe PropertyChangedEventArgs che definisce la proprietà PropertyName di tipo string, attraverso la quale è possibile sapere quale proprietà nell'oggetto PIIModel è cambiata (permettendo all’evento di accedere a quella proprietà).
 
 Attraverso la proprietà pubblica Id, offriamo la possibilità lato codice di ottenere le informazioni sul valore corrente attraverso il get, e di impostare un nuovo valore per tale proprietà attraverso il set ogni qualvolta il valore assunto dalla variabile name differisce da quella corrente. Proprio in quest’ultima porzione viene richiamato il metodo OnPropertyChanged, che prenderà in ingresso il nome della proprietà che deve essere aggiornata innescando il meccanismo sopra descritto. 
 
 Per effettuare l'effettiva collegamento basta inserire nel codice che gestische la schermata la seguente istruzione:
-\begin{verbatim}
+\begin{lstlisting}[caption={codice di connessione}]
     BindingContext = PIIModel;
-\end{verbatim}
+\end{lstlisting}
 
 Questo renderà possibile nel codice grafico (XAML) di poter utilizzare i valori dell'oggetto. Di seguito viene mostrato un esempio:
 
-\begin{verbatim}
+\begin{lstlisting}[caption={esempio di vista che usa il databinding}]
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -3325,4 +3325,60 @@ Questo renderà possibile nel codice grafico (XAML) di poter utilizzare i valori
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
-\end{verbatim}
+\end{lstlisting}
+
+\subsection{Instaurazione della rete di messaggi}
+Il modulo SP è composto da diversi componenti, i quali sono residenti in programmi differenti e seperati fra loro. L'unico modo di comunicazione che utilizzano è un \gls{messagebrokerg}\glsfirstoccur di nome \emph{RabbitMQ}. Questo deve essere eseguito su un server e verrà utilizzato dai vari componenti tramite il suo \emph{uri}.
+L'applicativo richiede che nel server sia installato \emph{Erlang}. Una volta averlo installato si può procedere all'installazione di \emph{RabbitMQ} seguendo la guida presente al seguente url \url{https://www.rabbitmq.com/download.html}. Per eseguire correttamente le funzionalità del modulo SP è inoltre necessario creare una rete col nome di "test"; per fare questo è necessario abilitare l'interfaccia di configurazione di \emph{RabbitMQ} seguendo la seguente guida \url{https://www.rabbitmq.com/management.html}.
+Una volta abilitata l'interfaccia questa sarà disponibile al seguente indirizzo \url{http://localhost:15672/#/connections}. La pagina che si presenterà avrà una scheda chiamata "network" dalla quale sarà possibile aggiungere la rete di nome "test".
+Fatto questa la configurazione di \emph{RabbitMQ} è terminata; ora basta avviare il broker tramite terminale usando il comando \emph{rabbitmq-server start}.
+
+
+\subsection{Gestione delle code e dei messaggi}
+Come già discusso il modulo SP ha un'architettura del tipo \emph{even driven}. L'applicazione di tale libreria ha necessitato dell'uso di una libreria per la gestione e l'invio dei vari messaggi.
+
+Il modulo SP è diviso in molteplici esecutori ognuno del quale presente del codice per la gestione dei messaggi equivalente, a titolo di esempio si procede ad esporre l'esecutore \emph{ITFVerifier}.
+
+All'avvio l'esecutore ha il compito di creare un oggetto in grado di individuare la rete che gestisce i messaggi (questa era disponibile all'uri definito in \emph{GeneralSetting.RabbitMQHost}) e quindi effettuare il collegamento ad essa tramite la sottomissione di una coppia username, password.
+Successivamente era necessario definire cosa doveva essere fatto dei messaggi in arrivo e sopratutto quale tipo di messaggi dovessero essere ascoltati. La parte finale del codice propostro mostra le instruzione necessarie a fare quanto appena detto. Tramite \emph{ReceiveEndpoint} viene stabilito il nome della coda dove verranno inseriti i messaggi catturati e il comportamento da intraprendere per ognuno di questi messaggi. Come comportarsi viene definito tramite una arrow function che instanzia un \emph{Consumer} con un tipo da noi definito (\emph{VerificationWorkConsumer}). I messaggi da inserire nella code di ricezione non vengono decisi in base ad un'indicazione del mandante, ma tramite il tipo dell'oggetto che implementa \emph{VerificationWorkConsumer}.
+L'ultimi riga ha lo scopo di eseguire il lavoro in modalità asincrona.
+\begin{lstlisting}[caption={creazione di un collegamento a \emph{RabbitMQ}}]
+    _busControl = Bus.Factory.CreateUsingRabbitMq(x =>
+        {
+            IRabbitMqHost host = x.Host(new Uri(GeneralSetting.RabbitMQHost), h =>
+            {
+                h.Username("guest");
+                h.Password("guest");
+            });
+            
+            x.ReceiveEndpoint(host, "VerQueue",
+                e => { e.Consumer<VerificationWorkConsumer>(); });
+            
+        });
+
+        TaskUtil.Await(() => _busControl.StartAsync());
+\end{lstlisting}
+
+Adesso risulta utile analizzare il codice del \emph{Consumer}. Come si può notare la classe implementa \emph{IVerificationWork}, pertando nella coda che porta il nome di "VerQueue" verranno inseriti solo i messaggi che hanno come tipo \emph{IVerificationWork}.
+Unico metodo implementabile è \emph{Consume} il quale rappresenta il codice da effettuare.
+
+\begin{lstlisting}[caption={esempio di \emph{Consumer}}]
+public class VerificationWorkConsumer : IConsumer<IVerificationWork>
+{
+    public async Task Consume(ConsumeContext<IVerificationWork> context)
+    {
+            //operazioni da effettuare
+
+    }
+}
+\end{lstlisting}
+
+Andiamo ora a vedere come si invia un messaggio un \emph{VerificationWork}:
+\begin{lstlisting}[caption={codice invio di un messaggio}]
+    public async Task SendToVerificationAsync(IVerificationWork verWork)
+    {
+        await _busControl.Publish(verWork);
+    }
+\end{lstlisting}
+
+Come potete vedere questo avviene tramite la funzione \emph{Publish} dell'oggetto \emph{\_busControl}.
