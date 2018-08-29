@@ -3116,6 +3116,213 @@ Al fine di garantire elevate doti di qualità e manutenibilità dell’architett
 \paragraph{Factory Method} è un pattern che permette di convogliare tutte le funzioni di creazione di vari elementi ad un oggetto unico. 
 
 %**************************************************************
-\subsection{Codifica}
+\section{Implementazione}
 
+Le attività di implementazione e codifica sono state la parte di maggior impegno e sforzo dell'intero progetto. Hanno occupato in termini orari 120 ore, le quali rappresentano quasi il 40\% della durata del progetto. Esse hanno fatto emergere diversi errori di progettazione e di codifica, inoltre ci sono stati diverse ripensamenti da parte dell'azienda che hanno portato a riprogettare interi moduli. Nei paragrafi seguenti si cercherà di presentare le implementazioni più significative all'interno del progetto.
 
+\subsection{Procedura di login}
+L'applicativo mobile non prevedeva una gestione degli account propria, ma utilizzava gli account già presenti nel sistema Monokee. Questo ha necessitato quindi la codifica di un apposita procedura di login in modo di autenticare un utente in base ad una coppia di valori email e password. 
+
+La suddetta procedura consiste principalmente in due chiamate HTTPS, la prima con lo scopo di ottenere l'id dell'utente tramite la mail fornita, la seconda allo scopo di verificare se la password sia conforne all'id ottenuto dalla prima chiamata. 
+
+La prima fase era attuata da un metodo chiamato \textbf{Task<string> RetriveUserID(string usr)}. Questo metodo inviava tramite una POST il seguente json, con il quale forniva le informazioni necessarie ad ottenere l'id :
+
+\begin{verbatim}
+    {
+        email = "user@dominio.com",
+        mobile = "false",
+    }
+\end{verbatim}
+
+La risposta doveva invece seguire il seguente schema:
+
+\begin{verbatim}
+    {
+        success = "true",
+        message = "ok",
+        user_id = "df3c92kzz1",
+    }
+\end{verbatim}
+
+La risposta in alcuni casi poteva presentare altri campi dati, ma questi venivano ignorati dall'applicativo. Risposte che non presentavano le precedentemente citate tre informazione o che non riportavano i valori "true" ed "ok" rispettivamente su "success" e "message" causavano il lancio di un'eccezzione che faceva comparire un messaggio di fallimento a schermo.
+
+Una volta ottenuto il valore "user\_id" si procedeva alla verifica della password col metodo
+\textbf{getTokenID(string userId, string password)}.
+Questo avveniva sempre tramite l'uso di una comunicazione POST. Nella request veniva mandato il seguente json:
+
+\begin{verbatim}
+    {
+        user_id = "df3c92kzz1",
+        password = "Passw0rd",
+        mobile = "false",
+        persistence = "false",
+        cc_key = "key",
+        salt = "salt",
+        domain_id = "5b475bd150e783334b5bb861",
+    }
+\end{verbatim}
+
+Il campo "persistence" è utile alla gestione interna del dato e non rientra in nessun modo nel progetto.
+I parametri "cc\_keys" e "salt" invece sono due valori tipici delle procedure di login. Questi servono a rendere più complessi gli attacchi a dizionario verso il sistema, infatti i due valori per essere generati richiedono un elevato onere computazionale sia in termini di spazio che di tempo, in quanto devono rispettare delle determinate condizioni. La codifica del codice per generare questi due valori ha richiesto innumerevoli sforzi e si è rivelata essere non banale.
+L'applicativo Monokee ha la caratteristica di offrire ai propri utenti domini seperati, un tipico utilizzo di questi è per esempio il dominio aziendale e quello personale. Il "domain\_id" fornito da rappresenta il dominio personale. L'applicativo per ragioni di semplicità faceva l'accesso sempre allo stesso dominio. 
+
+La risposta doveva seguire il seguente schema:
+\begin{verbatim}
+    {
+        success = "true",
+        message = "ok",
+        token = "qrdj99d7f9da0b2nf93Kd9LL"
+    }
+\end{verbatim}
+
+Il significato di "success" e "message" rimane analogo a quello precedentemente descritto, mentre il valore "token" rappresenta un codice da inserire nell'header sotto il nome di "Authorization" nelle successive chiamata in modo tale da essere risposto. Questo codice ha validità di 24 ore, al seguito delle quali scade ed è necessario rieffettuare la procedura di login. Risulta estremamente importante al momento del logout rimuovere dall'header il token, in quando una successiva operazione di login ne avrebbe aggiunto un altro causando un doppio token. Questo avrebbe fatto fallire le successive richiesta, seppur consentendo l'accesso.
+
+Per ragioni progettuali interne a Monokee le chiamate se ricevute vengono sempre risposte con uno status code 200, a prescindere del fatto che queste siano accettate o rifiutate. Per questa ragione al fine di sostituire i vari codici di errore vengono usati i campi "success" e "message". 
+
+La codifica di questa procedura non ha presentato particolari difficolta se non quella della generazione del cc\_key e del salt. 
+
+\subsection{Uso del database SQLite}
+
+Nel contesto dell'applicazione mobile per effettuare la persistenza dei dati si è deciso di utilizzare una base di dati relazionale. La scelta è ricaduta su SQLite. Si è deciso di operare con questa base di dati utilizzando il design pattern \emph{data access object} e apposite libreria di sistema che lo implementavano, questa pratica si è rivelata essere molto pratica ed efficace ai fini del progetto. Ovviamente risulta limitata comparata rispetto all'uso del codice \emph{sql}, ma le necessità applicative non richiedevano simili finezze.
+
+A titolo di esempio si discute ora della memorizzazione di un PII.
+
+\begin{verbatim}
+    public DBDao()
+    {
+        database = DependencyService
+            .Get<ILocalDataProvider>()
+            .GetConnection();
+        database.CreateTable<PIIModel>();
+        database.CreateTable<UserModel>();
+    }
+\end{verbatim}
+
+Il codice appena presentato rappresenta la creazione dell'oggetto che fornisce l'accesso alla base di dati, come si può notare il corpo del costrutture crea una connessione tramite l'uso di \emph{DependencyService}, successivamente crea le tabelle. Ovviamente in caso le tabelle siano già presenti, le istruzioni non alterano la base di dati. 
+
+A differenza di quanto uno si potrebbe aspettare, la funzione \emph{CreateTable} non richiede informazione sui tipi di dato e/o sulle colonne da creare. Queste informazione vengono dedotte dal tipo che gli viene fornito, il quale andrà a rappresentare il modello di una tupla della tabella.
+
+Si propone adesso il codice di \emph{PIIModel}:
+\begin{verbatim}
+    [Table("PIIModel")]
+    public class PIIModel
+    {
+ 
+        [PrimaryKey, AutoIncrement]
+        public int Id;
+        
+        [Indexed(Name = "nameId", Order = 1, Unique = true)]
+        public string UserID;
+
+        [Indexed(Name = "nameId", Order = 2, Unique = true)]
+        public string Name;
+        [NotNull]
+
+        //continua ...
+\end{verbatim}
+
+I campi dati pubblici vengono considerati come i valori delle colonne, mentre altre informazioni necessarie vengono fornite tra parentesi quadre. Queste sono per esempio le chiavi, i valori non nulli, i vincoli di integrità, il nome della tabella etc...
+
+Sequendo questa tecnica la gestione del database risulta particolarmente semplice. Vengono ora riportati degli esempi di codice per l'inserimento e la rimozione di una PII dalla base di dati:
+
+\begin{verbatim}
+public int AddPII(PIIModel pii)
+    {
+        lock (collisionLock)
+        {
+            if (pii.Id != 0)
+            {
+                database.Update(pii);
+                return pii.Id;
+            }
+            else return database.Insert(pii);      
+        }
+    }
+
+public int DeletePII(int piiID)
+{
+    lock(collisionLock)
+    {
+        return database.Delete<PIIModel>(piiID);
+    }
+}
+\end{verbatim}
+
+Ovviamente query più complicate risultano non essere possibile tramite funzioni di libreria, per queste particolari occassioni si è dovuto utilizzare del codice sql.
+
+\begin{verbatim}
+public List<PIIModel> GetPIIs(string name, string user\_id)
+    {
+        lock (collisionLock)
+        {
+            return (from i in database.Table<PIIModel>()
+                    where (i.Name == name && i.UserID==user\_id)
+                    select i).ToList();
+        }
+    }
+\end{verbatim}
+
+L'uso di queste tecniche e dei modelli ha permesso di limitare al massimo l'utilizzo di codice sql, inoltre ha permesso una più facile gestione del dato in quanto la risposta ad una query veniva già presentata in forma di oggetto.
+
+\subsection{Implementazione del databinding}
+L'applicaione mobile richiedeva la creazione di molteplici schermate che dovevano sempre rimanenere aggiornare rispetto ad un particolare oggetto e viceversa. Questo risultava particolarmente importante in quanto era fondamentale che l’interfaccia fosse ben separata dalla logica di business, affinché una modifica nella logica o nel modello di dominio non si rifletta sull’interfaccia. 
+
+A questi scopi \emph{Xamarin} offre la cosidetta tecnica del databinding tra intefaccia e oggetto. Ora si ripropone l'oggetto PIIModel, questa volta però non omettendo il codice necessario per il databinding.
+
+\begin{verbatim}
+[Table("PIIModel")]
+public class PIIModel : INotifyPropertyChanged
+{
+    private int piiID;
+    [PrimaryKey, AutoIncrement]
+    public int Id
+    {
+        get { return piiID; }
+        set {
+            piiID = value;
+            OnPropertyChanged(nameof(Id));
+        }
+    }
+
+    \\altro codice ommesso ...
+
+    private void OnPropertyChanged(string propertyName)
+    {
+            PropertyChanged?.Invoke(this,
+            new PropertyChangedEventArgs(propertyName));
+    }
+}
+\end{verbatim}
+
+Come si può notare per poter effettuare il databinding è necessario che la classe PIIModel implementi l’interfaccia INotifyPropertyChanged, che definisce l’evento PropertyChanged di tipo PropertyChangedEventHandler. Questo evento prende un’istanza della classe PropertyChangedEventArgs che definisce la proprietà PropertyName di tipo string, attraverso la quale è possibile sapere quale proprietà nell'oggetto PIIModel è cambiata (permettendo all’evento di accedere a quella proprietà).
+
+Attraverso la proprietà pubblica Id, offriamo la possibilità lato codice di ottenere le informazioni sul valore corrente attraverso il get, e di impostare un nuovo valore per tale proprietà attraverso il set ogni qualvolta il valore assunto dalla variabile name differisce da quella corrente. Proprio in quest’ultima porzione viene richiamato il metodo OnPropertyChanged, che prenderà in ingresso il nome della proprietà che deve essere aggiornata innescando il meccanismo sopra descritto. 
+
+Per effettuare l'effettiva collegamento basta inserire nel codice che gestische la schermata la seguente istruzione:
+\begin{verbatim}
+    BindingContext = PIIModel;
+\end{verbatim}
+
+Questo renderà possibile nel codice grafico (XAML) di poter utilizzare i valori dell'oggetto. Di seguito viene mostrato un esempio:
+
+\begin{verbatim}
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IdentityWallet.PIIVisualizerPage"
+             Title="{Binding Name}">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout VerticalOptions="StartAndExpand" Padding="20">
+                <Label Text="Id"/>
+                <Label x:Name="piiID" Text="{Binding Id}"/>
+            
+                <Label Text="Name" />
+                <Entry x:Name="piiName" Text="{Binding Name}"/>
+            
+                <- altro codice ->
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+\end{verbatim}
