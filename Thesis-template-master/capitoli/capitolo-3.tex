@@ -19,7 +19,7 @@ Il progetto ha come scopo la creazione di un’estensione del servizio MonoKee b
         \item \textbf{Identity Trust Fabric} (ITF);
         \item \textbf{Trusted Third Party} (TTP);
     \end{itemize} 
-In sintesi l’estensione dovrà operare al fine di fornire la possibilità ad un utente di registrare e gestire la propria identità autonomamente tramite l’IW e mandare i propri dati (PII) all’ITF, il quale custodirà la sua identità e farà da garante per le asserzioni proveniente dai TTP. Inoltre il SP dovrà essere in grado con le informazioni provenienti da IW e ITF di verificare o meno l’accesso ai propri servizi.
+In sintesi l’estensione dovrà operare al fine di fornire la possibilità ad un utente di registrare e gestire la propria identità autonomamente tramite l’IW e mandare i propri dati (PII) all’ITF, il quale custodirà la sua identità e farà da garante per le asserzioni provenienti dai TTP. Inoltre il SP dovrà essere in grado con le informazioni provenienti da IW e ITF di verificare o meno l’accesso ai propri servizi.
 L'immagine in figura \ref{fig:diag-mod} dovrebbe chiarificare i vari componenti in gioco.
 \begin{figure}[!h]
     \centering
@@ -150,13 +150,13 @@ Una permissionless \gls{blockchaing} è una rete in cui qualsiasi nodo può part
 \paragraph{Ethereum}
 Ethereum è una piattaforma decentralizzata pubblica ed open-source basata sulla creazione di \gls{SmartContractg}. Permette la creazione di applicazioni che operano su \gls{blockchaing} in modo che non ci sia alcuna possibilità di downtime, censura, frodi o interferenze da terze parti. Rappresenta una dei principali esempi di rete permissionless.
 La piattaforma è stata rilasciata nel corso del 2014 ed è mantenuta dalla Ethereum Foundation, e questo fa di Ethereum una delle più longeve \gls{blockchaing} disponibili. Ciò comporta la presenza di una documentazione abbastanza nutrita rispetto ai competitor e di un buon numero di strumenti già disponibili. 
-L’elevata popolarità della tecnologia e alcune sue caratteristiche non presenti nei competitor, ha fatto sì che una notevole quantità di sviluppatori abbiano deciso di utilizzarla. Il sito \footnote{site:state-dapps} mantiene una vetrina di oltre milleseicento esempi. Sono presenti tutte le più significative applicazioni ora in produzione; si fa notare che molte delle quali sono state le fonti dei più diffusi pattern Ethereum.
+L’elevata popolarità della tecnologia e alcune sue caratteristiche non presenti nei competitor, ha fatto sì che una notevole quantità di sviluppatori abbiano deciso di utilizzarla. Il sito \footnote{site:state-dapps} mantiene una vetrina di oltre milleseicento esempi. Sono presenti tutte le più significative applicazioni ora in produzione; si fa notare che molte di esse sono state le fonti dei più diffusi pattern Ethereum.
 
 \paragraph{Programmare SmartContract}
 Solidity è il principale linguaggio di programmazione usato per scrivere \gls{SmartContractg}. Nonostante sia presente un’implementazione basata su Go, questa è ancora acerba e non largamente utilizzata e per questo motivo tale implementazione non verrà trattata nel documento.
 Solidity è un linguaggio di programmazione ad oggetti ad alto livello. Il suo sviluppo è stato fortemente influenzato da linguaggi quali C++, Python e Javascript. Gli SmartContract così scritti vengono poi trasformati in bytecode e quest’ultimo viene eseguito dall’Ethereum Virtual Machina (EVM).
 Il linguaggio seppur non completamente maturo offre la maggior parte delle caratteristiche tipiche di un linguaggio ad oggetti. Infatti Solidity è fortemente tipato, supporta l’ereditarietà, librerie esterne e tipi definiti dall’utente. A sottolineare la bontà del linguaggio si evidenzia come in Solidity sia presente il concetto di interfaccia, caratteristica non presente in linguaggi ben più longevi. 
-Queste caratteristiche rappresentano un notevole vantaggio per Ethereum rispetto ai diretti competitor, i quali spesso utilizzano linguaggi acerbi e/o a basso livello. Si ritiene che un linguaggio con le caratteristiche precedentemente descritte sia fondamentale per la buona riuscita del progetto, soprattutto in un’ottica di manutenibilità e estendibilità.
+Queste caratteristiche rappresentano un notevole vantaggio per Ethereum rispetto ai diretti competitor, i quali spesso utilizzano linguaggi acerbi e/o a basso livello. Si è ritenuto che un linguaggio con le caratteristiche precedentemente descritte sia fondamentale per la buona riuscita del progetto, soprattutto in un’ottica di manutenibilità e estendibilità.
 \paragraph{Breve nota sull'applicabilità dei pattern}
 Nonostante il linguaggio permetta l’applicabilità dei più diffusi pattern si vuole far notare come nel contesto di una blockchain Permissionless questi risultino spesso controproducenti. 
 Durante la progettazione e l’applicazione dei pattern vanno sempre ricordati i seguenti punti:
@@ -169,7 +169,7 @@ Durante la progettazione e l’applicazione dei pattern vanno sempre ricordati i
     \item il costo della moneta e quindi delle transazioni è fortemente variabile. Approcci che, oggi risultano economici, possono diventare economicamente insostenibili a distanza di pochi giorni.
 \end{itemize}
 A seguito dei precedenti punti dovrebbe risultare più evidente come pattern che prevedono alta complessità temporale e spaziale siano inaccettabili su una rete Ethereum. Ad esempio i pattern Command e Decorator risultano difficilmente giustificabili.
-Sono invece presenti pattern pensati appositamente per Ethereum, questi sono presenti nella documentazione ufficiale Solidity \footcite{site:solidity-documentation}. Particolarmente utili al contesto del progetto in esame ritengo possano utili i seguenti pattern: 
+Sono invece presenti pattern pensati appositamente per Ethereum, questi sono presenti nella documentazione ufficiale Solidity \footcite{site:solidity-documentation}. Particolarmente utili al contesto del progetto in esame ritengo possano essere utili i seguenti pattern: 
 \begin{itemize}
     \item Owner Pattern;
     \item Vote Pattern 
@@ -180,7 +180,7 @@ Sono invece presenti pattern pensati appositamente per Ethereum, questi sono pre
 \label{cap:prestazioni}
 I punti precedentemente stilati nel paragrafo sull’applicabilità dei pattern portano anche delle notevoli differenze in termini di pratiche di stile di programmazione. Tra queste riporto:
 \begin{itemize}
-    \item l’uso di liste e array è fortemente sconsigliato, vanno preferite strutture con accesso costante. Solidity fornisce il tipo mapping;
+    \item l’uso di liste e array è fortemente sconsigliato, vanno preferite strutture dati con accesso costante. Solidity fornisce il tipo mapping;
     \item la creazione di oggetti (in termini Solidity contratti) ha un costo notevole. Una buona pratica è quella di utilizzare ADT (Abstract Data Type) differenti, come le strutture;
     \item cicli for che portano complessità lineare dovrebbero essere evitati, elaborazioni di questo tipo dovrebbero essere affidate a server esterni o a livello client-side;
     \item l’utilizzo dei puntatori (in Solidity address) nasconde completamente il tipo dell’oggetto puntato rendendo vano il controllo dei tipi. Andrebbe evitato il più possibile.
@@ -188,7 +188,7 @@ I punti precedentemente stilati nel paragrafo sull’applicabilità dei pattern 
 Si fa notare come in particolare l’ultimo punto degeneri completamente il concetto di programmazione ad alto livello.
 
 \paragraph{Strumenti}
-Come già citato la relativa maturità della tecnologia ha portato alla creazione di alcuni utili strumenti. 
+Vista la relativa maturità della tecnologia, esistono diversi strumenti utili:
 \begin{itemize}
     \item \textbf{Truffle}: è una suite di development e testing. Permette di compilare, buildare ed effettuare la migrazione degli SmartContract. Inoltre ha funzioni di debugging e di scripting. La suite offre la possibilità di effettuare test degli SmartContract sia in Javascript (con l’utilizzo di Chai), sia in Solidity. Si riporta di seguito il sito del progetto: \cite{site:truffle}.
     \item \textbf{Ganache}: è uno strumento rapido che permette di creare e mantenere in locale una rete blockchain Ethereum personale. Può essere usata per eseguire test, eseguire comandi e per operazioni di controllo dello stato mentre il codice esegue. Si riporta di seguito il sito del progetto: \cite{site:ganache}.
@@ -227,7 +227,7 @@ Al fine di poter valutare correttamente da ogni punto di vista l’applicabilit�
     La confidenzialità dei dati, anche se non presente nativamente in Ethereum, è facilmente ottenibile immagazzinando nei contratti solo un hash dei dati.
     L’integrità dei dati invece è garantita dalla prova di lavoro che utilizza la blockchain come già ribadito nella sezione Fiducia.
     La disponibilità invece è garantita dalle caratteristiche di distribuzione di ogni blockchain.
-    Un ulteriore punto di considerazione da fare è che chiunque ha la possibilità di vedere il contenuto di ogni SmartContract incluso il codice dei metodi. Questo come già detto può comportare la possibilità da parte di un attaccante di individuare eventuali errori logici. Ogni contratto dovrà comunicare con gli altri attraverso chiamate a metodi pubblici, in quanto non c’è in Ethereum nessun concetto di visibilità dei metodi di tipo protected o package. Questo rende possibile da parte di qualsiasi utente della rete di utilizzare questi metodi in maniera malevole. Questo tipo di problematica è facilmente superabile applicando i dovuti pattern Solidity quali WhiteList Pattern e Owner Pattern. L’applicazione dei pattern però comporterebbe un notevole aumento in termini di complessità e costo soprattutto in presenza di logiche di accesso variegate e dinamiche. Inoltre, in caso di liste di utenti autorizzati, l'immagazzinazione di queste liste potrebbe risultare oneroso in termini di costi.
+    Un ulteriore punto di considerazione da fare è che chiunque ha la possibilità di vedere il contenuto di ogni SmartContract incluso il codice dei metodi. Questo come già detto può comportare la possibilità da parte di un attaccante di individuare eventuali errori logici. Ogni contratto dovrà comunicare con gli altri attraverso chiamate a metodi pubblici, in quanto non c’è in Ethereum nessun concetto di visibilità dei metodi di tipo protected o package. Questo rende possibile da parte di qualsiasi utente della rete di utilizzare questi metodi in maniera malevole. Questo tipo di problematica è facilmente superabile applicando i dovuti pattern Solidity quali WhiteList Pattern e Owner Pattern. L’applicazione dei pattern però comporterebbe un notevole aumento in termini di complessità e costo soprattutto in presenza di logiche di accesso variegate e dinamiche. Inoltre, in caso di liste di utenti autorizzati, queste potrebbero risultare onerose in termini di costo.
     \item \textbf{Scalabilità}\\
     Ethereum per poter applicare l’algoritmo del consenso, fa utilizzo di una prova di lavoro che deve essere fatta in occasione di ogni transazione. La prova consiste nella risoluzione di un problema crittografico la cui difficoltà è dinamica in base a diversi fattori della blockchain, quali valore dell’Ether, numero di utenti, numero di transazioni, etc. Oltretutto si nota come anche in lettura ci sia una lentezza che difficilmente potrebbe essere ritenuta accettabile da un utente medio. Per avere prova di questo fatto si può prendere in esame una qualsiasi Dapp presente al seguente link \footcite{site:state-dapps}. La questione pone anche limiti, come già citato, in termini di costo.
 \end{itemize}
@@ -268,7 +268,7 @@ nell’ambito della registrazione di un utente il Wallet deve:
 \begin{itemize}
     \item generare e immaganizzare in locale una chiave pubblica;
     \item generare e immaganizzare in locale una chiave private;
-    \item creare l’hash della chiave la chiave pubblica e inviare l’hash all’ITF;
+    \item creare l’hash della chiave pubblica e inviarla all’ITF;
     \item incrementare le informazioni (PII) relative alle identità che il Wallet gestisce.
 \end{itemize}
 Nell’ambito della presentazione dei dati ad un Service Provider deve:
@@ -303,7 +303,7 @@ Da come si può evincere dai dati, Android, iOS, Windows Phone rappresentano, in
 \paragraph{Tecnologie per lo sviluppo}
 Segue un approfondimento relativo alle potenziali tecnologie con cui sviluppare l’IW. Data la necessità di sviluppare sia per Android, che per iOS l’analisi si concentrerà principalmente su framework multi piattaforma senza comunque ignorare la possibilità di sviluppi nativi.
 \paragraph{Sviluppo multipiattaforma}
-Tra le principali alternati multi piattaforma si ritengono particolarmente interessanti le seguenti:
+Tra le principali alternative multi piattaforma si ritengono particolarmente interessanti le seguenti:
 \begin{itemize}
     \item React Native;
     \item Cordova;
@@ -354,10 +354,10 @@ Riassumendo, dato che:
 \end{itemize}
  si ritiene non conveniente lo sviluppo parallelo di più applicazioni native. 
 \paragraph{Conclusioni sulla scelta del framework}
-A seguito di quanto detto nelle sezioni “Sviluppo multipiattaforma” e “Sviluppo nativo” si ritiene quindi più conveniente lo sviluppo di un’applicazione multi piattaforma. Nello specifico si consiglia l’utilizzo di framework quali React Native e Xamarin con la preferenza di quest’ultimo.
+A seguito di quanto detto nelle sezioni “Sviluppo multipiattaforma” e “Sviluppo nativo” si ritiene quindi più conveniente lo sviluppo di un’applicazione multi piattaforma. Nello specifico si consiglia l’utilizzo di framework quali React Native e Xamarin con la preferenza per quest’ultimo.
 \paragraph{Breve considerazione sullo sviluppo mobile}
 Dall’analisi del dominio applicativo emerge come un’applicazione di tipo mobile sia la scelta più adatta. La scelta è basata sulla tipologia di utenti e sul tipico uso ipotizzato per l’applicazione. Tuttavia come precedentemente detto l’obbligatorietà di comunicare con l’ITF tramite API REST snaturerebbe il concetto stesso di blockchain, poichè l’IW vedrebbe il componente REST come fonte centralizzata e non verificabile delle informazioni. Ne un’applicazione Desktop risulterebbe notevolmente più appropriata dal punto di vista tecnologico, ma fuori contesto dal punto di vista dell’uso previsto.
-Al fine di effettuare una scelta finale bisogna tenere sempre in menti questi due fattori e considerare cosa si vuole ottenere. Ritengo che l’utente dell’IW non sia in grado di apprezzare questo concetto di fiducia e che potrebbe apprezzare maggiormente il fatto che l’applicativo sia mobile.  
+Al fine di effettuare una scelta finale bisogna tenere sempre in mente questi due fattori e considerare cosa si vuole ottenere. Ritengo che l’utente dell’IW non sia in grado di apprezzare questo concetto di fiducia e che potrebbe apprezzare maggiormente il fatto che l’applicativo sia mobile.  
 \subsection{Motivazioni}
 \subsubsection{Aspetti Positivi}
 A seguito dell’analisi sopra proposta sono stati individuati i seguenti aspetti positivi:
@@ -380,7 +380,7 @@ Si è quindi proceduto a elaborare delle possibili soluzioni per far fronte a ta
 \end{risk}
 \begin{risk}{Visione centralizzata}
     \riskdescription{Un’applicazione mobile di questo tipo per l’IW potrebbe non essere considerata come strumento di IAM distribuito, ma potrebbe essere vista come centralizzata.}
-    \risksolution{Inserire note interno all'applicazione o all'interno del sito di Monokee per rendere edotti gli utenti del reale funzionamento del servizio.}
+    \risksolution{Inserire note all'interno dell'applicazione o all'interno del sito di Monokee per rendere edotti gli utenti del reale funzionamento del servizio.}
     \label{risk:centralization-vision-from-user} 
 \end{risk}
 \begin{risk}{Inesperienza nello sviluppo Xamarin}
@@ -426,10 +426,10 @@ Nell’ambito dell’accesso il SP deve:
 
 \subsection{Studio del dominio}
 \subsubsection{Dominio applicativo}
-L’applicativo SP dovrà essere usato come strumento abilitatore da parte dei vari fornitori di servizi a partecipare al progetto MonoKee. Da un primo studio si pensa che il target di questi servizi sarà lavorativo, successivamente potrà essere considerato l’introduzione di servizi Consumer. Si tratta sostanzialmente di un’applicazione di tipo Server con scopi essenzialmente di comunicazione. Data la vasta varietà di servizi e di necessità che potrebbe avere il fornitore non risulta definibile un comportamento standard che il SP dovrà tenere, ma si dovrà adattare caso per caso. Possiamo comunque ipotizzare che il suo funzionamento sia necessario solo durante l’orario di ufficio, quindi dalle 7.00 alle 18.00, fuori questi orari sarà possibile fare manutenzione. Nell’ottica dell’introduzione di servizi consumer si dovrebbe comunque tener conto di una disponibilità maggiore. L’applicativo dovrebbe offrire un’interfaccia di manutenzione, accessibile tramite interfaccia grafica da parte del personale del fornitore del servizio. Il software deve essere utilizzato dal personale IT delle varie organizzazione che utilizzano il servizio, per questa ragione si può dare per scontato che l’utente generico possegga delle competenze informatiche avanzate. 
+L’applicativo SP dovrà essere usato come strumento abilitatore da parte dei vari fornitori di servizi a partecipare al progetto MonoKee. Da un primo studio si pensa che il target di questi servizi sarà lavorativo, successivamente potrà essere considerato l’introduzione di servizi Consumer. Si tratta sostanzialmente di un’applicazione di tipo Server con scopi essenzialmente di comunicazione. Data la vasta varietà di servizi e di necessità che potrebbe avere il fornitore non risulta definibile un comportamento standard che il SP dovrà tenere, ma si dovrà adattare caso per caso. Possiamo comunque ipotizzare che il suo funzionamento sia necessario solo durante l’orario di ufficio, quindi dalle 7.00 alle 18.00, fuori questi orari sarà possibile fare manutenzione. Nell’ottica dell’introduzione di servizi consumer si dovrebbe comunque tener conto di una disponibilità maggiore. L’applicativo dovrebbe offrire un’interfaccia di manutenzione, accessibile tramite interfaccia grafica da parte del personale del fornitore del servizio. Il software deve essere utilizzato dal personale IT delle varie organizzazioni che utilizzano il servizio, per questa ragione si può dare per scontato che l’utente generico possegga delle competenze informatiche avanzate. 
 \subsection{Dominio tecnologico}
 Il service provider deve operare come intermediario tra l’IW, l’ITF e il reale fornitore del servizio. Le comunicazioni dovrebbero seguire lo schema proposto in figura \ref{fig:diag-flussi}. 
-A seguito dello studio di fattibilità relativo all’IW è emerso come la connessione tra IW e SP debba avvenire tramite protocollo REST. Mentre la comunicazione con l’ITF deve avvenire tramite blockchain. Relativamente alla comunicazione verso il fornitore vero e proprio non si possono fare considerazione in quanto queste possono variare significativamente.
+A seguito dello studio di fattibilità relativo all’IW è emerso come la connessione tra IW e SP debba avvenire tramite protocollo REST. Mentre la comunicazione con l’ITF deve avvenire tramite blockchain. Relativamente alla comunicazione verso il fornitore vero e proprio non si possono fare considerazioni in quanto queste possono variare significativamente.
 
 \begin{figure}[!h]
     \centering
@@ -482,7 +482,7 @@ In caso, invece, si opti per la scelta di Hyperledger la scelta risulterebbe mol
 
 
 \subsubsection{Scelta del client Ethereum}
-Il client è un componente che implementa il protocollo di comunicazione di Ethereum. Ethereum diversamente da Hyperledger presenta una realtà molto varia e frattagliata. Solo dal punto di vista del client ci sono multiple implementazioni per differenti sistemi operativi ed in differenti linguaggi. Questa diversità viene vista dalla community come un indicatore di salute per l’intero ecosistema. Il protocollo in ogni caso è sempre lo stesso ed è definito nel così detto Yellow Paper in nota 5, in sostanza si basa sull’utilizzo di file Json. 
+Il client è un componente che implementa il protocollo di comunicazione di Ethereum. Ethereum diversamente da Hyperledger presenta una realtà molto varia e frastagliata. Solo dal punto di vista del client ci sono multiple implementazioni per differenti sistemi operativi ed in differenti linguaggi. Questa diversità viene vista dalla community come un indicatore di salute per l’intero ecosistema. Il protocollo in ogni caso è sempre lo stesso ed è definito nel così detto Yellow Paper in nota 5, in sostanza si basa sull’utilizzo di file Json. 
 Fino al settembre 2016 erano presente le alternative esposte in tabella \ref{tab:comp-client}.
 \begin{table}[!h] %
     \caption{Tabella comparivi client Ethereum}
