@@ -60,12 +60,20 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
 \begin{figure}[htbp]
     
     \centering
-    \includegraphics[width=0.9\columnwidth]{ModelArkIW.png} 
+    \includegraphics[width=0.9\columnwidth]{iw-complete-uml.png} 
     \caption{Architettura IW}
     \label{fig:ark-mod-iw} 
 \end{figure}
 
 \paragraph{BusinessLogic} %**************************
+Nel contesto dell’architettura N-tier adottata il BusinessLogic layer è un gruppo di classi che si occupano di effettuare e di mantenere tutte le regole definite dai documenti IW - Analisi di massima, IW – Studio di fattibilità.  
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{bl-lay-iw.png} 
+    \caption{Diagramma BusinessLogic Layer IW}
+    \label{fig:bl-lay-iw} 
+\end{figure}
 \begin{namespacedesc}
     \classdesc{IWApplication}{questa classe ha il compito di fornire una facade per i vari ViewModel. Tutte le azioni possibile tramite l’interfaccia sono quindi implementate da questa classe.}
 
@@ -105,7 +113,15 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
     \classdesc{PIIChecher}{è una classe che ha il compito di verificare tramite ITF la veridicità di una PII.}
 \end{namespacedesc}
 
-\paragraph{DataAccess} %**************************
+\paragraph{DataAccess Layer} %**************************
+Nel contesto dell’architettura N-tier adottata il \emph{DataAccess} layer è un gruppo di classi che si occupano di interfacciarsi con gli strumenti di persistenza utilizzati dall’applicazione. Questi sono: Monokee (tramite RESTful), ITF e una base di dati locale al dispositivo. 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{dla-iw.png} 
+    \caption{Diagramma DataAccess Layer IW}
+    \label{fig:dla-iw} 
+\end{figure}
+
 \begin{namespacedesc}
     \classdesc{RestComp}{è un’interfaccia che ha il compito di rappresentare una generica strategia di comunicazione REST. Questa viene utilizzata da RealMonokee per ottenere i dati relativi all’utente.}
     \classdesc{RestImpl}{è una possibile implementazione della strategia di comunicazione REST. Implementa l’interfaccia RestComp.}
@@ -116,6 +132,19 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
 
 
 \paragraph{PresentationLayer} %**************************
+Questo layer contiene i vari controllori che gestiscono le viste. Si è previsto di creare un controller per ogni pagina dell’applicazione. L’applicazione utilizza il pattern MVVM, quindi, i controlli sono delle ViewModel (VM) che contengono i dati e le operazioni. Tra i dati e la vista sono presenti dei binding da realizzare utilizzando gli strumenti forniti da Xamarin. Le VM operano le loro azioni tramite l’utilizzo della classe IWFacade. 
+
+
+Tutte queste classi devono estendere da INotifyPropertyChanged.
+In figura \ref{fig:vm-layer-iw} il diagramma esplicativo del \emph{layer}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{VMlayer-iw.png} 
+    \caption{Diagramma UML VM Layer}
+    \label{fig:vm-layer-iw} 
+\end{figure}
+
 \begin{namespacedesc}
     \classdesc{LoginPageVM}{questa classe ha lo scopo di gestire la pagina di log in e quindi avere lo stato e le operazioni necessarie.}
     \classdesc{MenuVM}{questa classe ha lo scopo di gestire il menu dell’applicazione e quindi avere lo stato e le operazioni necessarie.}
