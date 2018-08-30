@@ -3382,3 +3382,117 @@ Andiamo ora a vedere come si invia un messaggio un \emph{VerificationWork}:
 \end{lstlisting}
 
 Come potete vedere questo avviene tramite la funzione \emph{Publish} dell'oggetto \emph{\_busControl}.
+
+\subsection{Interazioni con la \emph{blockchain}}
+
+Sia l'applicativo mobile IW, che l'applicativo server SP hanno previsto l'uso della stessa libreria \emph{Nethereum} al fine di effettuare le necessarie chiamate alla \emph{blockchain Ethereum}.
+Questa libreria implementa il protocollo Ethereum\footcite{site:ethereum-yellow-paper} in ambiente \emph{.NET}.
+
+Il protocollo discerne tra due tipi di chiamate, quelle in \textbf{sola lettura} e quella \textbf{in scrittura}; le prime sono identificate dai modificatori \emph{pure} o \emph{view}.
+
+Le chiamate in sola lettura sono immediate e non richiedono l'esecuzione di una transazione, per queste ragioni hanno prestazione paragonabile a quelle di un linguaggio tradizionale e non richiedono le venga fornito dell'\gls{etherg}.
+
+Le seconde invece, dovendo modificare la blockchain, hanno bisogno di effettuare una transazione con la conseguente esecuzione dell'algoritmo di consenso descritto nel capitolo \ref{cap:alg-cons}. Questo porta ai problemi di prestazioni e costo descritti in \ref{cap:prestazioni}
+
+Prima di poter procedere a qualsiasi operazione era necessario creare un collegamente alla rete \emph{Ethereum} usata (nel nostro caso una rete locale all'azienda). Il sequente codice mostra le istruzioni necessarie.
+
+\begin{lstlisting}[caption={Connessione alla rete di test},label={lst:connessione},language={C}]
+account = new Account(GeneralSetting.accountPrivKey);
+web3 = new Web3(account, blockchain_address);
+\end{lstlisting}
+
+La variabile \emph{web3} è l'oggetto che rappresenta la connessione. Il primo parametro del costruttore non è strettamente necessario, ma stabilisce un account di default con il quale verranno pagate le transazioni. Si è deciso in fase di codifica di non minare direttamente le aggiunte di blocchi, ma di pagare la transazione. Per essere riconosciuti dalla rete è sufficiente fornire la chiave privata. 
+\medskip
+
+Ora è necessario richiamare un contratto presente nella rete. Per fare questo necessitiamo di due informazione: l'\textbf{indirizzo} e l'\gls{abig}\glsfirstoccur. L'\emph{ABI} di un contratto consiste in un json contenente la definizione di tutti i metodi presenti nel contratto. Nel frammento ~\ref{lst:abi_ex} si mostra l'\emph{ABI} della chiamata che andremo ad effettuare, invece nel frammento ~\ref{lst:creazioneContr} si mostra la creazione dell'oggetto contratto. Dal contratto poi si ottiene la funzione.
+
+\begin{lstlisting}[caption={Esempio di ABI},label={lst:abi_ex},language={C}]
+[
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "_PII_ID",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "name": "result",
+                "type": "bool"
+            }
+        ],
+        "name": "eventResponse",
+        "type": "event"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "_publicKey",
+                "type": "string"
+            },
+            {
+                "name": "_PII_ID",
+                "type": "string"
+            },
+            {
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "name": "_description",
+                "type": "string"
+            }
+        ],
+        "name": "verify",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]  
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Creazione del contratto},label={lst:creazioneContr},language={[Sharp]C}]
+    SPFContract = web3.Eth.GetContract(abi,
+                "contract_address");
+    var verifyFunction = SPFContract.GetFunction("verify");
+\end{lstlisting}
+
+Una volta ottenuto l'oggetto \emph{verifyFunction} non ci resta che effettuare la chiamata. Il metodo \emph{verify} effettua modifiche, quindi è necessario effettuare una transazione. La funzione \emph{SendTransactionAndWaitForReceiptAsync} effettua la chiamata del metodo solidity \emph{verify} e aspetta che questa fallisca o abbia successo. Una transazione non restituisce mai il risultato della chiamata, ma una ricevuta che ne attesta la riuscita o il fallimento. Per ottenere il risultato bisogna usare i cosidetti \emph{eventi} che vanno lanciati dal codice solidity con il contenuto del valore di ritorno. Gli eventi sono comunicati in \emph{broadcast} a tutti gli utenti connessi alla rete, di conseguenza ottenere il risultato richiede una serie di procedure particolari. La seconda parte del codice nel frammento  \ref{lst:transax} mostra il codice necessario per filtrare gli eventi in base alla ricevuta e quindi ottenere il valore. 
+
+
+\begin{lstlisting}[caption={Creazione del contratto},label={lst:transax},language={[Sharp]C}]
+receipt = await verifyFunction.SendTransactionAndWaitForReceiptAsync(
+    "account_address,
+    null, 
+    ITFID,
+    description, 
+    publicKeyBytes)
+    .ConfigureAwait(false);          
+
+    //CODICE PER GESTIRE L'EVENTO DI RISPOSTA
+    var verifyEvent = SPFContract.GetEvent("eventResponse");
+    var filterOnITFID = verifyEvent.CreateFilterInput(
+        new BlockParameter(receipt.BlockNumber),
+            BlockParameter.CreateLatest());
+    var log = await verifyEvent.GetAllChanges<VerificationEvent>(filterOnITFID);
+    result = log[0].Event.Result;
+\end{lstlisting}
+
+
+Le chiamate a metodi solidity detti \emph{puri}, invece, sono più semplici e restituiscono direttamente il risultato.
+Di seguito un esempio di una chiamata di questo tipo.
+
+\begin{lstlisting}[caption={Esempio di chiamata a metodo puro},label={lst:call_ex},language={[Sharp]C}]
+
+getFunction = SPFContract.GetFunction("getFromID");
+string result = await getFunction.CallAsync(par1, par2);
+    
+\end{lstlisting}

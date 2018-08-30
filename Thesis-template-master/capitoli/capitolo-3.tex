@@ -111,6 +111,7 @@ Comunamente le principali \emph{blockchain} fanno uso di una particolare struttu
 In caso di alterazioni in un qualsiasi nodo dell'albero queste sarebbero rilevabile in quanto causerebbero delle incoerenze nei puntatori presenti nei nodi al livello superiore. L'uso di questa struttura nel contesto di una \emph{blockchain} semplifica la verifica dell'attribuzione dei blocchi e permette di dover conservare solo la radice nel blocco di testa.
 
 \subsubsection{Algoritmo di consenso}
+\label{cap:alg-cons}
 Abbiamo visto come l'uso di funzioni di hash e di strutture dati particolari rendono la \emph{blockchain} un'affidabile e verificabile base di dati centralizzata. Uno dei principali fattori di successo della tecnologia è stata però la natura decentralizzata di essa. Questa è possibile grazie all'uso di molteplici nodi in sostituzione ad un server centralizzato. La presenza di un algoritmo di consenso rende possibile ai vari nodi partecipanti accordarsi su cosa debba essere scritto o meno nella catena. Assumento che i vari nodi (anche malevoli) ricevano un input valido l'algoritmo di consenso assicura le seguenti proprietà:
 \begin{itemize}
     \item l'algoritmo termina quando tutti i nodi onesti sono in accordo sul valore;
@@ -176,6 +177,7 @@ Sono invece presenti pattern pensati appositamente per Ethereum, questi sono pre
 \end{itemize}
 
 \paragraph{Complessità e pratiche non convenzionali}
+\label{cap:prestazioni}
 I punti precedentemente stilati nel paragrafo sull’applicabilità dei pattern portano anche delle notevoli differenze in termini di pratiche di stile di programmazione. Tra queste riporto:
 \begin{itemize}
     \item l’uso di liste e array è fortemente sconsigliato, vanno preferite strutture con accesso costante. Solidity fornisce il tipo mapping;
