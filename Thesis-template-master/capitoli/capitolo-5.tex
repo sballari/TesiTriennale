@@ -11,14 +11,14 @@
 Il presente capitolo ha lo scopo di presentare e dimostrare l'architettura per i componenti IW e SP che dovranno funzionare nel contesto dell'estensione del prodotto Monokee.
 %**************************************************************
 \section{Componente Identity Wallet}
-Questa sezione inizia con una generica introduzione all’architettura Xamarin ed infine conclude presentando una prima ipotesi di architettura in formato UML 2.0.
+Questa sezione inizia con una generica introduzione all’architettura Xamarin ed si conclude conclude presentando una prima ipotesi di architettura in formato UML 2.0.
 \subsection{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
-Il componente Identity Wallet è sviluppato come applicazione mobile, questo contesto implica differenti tecnologie che comunicano e interagiscono fra loro. Le funzionalità di persistenza vengono offerte tramite tre diverse tecnologie: file system, blockchain, e server Monokee. La logica di business è implementata usando il framework .NET. L’interfaccia, invece, usa il pattern MVVM (Model View View Model).
-L’IW utilizza una classica architettura a strati (N-tier architecture). Trattandosi di un sistema mobile multi piattaforma, questa architettura è stata calata nel contesto e, quindi, si è deciso di basarla sul concetto di Portable Class Libraries (PCL) presentato da Xamarin. 
+Il componente Identity Wallet è sviluppato come applicazione mobile. Questo contesto implica differenti tecnologie che comunicano e interagiscono fra loro. Le funzionalità di persistenza vengono offerte tramite tre diverse tecnologie: file system, blockchain, e server Monokee. La logica di business è implementata usando il framework .NET. L’interfaccia, invece, usa il pattern MVVM (Model View View Model).
+L’IW utilizza una classica architettura a strati (N-tier architecture). Trattandosi di un sistema mobile multi piattaforma questa architettura è stata calata nel contesto e quindi si è deciso di basarla sul concetto di Portable Class Libraries (PCL) presentato da Xamarin. 
 
 \subsubsection{Portable Class Libraries PCL}
-\gls{pclg}\glsfirstoccur è un approccio alla condivisione del codice tra le diverse edizioni dell’app destinate a diversi sistemi operativi mobili sviluppato da Xamarin. Segue un diagramma esplicativo di come si sviluppa una tipica architettura PCL. Il diagramma in figura \ref{fig:ark-pcl} è tratto da \url{www.xamarin.com}.
+\gls{pclg}\glsfirstoccur è un approccio alla condivisione del codice tra le diverse edizioni dell’app destinate a diversi sistemi operativi mobili sviluppati da Xamarin. Segue un diagramma esplicativo di come si sviluppa una tipica architettura PCL. Il diagramma in figura \ref{fig:ark-pcl} è tratto da \url{www.xamarin.com}.
 
 \begin{figure}[!h]
     
@@ -28,19 +28,19 @@ L’IW utilizza una classica architettura a strati (N-tier architecture). Tratta
     \label{fig:ark-pcl} 
 \end{figure}
 
-Ogni \emph{“Platform-Specific Application Project”} (iOS app, Android app, Windows Phone app) referenzia la \gls{pclg}. Quindi esistono essenzialmente due parti: quelle specifiche per la piattaforma e quelle condivise. Obiettivo del progetto è quello di rendere meno corposa possibile le parti specifiche. Sarà poi possibile impiegare caratteristiche di una determinata piattaforma attraverso l’utilizzo del design pattern \emph{Dependency Injection} (DI).
-Applicare i principi della DI significa definire nel codice condiviso interfacce (classi astratte) che vengono implementate (estese) in ogni piattaforma tramite sottoclassi (\emph{Strategy Pattern}). A questo punto, sarà possibile integrare queste specifiche implementazioni all’interno della PCL. Xamarin per questo scopo offre la classe \emph{DependencyService}.
+Ogni \emph{“Platform-Specific Application Project”} (iOS app, Android app, Windows Phone app) referenzia la \gls{pclg}. Esistono essenzialmente due parti: quelle specifiche per la piattaforma e quelle condivise. Obiettivo del progetto è quello di rendere meno corposa possibile le parti specifiche. Sarà poi possibile impiegare caratteristiche di una determinata piattaforma attraverso l’utilizzo del design pattern \emph{Dependency Injection} (DI).
+Applicare i principi della DI significa definire nel codice condiviso interfacce (classi astratte) che vengono implementate (estese) in ogni piattaforma tramite sottoclassi (\emph{Strategy Pattern}). A questo punto sarà possibile integrare le specifiche implementazioni all’interno della PCL. Xamarin per questo scopo offre la classe \emph{DependencyService}.
 
 
 \subsection{Overview}
-Come già detto l’applicativo è strutturato come una N-tier application consistente dei seguenti layer:
+Come già detto, l’applicativo è strutturato come una N-tier application consistente dei seguenti layer:
 \begin{itemize}
     \item layer presentazione;
     \item logica di business;
     \item layer di accesso ai dati. 
 \end{itemize}
     
-Quando si sviluppa un’applicazione è importante scegliere se sviluppare un \emph{thin Web-based client} o \emph{un rich client}. Ovviamente, considerando il nostro contesto ricadiamo nel primo caso, infatti quasi tutta la logica e la persistenza ricadano sul componente ITF. In figura \ref{fig:ark-iw} un'immagine esplicativa dell'architettura ideata.
+Quando si sviluppa un’applicazione è importante scegliere se sviluppare un \emph{thin Web-based client} o \emph{un rich client}. Ovviamente, considerando il nostro contesto, ricadiamo nel primo caso, infatti quasi tutta la logica e la persistenza rientrano sul componente ITF. In figura \ref{fig:ark-iw} un'immagine esplicativa dell'architettura ideata.
 \begin{figure}[htbp]
     
     \centering
