@@ -48,7 +48,7 @@ Quando si sviluppa un’applicazione è importante scegliere se sviluppare un \e
     \caption{Architettura PCWL}
     \label{fig:ark-iw} 
 \end{figure}
-Come si può notare il principale pattern utilizzato per gestire l’interazione con l’utente è il Model View ViewModel (MVVM). Tutte le elaborazioni vengono effettuate dallo strato di business, mentre per la persistenza ci si affida principalmente o alla risorsa Monokee tramite comunicazione REST, o all’ITF tramite l’utilizzo di un client Ethereum. Tutto verrà sviluppato utilizzando il framework .NET.
+Come si può notare il principale pattern utilizzato per gestire l’interazione con l’utente è il Model View ViewModel (MVVM). Tutte le elaborazioni vengono effettuate dallo strato di business, mentre per la persistenza ci si affida principalmente alla risorsa Monokee tramite comunicazione REST, oppure all’ITF tramite l’utilizzo di un client Ethereum. Tutto verrà sviluppato utilizzando il framework .NET.
 %**************************************************************
 \subsection{Ciclo di vita del software}
 \label{sec:ciclo-vita-software}
@@ -66,7 +66,7 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
 \end{figure}
 
 \paragraph{BusinessLogic} %**************************
-Nel contesto dell’architettura N-tier adottata il BusinessLogic layer è un gruppo di classi che si occupano di effettuare e di mantenere tutte le regole definite dai documenti IW - Analisi di massima, IW – Studio di fattibilità.  
+Nel contesto dell’architettura N-tier adottata, il BusinessLogic layer è un gruppo di classi che si occupa di effettuare e di mantenere tutte le regole definite dai documenti IW - Analisi di massima, IW – Studio di fattibilità.  
 
 \begin{figure}[htbp]
     \centering
@@ -75,42 +75,42 @@ Nel contesto dell’architettura N-tier adottata il BusinessLogic layer è un gr
     \label{fig:bl-lay-iw} 
 \end{figure}
 \begin{namespacedesc}
-    \classdesc{IWApplication}{questa classe ha il compito di fornire una facade per i vari ViewModel. Tutte le azioni possibile tramite l’interfaccia sono quindi implementate da questa classe.}
+    \classdesc{IWApplication}{classe che ha il compito di fornire una facade per i vari ViewModel, di conseguenza tutte le azioni possibili tramite l’interfaccia sono implementate da essa.}
 
-    \classdesc{Monokee}{ si tratta di un’interfaccia con il compito di fornire un’astrazione del servizio Monokee. Questa interfaccia con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{Monokee}{interfaccia che ha il compito di fornire un’astrazione del servizio Monokee. L' interfaccia con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
 
-    \classdesc{RealMonokee}{è una classe che rappresenta il reale oggetto Monokee, questa classe poi dialoga con RESTComp per ottenere i dati. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{RealMonokee}{classe che rappresenta il reale oggetto Monokee e che dialoga poi con RESTComp per ottenere i dati. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
 
-    \classdesc{ProxyMonokee}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{ProxyMonokee}{classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
 
-    \classdesc{KeyGen}{è un’interfaccia che ha lo scopo di definire una strategia di generazione chiavi, fa parte di un’applicazione dello Strategy Pattern. È stata pensata in un’ottica in cui ci possono essere vari modi per generare una chiave a seconda del sistema operativo usato.}
+    \classdesc{KeyGen}{interfaccia che ha lo scopo di definire una strategia di generazione chiavi. Fa parte di un’applicazione dello Strategy Pattern ed è stata pensata in un’ottica in cui vi possano essere vari modi per generare una chiave a seconda del sistema operativo usato.}
 
-    \classdesc{KeyGenImpl}{questa classe rappresenta una possibile implementazione dell’interfaccia KeyGen. Fa parte di un’applicazione dello Strategy pattern.}
+    \classdesc{KeyGenImpl}{classe che rappresenta una possibile implementazione dell’interfaccia KeyGen. Fa parte di un’applicazione dello Strategy pattern.}
 
-    \classdesc{Session}{è una classe con lo scopo di immagazzinare tutti i dati di una sessione attiva, questa può essere generata dal file system o creata da zero. Deve essere presente in istanza singola e contiene le informazioni utente.}
+    \classdesc{Session}{classe con lo scopo di immagazzinare tutti i dati di una sessione attiva; questa può essere generata dal file system o creata da zero. Deve essere presente in istanza singola e inoltre contiene le informazioni utente.}
 
-    \classdesc{UserInt}{questa interfaccia rappresenta un qualsiasi utente dell’applicazione. È implementata solamente da UserMonokee. Questo oggetto viene creato dall’interfaccia Monokee.}
+    \classdesc{UserInt}{interfaccia che rappresenta un qualsiasi utente dell’applicazione. È implementata solamente da UserMonokee. Questo oggetto viene creato dall’interfaccia Monokee.}
 
-    \classdesc{UserMonokee}{è una classe che rappresenta un utente proveniente dal server Monokee. Implementa l’interfaccia Monokee. Un utente di questo tipo possiede un aggregato di servizi, potenzialmente contiene le chiavi e possiede una lista di PII.}
+    \classdesc{UserMonokee}{classe che rappresenta un utente proveniente dal server Monokee. Implementa l’interfaccia Monokee. Un utente di questo tipo possiede un aggregato di servizi e una lista PII; potenzialmente può contenere le chiavi.}
 
-    \classdesc{Service}{è una classe che rappresenta un servizio di cui l’utente ha diritto, possiede un ID e fornisce una lista di PII che dovranno essere presentati al fine di eseguire l’accesso.}
+    \classdesc{Service}{classe che rappresenta un servizio di cui l’utente ha diritto. Possiede un ID e fornisce una lista di PII che dovranno essere presentati al fine di eseguire l’accesso.}
 
-    \classdesc{KeyProv}{è una classe che ha il compito di occuparsi della generazione delle chiavi private e pubbliche. Questa classe viene usata da UserInt e a sua volta usa LocalDataProvider.}
+    \classdesc{KeyProv}{classe che ha il compito di occuparsi della generazione delle chiavi private e pubbliche. Viene usata da UserInt e a sua volta usa LocalDataProvider.}
 
-    \classdesc{LocalDataProvider}{è un’interfaccia che ha il compito di fornire in singolo punto dove ottenere informazione dal file system locale. Questa classe poi deve venire implementata in base al sistema operativo su cui girerà. }
+    \classdesc{LocalDataProvider}{interfaccia che ha il compito di fornire in singolo punto dove ottenere informazione dal file system locale. Successivamente deve essere implementata in base al sistema operativo su cui girerà. }
 
-    \classdesc{iOSLDImp}{ rappresenta l’implementazione per iOS di LocalDataProvider.}
+    \classdesc{iOSLDImp}{rappresenta l’implementazione per iOS di LocalDataProvider.}
 
     \classdesc{DroidLDImp}{rappresenta l’implementazione Android di LocalDataProvider.}
 
-    \classdesc{AbsPII}{è un’interfaccia che rappresenta una generica PII, questa per ora ha una sola possibile implementazione, ma un’interfaccia di questo tipo renderà più semplice l’implementazione di future PII.}
+    \classdesc{AbsPII}{interfaccia che rappresenta una generica PII. Ha una sola possibile implementazione, ma PUò rendere più semplice l’implementazione di future PII.}
 
-    \classdesc{PIIImpl}{è una classe che rappresenta l’attuale ed unica PII. Consiste di un nome, un identificativo e una descrizione. Una PII può essere verificata o meno tramite l’uso di PIIChecker. }
+    \classdesc{PIIImpl}{classe che rappresenta l’attuale ed unica PII. Consiste di un nome, un identificativo e una descrizione. Una PII può essere verificata o meno tramite l’uso di PIIChecker. }
 
-    \classdesc{ITF}{si tratta di un’interfaccia con il compito di fornire un’astrazione del componente Identity Trust Fabric. Questa interfaccia con ITFReal e ProxyITF rappresenta un’applicazione del pattern Proxy.}
-    \classdesc{RealITF}{è una classe che rappresenta il reale oggetto ITF, questa classe poi dialoga con il BlockchainClient per ottenere i dati. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
-    \classdesc{ProxyITF}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
-    \classdesc{PIIChecher}{è una classe che ha il compito di verificare tramite ITF la veridicità di una PII.}
+    \classdesc{ITF}{interfaccia che ha il compito di fornire un’astrazione del componente Identity Trust Fabric. Con ITFReal e ProxyITF rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{RealITF}{classe che rappresenta il reale oggetto ITF. Essa dialoga poi con il BlockchainClient per ottenere i dati. Con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{ProxyITF}{classe che rappresenta un proxy dell’oggetto Monokee, questa. Applica una politica di acquisizione pigra. Con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{PIIChecher}{classe che ha il compito di verificare tramite ITF la veridicità di una PII.}
 \end{namespacedesc}
 
 \paragraph{DataAccess Layer} %**************************
@@ -123,10 +123,10 @@ Nel contesto dell’architettura N-tier adottata il \emph{DataAccess} layer è u
 \end{figure}
 
 \begin{namespacedesc}
-    \classdesc{RestComp}{è un’interfaccia che ha il compito di rappresentare una generica strategia di comunicazione REST. Questa viene utilizzata da RealMonokee per ottenere i dati relativi all’utente.}
-    \classdesc{RestImpl}{è una possibile implementazione della strategia di comunicazione REST. Implementa l’interfaccia RestComp.}
-    \classdesc{BlockchainClient}{è un’interfaccia che ha il compito di rappresentare una generica strategia di comunicazione con la rete blockchain. Questa astrazione permette di slegare dall’architettura dipendenze con le varie implementazioni di blockchain e anche di client.}
-    \classdesc{EthereumClient}{è una possibile implementazione di BlockchainClient che utilizza la rete Ethereum. Questa classe poi userà la libreria Nethereum.}
+    \classdesc{RestComp}{interfaccia che ha il compito di rappresentare una generica strategia di comunicazione REST. Essa viene utilizzata da RealMonokee per ottenere i dati relativi all’utente.}
+    \classdesc{RestImpl}{possibile implementazione della strategia di comunicazione REST. Implementa l’interfaccia RestComp.}
+    \classdesc{BlockchainClient}{interfaccia che ha il compito di rappresentare una generica strategia di comunicazione con la rete blockchain. Questa astrazione permette di slegare dall’architettura dipendenze con le varie implementazioni di blockchain e anche di client.}
+    \classdesc{EthereumClient}{possibile implementazione di BlockchainClient che utilizza la rete Ethereum. Questa classe poi userà la libreria Nethereum.}
 \end{namespacedesc}
 
 
@@ -146,29 +146,29 @@ In figura \ref{fig:vm-layer-iw} il diagramma esplicativo del \emph{layer}.
 \end{figure}
 
 \begin{namespacedesc}
-    \classdesc{LoginPageVM}{questa classe ha lo scopo di gestire la pagina di log in e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{MenuVM}{questa classe ha lo scopo di gestire il menu dell’applicazione e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{ServiceListVM}{questa classe ha lo scopo di gestire la pagina che presenta la lista dei service a cui può accedere l’utente e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{ServicePage}{questa classe ha lo scopo di gestire la pagina con le informazioni relative ad un singolo servizio e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{PIIListVM}{questa classe ha lo scopo di gestire la pagina che presenta la lista delle PII che possiede l’utente e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{PIIPageVM}{questa classe ha lo scopo di gestire la pagina che visualizza le informazioni relative ad una specifica PII e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{InformationPageVM}{questa classe ha lo scopo di gestire la pagina che fornisce le informazioni sull’applicazione, sul servizio Monokee e le istruzioni per l’uso.}
+    \classdesc{LoginPageVM}{classe che ha lo scopo di gestire la pagina di log in e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{MenuVM}{classe che ha lo scopo di gestire il menù dell’applicazione e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{ServiceListVM}{classe che ha lo scopo di gestire la pagina che presenta la lista dei service a cui può accedere l’utente e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{ServicePage}{classe che ha lo scopo di gestire la pagina con le informazioni relative ad un singolo servizio e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{PIIListVM}{classe che ha lo scopo di gestire la pagina che presenta la lista delle PII che possiede l’utente e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{PIIPageVM}{classe che ha lo scopo di gestire la pagina che visualizza le informazioni relative ad una specifica PII e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{InformationPageVM}{classe che ha lo scopo di gestire la pagina che fornisce le informazioni sull’applicazione, sul servizio Monokee e le istruzioni per l’uso.}
 \end{namespacedesc}
 %**************************************************************
 \subsection{Design Pattern utilizzati}
 Al fine di garantire elevate doti di qualità e manutenibilità dell’architettura sono stati usati una serie di design pattern. Di seguito segue una breve descrizione di questi.
 
-\paragraph{Communicator}: incapsula i dettagli interni della comunicazione in un componente separato che poi può essere implementato da classi diverse e quindi canali diversi. Questo è risultato utile per rendere gli altri componenti quanto più indipendenti da come comunicano con l’esterno.
+\paragraph{Communicator}: incapsula i dettagli interni della comunicazione in un componente separato che poi può essere implementato da classi e canali diversi; risultato utile per rendere gli altri componenti quanto più indipendenti da come comunicano con l’esterno.
 
-\paragraph{Data Transfer Object (DTO)}: è un oggetto che ha il compito di racchiudere le informazioni utili a diverse componenti. Questo riduce i metodi necessari per la comunicazione e in generale la semplifica.
+\paragraph{Data Transfer Object (DTO)}: oggetto che ha il compito di racchiudere le informazioni utili a diverse componenti. Va a ridurre i metodi necessari per la comunicazione e, in generale, la semplifica.
 
-\paragraph{Entity Translator}: Un oggetto che trasforma un dato in una forma utile per essere usato nella logica di business. Questo pattern è stato usato per interfacciarsi con il client Ethereum e il server Monokee.
+\paragraph{Entity Translator}: oggetto che trasforma un dato in forma utile per essere usato nella logica di business. Esso è stato usato per interfacciarsi con il client Ethereum e il server Monokee.
 
-\paragraph{Lazy Acquisition Proxy}: Ritarda l’acquisizione delle risorse il più a lungo possibile. Questo pattern è stato ampiamente utilizzato, specie per rendere il più leggero possibile la creazione dei dati dell’utente e della verifica dei dati nell’ITF.
+\paragraph{Lazy Acquisition Proxy}: Ritarda l’acquisizione delle risorse il più a lungo possibile. Esso è stato ampiamente utilizzato, specialmente per rendere più leggera possibile la creazione dei dati dell’utente e della verifica dei dati nell’ITF.
 
-\paragraph{Strategy Pattern}: è un oggetto che permette di separare l’esecuzione di un metodo dalla classe che lo contiene. Usando un’interfaccia per astrarre il metodo è poi possibile crearne molteplici implementazioni. Questo è risultato molto utile nel contesto di un’applicazione multi piattaforma in cui alcune procedure andavano implementate in nativo. Oltre all’appena citato vantaggio questo ha reso possibile separare il metodo dall’implementazione.
+\paragraph{Strategy Pattern}: oggetto che permette di separare l’esecuzione di un metodo dalla classe che lo contiene. Usando un’interfaccia per astrarre il metodo è poi possibile creare molteplici implementazioni. Ciò è risultato molto utile nel contesto di un’applicazione multi piattaforma in cui alcune procedure dovevano essere implementate in nativo. Oltretutto ha reso possibile separare il metodo dall’implementazione.
 
-\paragraph{Dependency Injection}: è un pattern che permette di delegare il controllo della creazione oggetti ad un oggetto esterno. Questo permette di semplificare la gestione delle dipendenze e nel contesto dello strategy pattern permette di inoculare l’implementazione corretta.
+\paragraph{Dependency Injection}: pattern che permette di delegare il controllo della creazione oggetti ad un oggetto esterno. Esso permette di semplificare la gestione delle dipendenze e, nel contesto dello strategy pattern, permette di inserire l’implementazione corretta.
 
 \paragraph{Model-View-Controller}: separa il codice per l’interfaccia grafica in tre componenti separati: Modello (il dato), Vista (l’interfaccia), and Controllore (il responsabile della logica), con particolare attenzione alla vista. Nel progetto viene usata una sua particolare declinazione chiamata MVVM. 
 
@@ -178,7 +178,7 @@ Al fine di garantire elevate doti di qualità e manutenibilità dell’architett
 %COMPONENTE SP ********************************************************************
 \newpage
 \section{Componente Service Provider}
-Questa sezione inizia con una generica introduzione alle architetture Event Driven. Viene poi scelto di utilizzare un approccio Broken topology, la scelta è motivata dalla maggiore indipendenza tra i vari componenti rispetto ad un approccio Mediator topology. Infine si conclude presentando una prima ipotesi di architettura in formato UML 2.0.
+La sezione inizia con una generica introduzione alle architetture Event Driven. Si è deciso di utilizzare un approccio Broken topology; la scelta è motivata dalla maggior indipendenza tra i vari componenti rispetto ad un approccio Mediator topology. Infine si conclude con la presentazione una prima ipotesi di architettura in formato UML 2.0.
 
 
 
