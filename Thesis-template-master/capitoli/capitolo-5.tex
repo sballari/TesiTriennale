@@ -49,9 +49,6 @@ Quando si sviluppa un’applicazione è importante scegliere se sviluppare un \e
     \label{fig:ark-iw} 
 \end{figure}
 Come si può notare il principale pattern utilizzato per gestire l’interazione con l’utente è il Model View ViewModel (MVVM). Tutte le elaborazioni vengono effettuate dallo strato di business, mentre per la persistenza ci si affida principalmente alla risorsa Monokee tramite comunicazione REST, oppure all’ITF tramite l’utilizzo di un client Ethereum. Tutto verrà sviluppato utilizzando il framework .NET.
-%**************************************************************
-\subsection{Ciclo di vita del software}
-\label{sec:ciclo-vita-software}
 
 %**************************************************************
 \subsection{Progettazione}
@@ -65,7 +62,7 @@ In figura \ref{fig:ark-mod-iw} viene presentato il diagramma di massima dell’a
     \label{fig:ark-mod-iw} 
 \end{figure}
 
-\paragraph{BusinessLogic} %**************************
+\subsubsection{BusinessLogic} %**************************
 Nel contesto dell’architettura N-tier adottata, il BusinessLogic layer è un gruppo di classi che si occupa di effettuare e di mantenere tutte le regole definite dai documenti IW - Analisi di massima, IW – Studio di fattibilità.  
 
 \begin{figure}[htbp]
@@ -113,7 +110,7 @@ Nel contesto dell’architettura N-tier adottata, il BusinessLogic layer è un g
     \classdesc{PIIChecher}{classe che ha il compito di verificare tramite ITF la veridicità di una PII.}
 \end{namespacedesc}
 
-\paragraph{DataAccess Layer} %**************************
+\subsubsection{DataAccess Layer} %**************************
 Nel contesto dell’architettura N-tier adottata il \emph{DataAccess} layer è un gruppo di classi che si occupano di interfacciarsi con gli strumenti di persistenza utilizzati dall’applicazione. Questi sono: Monokee (tramite RESTful), ITF e una base di dati locale al dispositivo. 
 \begin{figure}[htbp]
     \centering
@@ -131,7 +128,7 @@ Nel contesto dell’architettura N-tier adottata il \emph{DataAccess} layer è u
 
 
 
-\paragraph{PresentationLayer} %**************************
+\subsubsection{PresentationLayer} %**************************
 Questo layer contiene i vari controllori che gestiscono le viste. Si è previsto di creare un controller per ogni pagina dell’applicazione. L’applicazione utilizza il pattern MVVM, quindi, i controlli sono delle ViewModel (VM) che contengono i dati e le operazioni. Tra i dati e la vista sono presenti dei binding da realizzare utilizzando gli strumenti forniti da Xamarin. Le VM operano le loro azioni tramite l’utilizzo della classe IWFacade. 
 
 
@@ -284,38 +281,136 @@ Gli eventi sono i seguenti:
     
  Il diagramma in figura \ref{fig:eventdriven-flusso-code} rappresenta come i vari eventi di lavoro si distribuiscono tra i vari esecutori.
 
- \begin{figure}[htbp]
+ \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.9\columnwidth]{flow-eventi-sp.png} 
+    \includegraphics[width=0.7\columnwidth]{flow-eventi-sp.png} 
     \caption{Flusso eventi SP}
     \label{fig:eventdriven-flusso-code} 
 \end{figure}
 Lo \emph{Starter} quando riceve una richiesta d’accesso da parte del RSP procede a generare il lavoro di \emph{AccessRequest}, una volta ricavati tutti i dati necessari per l’accesso da Monokee, viene affidato al \emph{PageResponce} l’incarico di visualizzare la pagina che richiede l’inserimento del QR. I dati verranno poi inseriti dall’utente e attraverso lo \emph{Starter} verrà creato un lavoro di verifica dei dati inseriti e se questi sono sufficienti ad accedere al servizio, tramite un’ulteriore accesso a Monokee. In caso di esito positivo viene creato un lavoro di invio dati verso il RSP altrimenti verrà visualizzata una pagina di errore.
 %**************************************************************
-\subsection{Ciclo di vita del software}
-\label{sec:ciclo-vita-software}
 
 %**************************************************************
+\newpage
 \subsection{Progettazione}
 \label{sec:progettazione}
 In figura \ref{fig:sp-uml-diag} si presenta un diagramma delle classi che attua la gestione delle code sopra espletata. Il diagramma è stato redatto in formato \emph{UML 2.0}, con leggere modifiche relativo alla rappresentazione delle varie istanze del template \emph{CommandQueue}. Questo è stato fatto al fine di rendere più leggibile e comprensibile il diagramma. Come si può notare sono presenti componenti non presenti nella precedente trattazione. Questi servono per effettuare le comunicazioni con l’ambiente esterno. Si è deciso per questioni di semplicità di non creare code separate.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.9\columnwidth]{SPdiagram.png} 
-    \caption{diagramma classi SP}
+    \caption{Diagramma delle classi del modulo SP}
     \label{fig:sp-uml-diag} 
 \end{figure}
 
-\paragraph{Descrizione elementi} %**************************
+\subsubsection{Starter}
+Lo \emph{Starter} rappresenta l’esecutore iniziale. Questo rimane in ascolto di eventuali richieste di accesso inoltrate dagli \emph{RSP} e da inizio all’esecuzione di questa. Riceve inoltre i dati provenienti dai codici QR. In figura \ref{fig:starter-uml-diag} viene riportato il diagramma UML dell'esecutore. Le classi più significative sono di seguito descritte.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{starter-uml.png} 
+    \caption{Rappresentazione UML di \emph{Starter}}
+    \label{fig:starter-uml-diag} 
+\end{figure}
+\begin{namespacedesc}
+    \classdesc{Reicever}{è un'interfaccia con il compito di ricevere le comunicazioni provenienti dal sito di login e, quindi, inoltrare i messaggi alla coda successiva (\emph{RetrieveInfo}). Rappresenta il \emph{driver} del componente \emph{Starter}.}
+    \classdesc{AspRestImpl}{è una possibile implementazione della strategia di comunicazione tramite \emph{REST}. Implementa l’interfaccia \emph{Reicever}.}
+    \classdesc{MessageBroker}{è un'interfaccia con il compito di definire i metodi necessari alla gestione dalla rete di comunicazione \emph{RabbitMQ}.}
+    \classdesc{MassTransitImpl}{questa classe implementa il MessageBroker utilizzano la libreria MassTransit.}
+\end{namespacedesc}
+
+\subsubsection{RetriveInfo}
+È l’esecutore con il compito di ottenere le informazioni necessarie da \emph{Monokee}. In caso di associazione presente manda il lavoro di creazione pagina di login, in caso di associazione non presente manda il lavoro di creazione pagina di errore.
+In figura \ref{fig:retrive-info-uml-diag} viene riportato il diagramma UML dell'esecutore. Le classi più significative sono di seguito descritte.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{retrive-info-uml.png} 
+    \caption{Rappresentazione UML di \emph{RetriveInfo}}
+    \label{fig:retrive-info-uml-diag} 
+\end{figure}
+\begin{namespacedesc}
+    \classdesc{AIRetriverTemplate}{questa interfaccia ha lo scopo di ricevere gestire e inoltrare i messaggi alla coda successiva (\emph{RetrieveInfo}). Rappresenta un template (\emph{Templete pattern}) del \emph{driver} dell’esecutore \emph{RetriveInfo}.}
+    \classdesc{AccountInfoRetriever}{implementazione di \emph{AIRetriverTemplate}.}
+    \classdesc{ServiceAssociationInfo}{questa classe rappresenta le informazioni ottenute da \emph{Monokee}, riporta i dati della \emph{AccessRequest} che l’ha generata e ci aggiunge l’informazione relativa alla lista delle \emph{PII} richieste e la presenta o meno della associazione in \emph{Monokee}. È un oggetto immutabile.}
+    \classdesc{PageType}{Questo \emph{enumeration} definisce le varie possibili pagine creabili dall’esecutore \emph{PageGenerator}.
+    I possibili tipi sono:
+    \begin{itemize}
+        \item loginQRPage: è una pagina mostra cattura il codice QR con le informazioni necessarie;
+        \item noAssocPage: è una pagina che comunica che l’utente che ha effettuato una richiesta per un servizio a cui non è abilitato (non possiede l’associazione in Monokee);
+        \item comErrorPage: è una pagina che comunica un generico errore di comunicazione.
+    \end{itemize}}
+    \classdesc{Monokee}{si tratta di un’interfaccia con il compito di fornire un’astrazione del servizio Monokee. Questa interfaccia con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+
+    \classdesc{RealMonokee}{è una classe che rappresenta il reale oggetto Monokee, questa classe poi dialoga con RESTComp per ottenere i dati. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
+
+    \classdesc{ProxyMonokee}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy}
+
+    \classdesc{Comunicator}{questa classe fornisce un’interfaccia per gestire tutte le informazioni attraverso fonti esterne. Deve essere usata per comunicare con \emph{Monokee} e il \emph{Real Service Provider}.}
+    \classdesc{AspRestCom}{questa classe implementa \emph{Comunicator} tramite l'utilizzo della libreria \emph{Asp.NET}.}
+
+    \classdesc{Listener}{È un'interfaccia con il compito di rimanere in ascolto su determinati uri. È un oggetto non mutabile.}
+    \classdesc{AspRestList}{È un oggetto con il compito di rimanere in ascolto su determinati uri. È un oggetto non mutabile. Questa classe è un \emph{wrapper} del \emph{listener} di \emph{System.Net}. Implementa \emph{Listener}.}
+\end{namespacedesc}
+
+
+\subsubsection{PageGenerator}
+È l’esecutore con il compito di ascoltare le richieste di creazione pagina provenienti dagli altri esecutori e quindi di generarle come richiesto e di inviarle al \emph{browser}del richiedente. In figura \ref{fig:pagegenerator-uml-diag} viene riportato il diagramma UML dell'esecutore. Le classi più significative sono di seguito descritte.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{pagegenerator-uml.png} 
+    \caption{Rappresentazione UML di \emph{PageGenerator}}
+    \label{fig:pagegenerator-uml-diag} 
+\end{figure}
+\begin{namespacedesc}
+    \classdesc{PageHandlerTemplate}{questa interfaccia consiste in un \emph{template} per la creazione di un \emph{driver} per la gestione e l’esecuzione dei \emph{Command} di \emph{PageGenerator}.}
+    \classdesc{PageHandler}{Questa classe implementa la struttura fornita da \emph{PageHandlerTemplate}.}
+\end{namespacedesc}
+
+\subsubsection{PIIDataHandler}
+Questo esecutore ha il compito di ricevere nella propria coda dallo \emph{Starter} una serie di lavori di verifica e quindi di verificare questi sia verso \emph{Monokee} sia verso l’\emph{ITF}. In questo esecutore sono presenti le interfacce \emph{Command}, \emph{Monokee} e \emph{MessageBroker} che non verranno presentate. In figura \ref{fig:piidatahandler-diag} viene riportato il diagramma UML dell'esecutore. Le classi più significative sono di seguito descritte. 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{piidatahandler-uml.png} 
+    \caption{Rappresentazione UML di \emph{PIIDataHandler}}
+    \label{fig:piidatahandler-uml-diag} 
+\end{figure}
 
 \begin{namespacedesc}
-    \classdesc{RESTComp}{è un’interfaccia che ha il compito di rappresentare una generica strategia di comunicazione REST. Questa viene utilizzata da RealMonokee per ottenere i dati relativi all’utente.}
+    \classdesc{VerificationDataPiiTemplate}{questa interfaccia rappresenta il \emph{template} da seguire per eseguire l’algoritmo di gestione di un \emph{VerificationPiiWork}. Dalla ricezione fino al suo esaurimento.}
+    \classdesc{VerificationDataPii}{Questa classe rappresenta un’applicazione del \emph{template} da seguire per eseguire l’algoritmo di gestione di un \emph{VerificationPiiWork}. Dalla ricezione fino al suo esaurimento.}
+    \classdesc{PII}{è una classe che rappresenta una PII. Contiene l’id, la descrizione di una PII.}
+    \classdesc{HashedPII}{questa classe rappresenta una \emph{PII} con le informazioni \emph{piiName} e \emph{piiDesc} sotto forma di \emph{Hash}, questa classe dev’essere usata per comunicare con l’\emph{ITF}. L’oggetto è immutabile.}
+    \classdesc{ITF}{si tratta di un’interfaccia con il compito di fornire un’astrazione del componente ITF. Questa interfaccia con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
 
-    \classdesc{RESTImpl}{è una possibile implementazione della strategia di comunicazione REST. Implementa l’interfaccia RestComp.}
-    \classdesc{RSP}{si tratta di un’interfaccia con il compito di fornire un’astrazione del componente real service provider. Questa interfaccia con RSPReal e ProxyRSP rappresenta un’applicazione del pattern Proxy.}
-    \classdesc{RealRSP}{è una classe che rappresenta il reale oggetto RSP, questa classe poi dialoga con il RESTComp per ottenere i dati. Questa classe con RealRSP e ProxyRSP rappresenta un’applicazione del pattern Proxy.}
-    \classdesc{ProxyRSP}{è una classe che rappresenta un proxy dell’oggetto RSP, questa classe applica una politica di acquisizione remota. Questa classe con RealRSP e ProxyRSP rappresenta un’applicazione del pattern Proxy.}
+    \classdesc{RealITF}{è una classe che rappresenta il reale oggetto ITF, questa classe poi dialoga con il BlockchainClient per ottenere i dati. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
+
+    \classdesc{ITFProxy}{è una classe che rappresenta un proxy dell’oggetto ITF, questa classe applica una politica di acquisizione remota. Questa classe con RealITF e ITFProxy rappresenta un’applicazione del pattern Proxy.}
+
+    \classdesc{BlockchainClient}{questa interfaccia ha il compito di rappresentare un canale di comunicazione verso gli \gls{SmartContractg}. Deve essere atea rispetto alla tipologia di \gls{blockchaing} usata.}
+
+    \classdesc{NethereumClient}{Questa classe rappresentare un canale di comunicazione verso gli \gls{SmartContractg} di una rete \emph{Ethereum}. Fa uso della libreria \emph{.NET Nethereum} per instaurare la comunicazione. }
+\end{namespacedesc}
+
+\subsubsection{SendAccessInfo}
+Questo esecutore ha il compito di inviare le informazioni necessarie per effettuare il Login al \emph{RSP} ed al \emph{back-end} di \emph{Monokee}. Queste informazione deve essere fornite in forma non di \emph{hash}. I \emph{Command} provengono da \emph{PIIDataHandle}. In figura \ref{fig:sendaccessinfo-diag} viene riportato il diagramma UML dell'esecutore. Le classi più significative sono di seguito descritte.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{SendAccessInfo.png} 
+    \caption{Rappresentazione UML di \emph{SendAccessInfo}}
+    \label{fig:sendaccessinfo-uml-diag} 
+\end{figure}
+
+\begin{namespacedesc}
+    \classdesc{RSPSenderTemplate}{questa interfaccia rappresenta il \emph{template} da seguire per eseguire il lavoro dell’esecutore. In altre parole rappresenta l’algoritmo da eseguire per espletare il lavoro di invio attributi al \emph{RSP}.}
+    \classdesc{RSPSender}{questa classe implementa il \emph{template} da seguire per eseguire il lavoro dell’esecutore. In altre parole rappresenta l’algoritmo da eseguire per espletare il lavoro di invio attributi al \emph{RSP}.}
+\end{namespacedesc}
+
+\paragraph{CommonElement}
+Questo componente contiene una serie di elementi usati da più esecutori, primi fra tutti gli oggetti \emph{Command}. Pertanto si è deciso di creare una libreria condivisa tra i vari esecutori.
+Le classi più significative sono di seguito descritte.
+ 
+\begin{namespacedesc}
+
     \classdesc{Command}{È una classe che rappresenta un generico evento nel contesto dell’architettura event driven. Questa interfaccia viene poi implementata da:
     \begin{itemize}
         \item \textbf{AccessRequest}: generato dallo starter e eseguito dal RetriveInfo, rappresenta il lavoro per gestire la richiesta di accesso;
@@ -324,38 +419,10 @@ In figura \ref{fig:sp-uml-diag} si presenta un diagramma delle classi che attua 
         \item \textbf{RSPSendingWork}: generato da PiiDataHandler in caso di verifica positiva. Rappresenta il lavoro di sottomissione dati in caso di verifica positiva.
     \end{itemize}
     }
-    
-    \classdesc{CommandQueue}{Questo template definisce una coda di command. Dispone delle funzionalità per gestire la coda in maniera concorrente.}
-
-    \classdesc{Account Retriver}{È la classe che ha il compito di guidare l’esecuzione di un AccessRequest. }
-
-    \classdesc{ServiceAssociationInfo}{È una classe generata da Monokee che rappresenta un l’associazione tra utente e servizio e il nome dei PII richiesti.}
-
-    \classdesc{Monokee}{si tratta di un’interfaccia con il compito di fornire un’astrazione del servizio Monokee. Questa interfaccia con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
-
-    \classdesc{RealMonokee}{è una classe che rappresenta il reale oggetto Monokee, questa classe poi dialoga con RESTComp per ottenere i dati. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy.}
-
-    \classdesc{ProxyMonokee}{è una classe che rappresenta un proxy dell’oggetto Monokee, questa classe applica una politica di acquisizione pigra. Questa classe con RealMonokee e ProxyMonokee rappresenta un’applicazione del pattern Proxy}
-
-    \classdesc{PageFactory}{È la classe che si occupa di eseguire l’evento PageResponce e quindi di generare le pagine e inviarle.}
-
-    \classdesc{ITF}{si tratta di un’interfaccia con il compito di fornire un’astrazione del componente ITF. Questa interfaccia con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
-
-    \classdesc{RealITF}{è una classe che rappresenta il reale oggetto ITF, questa classe poi dialoga con il BlockchainClient per ottenere i dati. Questa classe con RealITF e ProxyITF rappresenta un’applicazione del pattern Proxy.}
-
-    \classdesc{ITFProxy}{è una classe che rappresenta un proxy dell’oggetto ITF, questa classe applica una politica di acquisizione remota. Questa classe con RealITF e ITFProxy rappresenta un’applicazione del pattern Proxy.}
-
-    \classdesc{VerifierDataPii}{È la classe che ha il compito di gestire i VerificationWork, si tratta di un’applicazione di Templete Patter. Ha il compito di verificare le informazioni nell’ITF e di inviare una RSPSendingWork in caso di successo o una PageResponce in caso di fallimento.}
-
-    \classdesc{PII}{È una classe che rappresenta una PII. Contiene l’id, la descrizione di una PII.}
-
-    \classdesc{Decoder}{è una classe che ha il compito di decodificare le informazioni presentate tramite il codice QR e quindi generare una serie di PII.}
 
     \classdesc{Hasher}{È un’interfaccia che ha il compito di eseguire l’hash di un dato. Rappresenta un’applicazione dello strategy pattern. }
 
     \classdesc{HasherImpl}{È una classe che implementa un’implementazione della classe Hasher. Esegue l’hash di un dato. Rappresenta con Hasher un’applicazione dello strategy pattern.}
-
-    \classdesc{SPSender}{È la classe che ha il compito di eseguire i RSPSendingWork. Invia tramite il componente RestCompOut le informazioni relative l’accesso al RSP.}
 
 \end{namespacedesc}
 
