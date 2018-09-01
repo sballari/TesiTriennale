@@ -7,7 +7,7 @@
 \label{cap:descrizione-stage}
 %**************************************************************
 
-\intro{Breve introduzione al capitolo}\\
+
 
 %**************************************************************
 \section{Introduzione al progetto}
@@ -120,7 +120,8 @@ Abbiamo visto come l'uso di funzioni di hash e di strutture dati particolari ren
 
 In questo caso, un nodo onesto viene scelto per inserire il proprio blocco in cosa alla catena. In questo modo, l'algoritmo permette al sistema di generare fiducia in un contesto in cui nessun nodo si fida dell'altro.
 
-Tipicamente in una \emph{blockchain} avvengono le seguenti operazioni. A intervalli regolari, ogni nodo propone le proprie transazioni in sospeso per essere inserite come prossimo blocco. Successivamente si attua l'algoritmo di consenso in cui ogni nodo proprone come input il blocco che intendono inserire. Alcuni nodi potrebbero essere malevoli e inserire transazioni non valide nei proprio blocco di input, ma possiamo assumere che gli altri nodi sono onesto. Se l'algoritmo di consenso ha successo viene selezionato il blocco da inserire in coda. Nessuno decide quale sarà il prossimo nodo ad essere inserito nella blockchain.
+Tipicamente in una \emph{blockchain} avvengono le seguenti operazioni. A intervalli regolari, ogni nodo propone le proprie transazioni in sospeso per essere inserite come prossimo blocco. Successivamente si attua l'algoritmo di consenso in cui ogni nodo proprone come input il blocco che intendono inserire. Alcuni nodi potrebbero essere malevoli e inserire transazioni non valide nei proprio blocco di input, ma possiamo assumere che gli altri nodi sono onesto. Se l'algoritmo di consenso ha successo viene selezionato il blocco da inserire in coda. Questa attività viene detta \emph{mining}
+Nessuno decide quale sarà il prossimo nodo ad essere inserito nella blockchain.
 
 C'è comunque da ricordare che la presente è una trattazione ad alto livello, e quindi non verranno presentati particolari algoritmi di consenso. Mi limito quindi a presentare le principali carattestiche che questo deve avere:
 \begin{itemize}
@@ -148,9 +149,20 @@ Una permissioned \gls{blockchaing} pone dei vincoli sulla partecipazione alla re
 Una permissionless \gls{blockchaing} è una rete in cui qualsiasi nodo può partecipare al processo di verifica dei blocchi. Ogni nodo ha tutte le precedenti quattro proprietà.
 
 \paragraph{Ethereum}
+\label{cap:ETH}
 Ethereum è una piattaforma decentralizzata pubblica ed open-source basata sulla creazione di \gls{SmartContractg}. Permette la creazione di applicazioni che operano su \gls{blockchaing} in modo che non ci sia alcuna possibilità di downtime, censura, frodi o interferenze da terze parti. Rappresenta una dei principali esempi di rete permissionless.
 La piattaforma è stata rilasciata nel corso del 2014 ed è mantenuta dalla Ethereum Foundation, e questo fa di Ethereum una delle più longeve \gls{blockchaing} disponibili. Ciò comporta la presenza di una documentazione abbastanza nutrita rispetto ai competitor e di un buon numero di strumenti già disponibili. 
-L’elevata popolarità della tecnologia e alcune sue caratteristiche non presenti nei competitor, ha fatto sì che una notevole quantità di sviluppatori abbiano deciso di utilizzarla. Il sito \footnote{site:state-dapps} mantiene una vetrina di oltre milleseicento esempi. Sono presenti tutte le più significative applicazioni ora in produzione; si fa notare che molte di esse sono state le fonti dei più diffusi pattern Ethereum.
+L’elevata popolarità della tecnologia e alcune sue caratteristiche non presenti nei competitor, ha fatto sì cL'attuazione di tale algoritmo è la principale causa dell'intrinsica lentezza di questa tecnologia. Esso infatti deve prevedere un \emph{puzzle} di complessità adeguata a rendere vani eventuali tentativi di manomissioni. In caso un utente della \emph{blockchain} non fosse intenzionato a he una notevole quantità di sviluppatori abbiano deciso di utilizzarla. Il sito \footnote{site:state-dapps} mantiene una vetrina di oltre milleseicento esempi. Sono presenti tutte le più significative applicazioni ora in produzione; si fa notare che molte di esse sono state le fonti dei più diffusi pattern \emph{Ethereum}.
+
+\medskip
+\emph{Ethereum} al fine del raggiungemento del consenso necessità di una dimostrazione di interesse verso la \emph{blockchain}, in gergo \emph{Proof of Interest}. Questa nel nostro specifico caso si concretizza in una  \emph{Proof of Work}, cioè nella risoluzione di un \emph{puzzle di ricerca}. 
+La risoluzione di tale problema (detta \emph{mining}) è la principale causa dell'intrinsica lentezza di questa tecnologia. Esso infatti deve prevedere un \emph{puzzle di ricerca} di complessità adeguata a rendere vani eventuali tentativi di manomissioni\footnote{All'aumentare degli interessi presenti nella rete aumenta anche la complessità del problema.}. 
+In caso un utente della \emph{blockchain} non fosse intenzionato a eseguire questo lavoro ha la possibilità di pagare un nodo della rete per farlo al posto suo\footnote{I pagamenti vengono effettuati tramite un sistema di valuta digitale. La moneta utilizzata è chiamate \emph{Ether}.}. In base alla quantità pagata si può richiedere una potenza di calcolo minore o maggiore e di conseguenza velocità di esecuzione differenti.
+
+\medskip
+Il costo per \emph{minare} una transazione varia in base alla mole di dati da immettere nella rete e alla complessità del codice che si vuole eseguire. Durante le attività di codifica si è notato come operazioni di complessità lineari potessero portare a costi estremamenti elevati. 
+La velicità del \emph{mining} viene inpostata tramite un valore detto \emph{gas}. All'aumentare di questo valore corrispende una potenza di calcolo maggiore, quindi una risoluzione del \emph{puzzle di ricerca} più o meno veloce. 
+Per calcolare il prezzo finale di una transazione è necessario moltiplicare il costo base con il valore del \emph{gas}.
 
 \paragraph{Programmare SmartContract}
 Solidity è il principale linguaggio di programmazione usato per scrivere \gls{SmartContractg}. Nonostante sia presente un’implementazione basata su Go, questa è ancora acerba e non largamente utilizzata e per questo motivo tale implementazione non verrà trattata nel documento.
@@ -161,10 +173,10 @@ Queste caratteristiche rappresentano un notevole vantaggio per Ethereum rispetto
 Nonostante il linguaggio permetta l’applicabilità dei più diffusi pattern si vuole far notare come nel contesto di una blockchain Permissionless questi risultino spesso controproducenti. 
 Durante la progettazione e l’applicazione dei pattern vanno sempre ricordati i seguenti punti:
 \begin{itemize}
-    \item l’esecuzione di un metodo che modifica la blockchain si paga in base al lavoro che viene effettivamente svolto;
-    \item complessità lineari portano a costi difficilmente accettabili;
-    \item plugin come Metamask calcolano il massimo costo possibile di una transazione, in caso il credito non sia sufficiente la transazione fallisce. Ne condegue che un ciclo for su una lista di un elemento viene stimato presupponendo che la lista sia completamente piena;
-    \item la velocità di esecuzione varia in base alla somma pagata per questa, anche con somme estremamente alte o su reti locali i tempi potrebbero essere considerati non giustificabili per la maggior parte degli utenti;
+    \item l’esecuzione di un metodo che modifica la blockchain si paga in base al lavoro che viene effettivamente svolto, in quanto è necessaria l'attuazione dell'algoritmo di consenso;
+    \item complessità lineari portano a costi di transazione difficilmente accettabili;
+    \item plugin come Metamask calcolano il massimo costo possibile di una transazione, in caso il credito non sia sufficiente la transazione fallisce. Ne consegue che un ciclo \emph{for} su una lista di un elemento viene stimato presupponendo che la lista sia completamente piena;
+    \item la velocità di esecuzione varia in base alla somma pagata per questa\footnote{Per i motivi descritti in \ref{cap:ETH} riguardo al commissionamento ad altri nodi della rete delle attività di \emph{mining}.}, anche con somme estremamente alte o su reti locali i tempi potrebbero essere considerati non giustificabili per la maggior parte degli utenti;
     \item ogni oggetto e campo dato si paga in base al loro spazio occupato;
     \item il costo della moneta e quindi delle transazioni è fortemente variabile. Approcci che, oggi risultano economici, possono diventare economicamente insostenibili a distanza di pochi giorni.
 \end{itemize}
@@ -190,15 +202,15 @@ Si fa notare come in particolare l’ultimo punto degeneri completamente il conc
 \paragraph{Strumenti}
 Vista la relativa maturità della tecnologia, esistono diversi strumenti utili:
 \begin{itemize}
-    \item \textbf{Truffle}: è una suite di development e testing. Permette di compilare, buildare ed effettuare la migrazione degli SmartContract. Inoltre ha funzioni di debugging e di scripting. La suite offre la possibilità di effettuare test degli SmartContract sia in Javascript (con l’utilizzo di Chai), sia in Solidity. Si riporta di seguito il sito del progetto: \cite{site:truffle}.
-    \item \textbf{Ganache}: è uno strumento rapido che permette di creare e mantenere in locale una rete blockchain Ethereum personale. Può essere usata per eseguire test, eseguire comandi e per operazioni di controllo dello stato mentre il codice esegue. Si riporta di seguito il sito del progetto: \cite{site:ganache}.
-    \item \textbf{Mist}: è un browser sviluppato direttamente dal team Ethereum in grado di operare transazioni direttamente nella blockchain senza la necessità di possedere un intero nodo. È estremamente immaturo e non utilizzabile in produzione. Si riporta di seguito il sito del progetto: \cite{site:mist}.
-    \item \textbf{Parity}: è un client Ethereum che permette di operare sulla rete senza necessità di possedere un intero nodo. Questa soluzione a differenza di Mist dovrebbe risultare più facilmente integrabile nel prodotto senza che l’utente ne abbi consapevolezza. Si riporta di seguito il sito del progetto: \cite{site:parity} .
-    \item \textbf{Metamask}: è uno plugin disponibile per i browser Chrome, Firefox, e Opera. Permette di interfacciarsi alla rete Ethereum senza la necessità di eseguire in intero nodo della rete. Il plugin include un wallet con cui l’utente può inserire il proprio account tramite la chiave privata. Una volta inserito l’account il plugin farà da tramite tra l’applicazione e la rete.
-    Metamask è utilizzato dalla maggioranza delle applicazioni Ethereum presenti on line, questo però rappresenterebbe un componente esterno compatibile con pochi browser desktop. Si riporta di seguito il sito del progetto: \cite{site:metamask} .
-    \item \textbf{Status}: è un progetto che propone una serie di \gls{apig} che permettono di sviluppare un’applicazione mobile nativa operante direttamente su blockchain senza la necessità di possedere un intero nodo. Il sito del progetto propone una serie di applicazioni che utilizzano Status. Tuttavia nessuna di queste applicazioni risulta attualmente rilasciate in nessuno store. Status risulta in early access ed è disponibile per Android e iOS. Il sito del progetto è il seguente: \cite{site:status}.
-    \item \textbf{Microsoft Azure}: “Ethereum Blockchain as a Service” è un servizio fornito da Microsoft e ConsenSys che permette di sviluppare a basso costo in un ambiente di dev/test/produzione. Permette di creare reti private, pubbliche e di consorzio. Queste reti saranno poi accessibili attraverso la rete privata Azure. Questa tecnologia rende facile l’integrazione con Cortana Analytics, Power BI, Azure Active Directory, O365 e CRMOL.
+    \item \textbf{Truffle};
+    \item \textbf{Ganache};
+    \item \textbf{Mist};
+    \item \textbf{Parity};
+    \item \textbf{Metamask};
+    \item \textbf{Status};
+    \item \textbf{Microsoft Azure}.
 \end{itemize}
+Per una descrizione più specifica consultare \ref{cap:str_eth}.
 
 \paragraph{Valutazione applicabilità soluzione Ethereum}
 Al fine di poter valutare correttamente da ogni punto di vista l’applicabilità di una soluzione basata su Ethereum quale base della componente ITF, si procede ad analizzare in maniera analitica le sei caratteristiche presentate nel capitolo ‘ITF – Identity Trust Fabric’.
@@ -292,17 +304,17 @@ Un eventuale applicativo Desktop ha un’elevata probabilità di non rientrare n
 Per queste ragioni lo studio del dominio tecnologico si incentrerà principalmente su tecnologie multi piattaforma mobili. Verrà comunque tenuto in considerazione anche lo sviluppo nativo.
 \paragraph{Studio diffussione sistemi operativi mobili}
 Procedo di seguito ad un’analisi sulla diffusione dei vari sistemi operativi mobili.
-I dati in figura ~\ref{fig:diff-os-mob} riportati provengono da Kantar \footcite{site:kantar-study} società di analisi inglese e fanno riferimento al trimestre che va da novembre 2016 a gennaio 2017.
-\begin{figure}[!h] 
-    \centering
-    \includegraphics[width=0.9\columnwidth]{diff-os-mob.png} 
-    \caption{Diffuzione sistemi mobili}
-    \label{fig:diff-os-mob} 
-\end{figure}
-Da come si può evincere dai dati, Android, iOS, Windows Phone rappresentano, in questa sequenza ed in ogni mercato, i sistemi più diffusi. I restanti sistemi non raggiungono cifre significative. Ponendo maggiore attenzione ai primi tre sistemi si nota come Android nell’area EU5 rappresenti i tre quarti del mercato. In Giappone, Stati Uniti, Australia e Gran Bretagna invece la situazione risulta più bilanciata con una sostanziale parità. Windows Phone in ogni mercato si pone in terza posizione con percentuali che non superano mai l’otto percento. Individuando nell’area EU5 il principale mercato per MonoKee si ritiene che il prodotto IW debba essere sviluppato per i sistemi Android e iOS, dando la precedenza al primo. Non si ritiene necessario lo sviluppo di un’applicazione Windows Phone in quanto difficilmente attuabile nei tempi dello stage. 
+Le informazione di seguito riportate provengono da Kantar \footcite{site:kantar-study} società di analisi inglese e fanno riferimento al trimestre che va da novembre 2016 a gennaio 2017.
+I dati Kantar fanno emergere come Android, iOS e Windows Phone rappresentano, in questa sequenza ed in ogni mercato, i sistemi più diffusi. I restanti sistemi non raggiungono cifre significative. Ponendo maggiore attenzione ai primi tre sistemi si nota come Android nell’area EU5 rappresenti i tre quarti del mercato. In Giappone, Stati Uniti, Australia e Gran Bretagna invece la situazione risulta più bilanciata con una sostanziale parità. Windows Phone in ogni mercato si pone in terza posizione con percentuali che non superano mai l’otto percento. Individuando nell’area EU5 il principale mercato per MonoKee si ritiene che il prodotto IW debba essere sviluppato per i sistemi Android e iOS, dando la precedenza al primo. Non si ritiene necessario lo sviluppo di un’applicazione Windows Phone in quanto difficilmente attuabile nei tempi dello stage. 
 \paragraph{Tecnologie per lo sviluppo}
 Segue un approfondimento relativo alle potenziali tecnologie con cui sviluppare l’IW. Data la necessità di sviluppare sia per Android, che per iOS l’analisi si concentrerà principalmente su framework multi piattaforma senza comunque ignorare la possibilità di sviluppi nativi.
 \paragraph{Sviluppo multipiattaforma}
+Le applicazioni multipiattaforma si dividono sostanzialmente in due categorie: le applicazioni ibride e le applicazione multipiattaforma native.
+\medskip
+Le prime consistono in applicazioni scritte in un linguaggio \emph{cross-platform} (in genere \emph{Javascript} e \emph{HTML5}) come le \emph{web app}, che però possono essere incapsulate tramite \gls{webviewg} nel linguaggio nativo di una certa piattaforma. Hanno un discreto accesso al sistema operativo anche se non sono state scritte interamente nel linguaggio specifico della piattaforma.
+\medskip
+Le seconde consistono in applicazioni scritte utilizzando particolari \emph{framework} che permettono, da del codice comune, di generare differenti versioni in base al sistema operativo di destinazione. La applicazioni così generate sono totalmente paragonabili ad applicazione native sviluppate nel linguaggio specifico della piattaforma. 
+\medskip
 Tra le principali alternative multi piattaforma si ritengono particolarmente interessanti le seguenti:
 \begin{itemize}
     \item React Native;
@@ -482,7 +494,7 @@ In caso, invece, si opti per la scelta di Hyperledger la scelta risulterebbe mol
 
 
 \subsubsection{Scelta del client Ethereum}
-Il client è un componente che implementa il protocollo di comunicazione di Ethereum. Ethereum diversamente da Hyperledger presenta una realtà molto varia e frastagliata. Solo dal punto di vista del client ci sono multiple implementazioni per differenti sistemi operativi ed in differenti linguaggi. Questa diversità viene vista dalla community come un indicatore di salute per l’intero ecosistema. Il protocollo in ogni caso è sempre lo stesso ed è definito nel così detto Yellow Paper in nota 5, in sostanza si basa sull’utilizzo di file Json. 
+Il client è un componente che implementa il protocollo di comunicazione di Ethereum. \emph{Ethereum} diversamente da \emph{Hyperledger} presenta una realtà molto varia e frastagliata. Solo dal punto di vista del client ci sono multiple implementazioni per differenti sistemi operativi ed in differenti linguaggi. Questa diversità viene vista dalla community come un indicatore di salute per l’intero ecosistema. Il protocollo in ogni caso è sempre lo stesso ed è definito nel così detto Yellow Paper\footcite{site:ethereum-yellow-paper}, in sostanza si basa sull’utilizzo di file Json. 
 Fino al settembre 2016 erano presenti le alternative esposte in tabella \ref{tab:comp-client}.
 \begin{table}[!h] %
     \caption{Tabella comparivi client Ethereum}
@@ -541,7 +553,7 @@ In caso si dovesse optare per una scelta basata su Hyperledger quale base dell�
 \end{table}%
 Data l’amplissima diffusione delle API REST e di queste librerie non si procede ad una trattazione analitica.
 \subsection{Conclusioni scelta sviluppo}
-Considerando quanto precedentemente detto lo sviluppo tradizionale sembrerebbe avrebbe meno incognite e un ampio repertorio di librerie utilizzabili. Si propone, quindi un’architettura del secondo tipo.
+Considerando quanto precedentemente detto, lo sviluppo tradizionale sembrerebbe avere meno incognite e un ampio repertorio di librerie utilizzabili. Si propone, quindi un’architettura del secondo tipo.
 Inoltre, si vuole fare notare come l’utilizzo delle soluzioni .NET potrebbero rivelarsi molto vantaggiose in quanto facilmente integrabili con il componente IW e Azure Blockchain.
 \subsection{Motivazioni}
 \subsubsection{Aspetti positivi}
@@ -563,7 +575,7 @@ A seguito dell’analisi sopra proposta sono stati individuati i seguenti aspett
     \risksolution{Rendere edotto il responsabili del progetto, il quale metterà a disposizione del personale.}
     \label{risk:centralization-vision-from-user} 
 \end{risk}
-\begin{risk}{Prestazioni chiamate alla rete blockchain}
+\begin{risk}{Prestazioni delle chiamate alla rete blockchain}
     \riskdescription{Il componete SP deve interrogare la rete blockchain, questo potrebbe rappresentare un problema di performance}
     \risksolution{Rendere edotto il responsabili del progetto, valutare soluzioni alternative.}
     \label{risk:centralization-vision-from-user} 
