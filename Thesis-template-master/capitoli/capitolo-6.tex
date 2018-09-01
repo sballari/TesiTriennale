@@ -9,15 +9,14 @@
 \section{Verifica}
 Secondo lo stardard ISO/IEC 12207:2008\footcite{ISO:Systems-and-software-engineering} la verifica è un processo di supporto che si occupa di accertarsi che l’esecuzione di un'attività non abbia introdotto errori durante il periodo in esame. 
 Ci sono due tipi di verifica: \textbf{statica} e \textbf{dinamica}.
-La verifica statica, è estremamente utile in quanto non richiede che il prodotto sia eseguibile, può essere effettuata tramite due tecniche. Queste sono:
+La verifica statica è estremamente utile in quanto non richiede che il prodotto sia eseguibile. Può essere effettuata tramite due tecniche:
 \begin{itemize}
     \item ispezione;
     \item analisi a pettine.
 \end{itemize}
-La verifica dinamica richiede l'esecuzione del codice, questa può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante le attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente allora venivano prima redatti i test riguardo a questo e solo in seguito veniva fatta la progettazione in dettaglio. Questo permetteva in maniera immediata di progettare ad alto livello pensando al requisito astratto, ma permetteva anche di progettare in dettaglio con i test.
-I test dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
+La verifica dinamica richiede l'esecuzione del codice e può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante l' attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente, venivano redatti i test che lo riguardavano e successivamente veniva fatta la progettazione in dettaglio. Ciò permetteva di progettare, in modo immediato, ad alto livello pensando al requisito astratto, ed anche in dettaglio grazie ai test che dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
 Per permettere uno sviluppo agevole si è utilizzata una tecnica di gestione del repository detta \emph{branch-pull}.\\
-Questa prevedeva che ogni attivita’ di codifica dovesse essere eseguita in un branch creato appositamente allo scopo. Alla fine dell'attività si procedeva con una pull request verso il \emph{branch} principale, questa veniva accettata se e solo se i test passavano completamente. \\
+Essa prevedeva che ogni attivita’ di codifica dovesse essere eseguita in un branch creato appositamente per lo scopo. Alla fine dell'attività si procedeva con una pull request verso il \emph{branch} principale, la quale veniva accettata se, e solo se, i test passavano totalmente. \\
 
 Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi: 
 \begin{itemize}
@@ -28,12 +27,11 @@ Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi:
     \item rilevazione di integrazioni tra componenti non adatte.
 \end{itemize}
 \medskip
-Un punto critico è stato quello di trovare un giusto quantitativo di test da produrre. Esagerando avremmo rischiato di superare la scadenza inerenti alle attività di codifica.
-Abbiamo quindi deciso di produrre almeno un test per metodo ed un test per classe. 
-Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo deciso di farli solo in caso ci fosse stato tempo. 
-L'uso di queste tecniche ha inoltre permesso di avere una certa libertà nelle modifiche a codice già integrato nel sistema, in quanto ha fornito almeno in parte anche dei test di regressione. 
+Un punto critico è stato trovare un giusto quantitativo di test da produrein modo da non superare le scadenze inerenti alle attività di codifica, per questo abbiamo deciso di produrre almeno un test per metodo, ed uno per classe. 
+Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo optato per farli solo se ci fosse stato tempo utile. 
+L'uso di queste tecniche ha permesso di avere anche una certa libertà nelle modifiche a codice (già integrato nel sistema) in quanto ha fornito, almeno in parte, anche dei test di regressione. 
 
-Lo svolgimento di questo processo ha permesso di ottenere varie metriche quali:
+Lo svolgimento del processo ha permesso di ottenere varie metriche quali:
 \begin{itemize}
     \item test coverage;
     \item percentuale di test passati;
@@ -41,29 +39,29 @@ Lo svolgimento di questo processo ha permesso di ottenere varie metriche quali:
 \end{itemize}
 
 \subsection{Attività di verifica statica}
-I componenti basandosi sullo stesso linguaggio hanno condiviso le procedure per la verifica statica. Il principale strumento di utilizzato è stato il linter \emph{SonarLint}. Questo strumento ha permesso di mantenere lo stesso stile di scrittura in ogni parte del progetto, inoltre aveva funzioni che permettevano l'individuazine di potenziali errori logici e cattive pratiche. 
-Inoltre sono state utilizzate numerose funzionalità presenti in \emph{Visul Studio} che permettevano refactoring automatici del codice e strumenti di analisi statica.
+I componenti, basandosi sullo stesso linguaggio, hanno condiviso le procedure per la verifica statica. Il principale strumento di utilizzato è stato il \emph{linter} \emph{SonarLint}. Questo strumento ha permesso di mantenere lo stesso stile di scrittura in ogni parte del progetto e di individuaare potenziali errori logici e cattive pratiche. 
+Sono state anche utilizzate numerose funzionalità presenti in \emph{Visul Studio} che hanno permesso \emph{refactoring} automatici del codice e strumenti di analisi statica.
 
 \subsection{Realizzazione dei test}
-Entrambi i componente codificati durante le 320 ore di stage condividevano lo stesso linguaggio di programmazione, ma utilizzavano \gls{frameworkg} diversi. Nonostante molte librerie fossero in comune questo non lo era per i framework di test. Il test per il componente SP sono stati codificati usando \emph{MSTest}, mentre quelli per il componente IW hanno usato \emph{Xamarin.UITest}
+Entrambi i componenti codificati durante le ore di stage condividevano lo stesso linguaggio di programmazione, ma utilizzavano \gls{frameworkg} diversi. Nonostante molte librerie fossero in comune questo non lo era per i \emph{framework} di test. I test per il componente SP sono stati codificati usando \emph{MSTest}, mentre quelli per il componente IW hanno usato \emph{Xamarin.UITest}
 
-Particolare difficoltà è stata riscontrata nei test di integrazione del componente SP. Questo infatti lavora in stretto conttato con l'applicativo Monokee e con i componenti IW e ITF. Data l'elevata mutabilità dell'applicativo Monokee si è deciso di realizzare doppie versioni di ogni test; la prima prevedento l'uso di \emph{mock}, la seconda  effettuando una reale comunicazione con i componenti precedentemente citati. Questo ha permesso una più semplice localizzazione dei problemi.
+Altra particolare difficoltà è stata riscontrata nei test di integrazione del componente SP perchè lavora in stretto contatto con l'applicativo Monokee e con i componenti IW e ITF. Data l'elevata mutabilità dell'applicativo Monokee si è deciso di realizzare doppie versioni di ogni test; la prima prevedendo l'uso di \emph{mock}, la seconda  effettuando una reale comunicazione con i componenti precedentemente citati e ciò ha permesso una più semplice localizzazione dei problemi.
 
-Il componente IW è un'applicazione mobile le cui interazioni con elementi esterni sono di natura occasionale e al solo fine di ottenere informazioni verificabili. Per questa ragione si è ritenuto di non usare dei \emph{mock}, ma di prevedere direttamente test che comunicassero con gli elementi esterni.
+Il componente IW è un'applicazione mobile le cui interazioni con elementi esterni sono di natura occasionale e con il fine unico di ottenere informazioni verificabili, motivo per cui si è scelto di non usare dei \emph{mock} ma di prevedere direttamente test che comunicassero con gli elementi esterni.
 
 
 \section{Validazione}
-La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfa il cliente e gli utenti finali. La principale attività di validazione è stata svolta l'ultima settimana di lavoro tramite prove e dimostrazioni del prodotto. In quei giorni si è verificato con la presenza del tutor aziendale la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
+La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfa il cliente e gli utenti finali. La principale attività di validazione è stata svolta durante l'ultima settimana di lavoro attraverso prove e dimostrazioni del prodotto e si è verificato, con la presenza del tutor aziendale, la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
 
-L'esito, seppur non vedendo la totalità dei requisiti soddisfatti, è stato soddisfacente. Si preme di tenere conto che molto requisiti sono stati ritenuti di importanza accessoria dall'azienda e sostituiti con altre funzionalità non previste inizialmente.
+L'esito, nonostante non avesse la totalità dei requisiti soddisfatti, è stato soddisfacente. Oltretutto è da sottolineare che molti requisiti sono stati ritenuti di importanza accessoria dall'azienda e quindi sostituiti con altre funzionalità non previste inizialmente.
 
 
 \subsection{Validazione requisiti componente IW}
-In tabella \ref{tab:validazione-iw} si mostra lo stato di validazione di ogni requisiti del componente IW, questi possono essere:
+In tabella \ref{tab:validazione-iw} si mostra lo stato di validazione di ogni requisiti del componente IW, i quali possono essere:
 \begin{itemize}
     \item implementati: se il requisito è stato implementato correttamente e riconosciuto come tale dal tutor aziendale;
-    \item non implementato: se il requisito non è stato inserito nel progetto o non funziona come aspettato;
-    \item cancellato: se il requisito è stato ritenuto non più di interesse o non più compatibile con il progetto da parte del tutor aziendali.
+    \item non implementato: se il requisito non è stato inserito nel progetto o non funziona come da aspettative;
+    \item cancellato: se il requisito risultava non più di interesse o non più compatibile con il progetto da parte del tutor aziendali.
 \end{itemize}
 
 \begin{center}
@@ -157,7 +155,7 @@ I requisiti:
     \item R[F][C]003;
     \item R[F][C]004
 \end{itemize}
-non sono stati implementati in quanto questi sono stati pensati in un'ottica che prevedeva la distribuzione al grande pubblico dell'applicazione. Questi requisiti sono stati quindi ritenuti dal tutor aziendale non importanti e rimanabili a successivi rilasci.
+non sono stati implementati perchè pensati in un'ottica di distribuzione al grande pubblico dell'applicazione e perciò posticipabili a successivi rilasci.
 
 I requisiti: 
 \begin{itemize}
@@ -167,12 +165,12 @@ I requisiti:
     \item R[F][M]0010; 
     \item R[F][M]0011 
 \end{itemize}
-sono stati cancellati in quanto si è deciso che le funzionalità che proponevano non dovessero essere offerte dall'applicazione, ma dal portale attualmente esistente di Monokee.
+sono stati cancellati in quanto le funzionalità che proponevano non volevano essere offerte dall'applicazione ma dal portale attualmente esistente di Monokee.
 
-Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche push. Si è ritenuto, in accordo con il tutor aziendale, che lo sforzo sarebbe stato eccessivo rispletto al valore che avrebbe apportato la funzionalità. Per questo si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
+Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche push, questo perchè lo sforzo sarebbe stato eccessivo rispetto al valore che avrebbe apportato la funzionalità, motivo per cui si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
 
 \subsection{Validazione requisiti componente SP}
-In tabella \ref{tab:validazione-sp} si mostra lo stato di validazione di ogni requisiti del componente SP, questi possono essere:
+In tabella \ref{tab:validazione-sp} mostra lo stato di validazione di ogni requisito del componente SP.I requisiti possono essere:
 \begin{itemize}
     \item implementati: se il requisito è stato implementato correttamente e riconosciuto come tale dal tutor aziendale;
     \item non implementato: se il requisito non è stato inserito nel progetto o non funziona come aspettato;
