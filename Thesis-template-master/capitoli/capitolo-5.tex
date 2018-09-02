@@ -148,14 +148,14 @@ In figura \ref{fig:vm-layer-iw} il diagramma esplicativo del \emph{layer}.
     \classdesc{ServiceListVM}{classe che ha lo scopo di gestire la pagina che presenta la lista dei service a cui può accedere l’utente e quindi avere lo stato e le operazioni necessarie.}
     \classdesc{ServicePage}{classe che ha lo scopo di gestire la pagina con le informazioni relative ad un singolo servizio e quindi avere lo stato e le operazioni necessarie.}
     \classdesc{PIIListVM}{classe che ha lo scopo di gestire la pagina che presenta la lista delle PII che possiede l’utente e quindi avere lo stato e le operazioni necessarie.}
-    \classdesc{PIIPageVM}{classe che ha lo scopo di gestire la pagina che visualizza le informazioni relative ad una specifica PII e quindi avere lo stato e le operazioni necessarie.}
+    \classdesc{PIIPageVM}{classe con lo scopo di gestire la pagina che visualizza le informazioni relative ad una specifica PII e quindi avere lo stato e le operazioni necessarie.}
     \classdesc{InformationPageVM}{classe che ha lo scopo di gestire la pagina che fornisce le informazioni sull’applicazione, sul servizio Monokee e le istruzioni per l’uso.}
 \end{namespacedesc}
 %**************************************************************
 \subsection{Design Pattern utilizzati}
 Al fine di garantire elevate doti di qualità e manutenibilità dell’architettura sono stati usati una serie di design pattern. Di seguito segue una breve descrizione di questi.
 
-\paragraph{Communicator}: incapsula i dettagli interni della comunicazione in un componente separato che poi può essere implementato da classi e canali diversi; risultato utile per rendere gli altri componenti quanto più indipendenti da come comunicano con l’esterno.
+\paragraph{Communicator}: incapsula i dettagli interni della comunicazione in un componente separato che poi può essere implementato usando tecnologie diverse; risultato utile per rendere gli altri componenti quanto più indipendenti da come comunicano con l’esterno.
 
 \paragraph{Data Transfer Object (DTO)}: oggetto che ha il compito di racchiudere le informazioni utili a diverse componenti. Va a ridurre i metodi necessari per la comunicazione e, in generale, la semplifica.
 
