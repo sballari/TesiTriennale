@@ -18,7 +18,7 @@ Più in particolare il presente capitolo si prefigge di:
     \item fissare un ordine di priorità tra i requisiti individuati;
 \end{itemize}
 \section{Specifiche in Linguaggio Naturale}
-Il linguaggio naturale ha un’enorme potenza espressiva ma, essendo inerentemente ambiguo, può portare ad incomprensioni. È quindi necessario limitarne l’utilizzo e standardizzarlo, in modo da ridurre al minimo le possibili ambiguità. È comunque fondamentale evitare di utilizzare espressioni e acronimi che possano essere fraintendibili dagli stakeholders, a tal proposito in fondo al documento è presente una lista degli acronimi utilizzati.
+Il linguaggio naturale ha un’enorme potenza espressiva ma essendo inerentemente ambiguo può portare ad incomprensioni; è quindi necessario limitarne l’utilizzo e standardizzarlo, in modo da ridurre al minimo le possibili ambiguità. È comunque fondamentale evitare di utilizzare espressioni e acronimi che possano essere fraintendibili dagli stakeholders, a tal proposito in fondo al documento è presente una lista degli acronimi utilizzati.
 \section{Specifiche in Linguaggio Strutturato}
 Il linguaggio strutturato mantiene gran parte dell’espressività del linguaggio naturale, fornendo però uno standard schematico che permette l’uniformità della descrizione dei vari requisiti. Sebbene l’utilizzo di un linguaggio strutturato permetta di organizzare i requisiti in modo più ordinato e comprensibile, talvolta la ridotta espressività rende difficile la definizione di requisiti complessi. A tal proposito è possibile integrare la specifica in linguaggio strutturato con una descrizione in linguaggio naturale.
 \section{Specifiche in Linguaggio UML Use Case}
@@ -28,7 +28,7 @@ Per la definizione dei diagrammi UML dei casi d’uso, viene utilizzato lo stand
 \subsection{Casi d'uso}
 
 Per lo studio dei casi di utilizzo del prodotto sono stati creati dei diagrammi.
-I diagrammi dei casi d'uso (in inglese \emph{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
+I diagrammi dei casi d'uso (in inglese \emph{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o dei servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
 
 \subsubsection{Descrizione Attori}
 I tipi di attori principali che andranno ad interagire direttamente con il sistema sono essenzialmente tre: 
@@ -45,18 +45,18 @@ Tra di essi è presente una relazione di generalizzazione che vede l’attore ut
     \caption{Gerarchia utenti user case}
     \label{fig:ger-actors} 
 \end{figure}
-Sono stati individuati i seguenti attori secondari: ITF, MonoKee.
+Sono stati individuati i seguenti attori secondari: ITF, \textit{MonoKee}.
 \paragraph{Attori principali}
 \begin{itemize}
     \item \textbf{Utente}: l’attore utente è un fruitore generico del sistema. Potrebbe avere o non avere effettuato l’accesso all’applicazione. Da lui derivano gli attori utente non registrato e utente autenticato.	
-    \item \textbf{Utente non registrato}: l’attore utente non registrato è una particolare specializzazione dell’attore utente. Unica sua caratteristica è quella di non essere riconosciuto come utente di MonoKee.
-    \item \textbf{Utente autenticato}: l’attore utente autenticato è una particolare specializzazione dell’attore utente. Rappresenta un utente che ha effettuato l’accesso al sistema e che è stato riconosciuto all’interno del sistema MonoKee.
+    \item \textbf{Utente non registrato}: l’attore utente non registrato è una particolare specializzazione dell’attore utente. Unica sua caratteristica è quella di non essere riconosciuto come utente di \textit{MonoKee}.
+    \item \textbf{Utente autenticato}: l’attore utente autenticato è una particolare specializzazione dell’attore utente. Rappresenta un utente che ha effettuato l’accesso al sistema e che è stato riconosciuto all’interno del sistema \textit{MonoKee}.
 \end{itemize}
       
 \paragraph{Attori secondari}
 \begin{itemize}
     \item \textbf{ITF}: è il componente dell’estensione che ha il compito di conservare e convalidare tutte le informazioni provenienti dall’IW.
-    \item \textbf{MonoKee}: è il componente centrare dell’attuale servizio MonoKee. Ha il compito di fornire le informazioni di accesso del servizio MonoKee. 
+    \item \textbf{MonoKee}: è il componente centrare dell’attuale servizio \textit{MonoKee}. Ha il compito di fornire le informazioni di accesso del servizio \textit{MonoKee}. 
 \end{itemize}
     
 
@@ -113,11 +113,11 @@ L’utente visualizza un messaggio con le informazioni tecniche relative all’a
 
 
 \subsubsection{UC1.1.2 – Visualizza info servizio MonoKee}
-\paragraph{Descrizione}  Il sistema deve visualizzare le informazioni relative al servizio MonoKee
+\paragraph{Descrizione}  Il sistema deve visualizzare le informazioni relative al servizio \textit{MonoKee}
 \paragraph{Attore primario}  Utente
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed ha richiesto la visualizzazione delle informazioni relative al servizio MonoKee
-\paragraph{Postcondizioni}  L’utente ha visualizzato le informazioni con le informazioni relative al servizio MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed ha richiesto la visualizzazione delle informazioni relative al servizio \textit{MonoKee}
+\paragraph{Postcondizioni}  L’utente ha visualizzato le informazioni con le informazioni relative al servizio \textit{MonoKee}
 \paragraph{Scenario principale}  
 L’utente visualizza un messaggio con le informazioni relative al servizio MonoKee
 \paragraph{Scenari alternativi}  Nessuno
@@ -141,15 +141,15 @@ L’utente visualizza un tutorial su come utilizzare l’applicazione IW
     \caption{Use Case - UC2: Azioni utente non registrato}
 \end{figure}
 
-\paragraph{Descrizione}  L’utente non registrato può eseguire le operazioni di registrazione e accesso al servizio MonoKee 
+\paragraph{Descrizione}  L’utente non registrato può eseguire le operazioni di registrazione e accesso al servizio \textit{MonoKee} 
 \paragraph{Attore primario}  Utente non registrato
-\paragraph{Attore secondario}  MonoKee
+\paragraph{Attore secondario}  \textit{MonoKee}
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed non è ancora riconosciuto nel sistema
 \paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione di non essere registrato
 \paragraph{Scenario principale}  
     \begin{enumerate}
         \item UC2.1 Registrazione
-        \item UC2.2 Accesso MonoKee
+        \item UC2.2 Accesso \textit{MonoKee}
     \end{enumerate}
 \paragraph{Scenari alternativi}  
     \begin{enumerate}
@@ -167,8 +167,8 @@ L’utente visualizza un tutorial su come utilizzare l’applicazione IW
 
 \paragraph{Descrizione}  L’utente non registrato può eseguire l’operazione di registrazione 
 \paragraph{Attore primario}  Utente non registrato
-\paragraph{Attore secondario}  MonoKee
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare la registrazione al servizio MonoKee
+\paragraph{Attore secondario}  \textit{MonoKee}
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare la registrazione al servizio \textit{MonoKee}
 \paragraph{Postcondizioni}  L’utente ha eseguito l’operazione di registrazione al sistema
 \paragraph{Scenario principale}  
     \begin{enumerate}
@@ -187,7 +187,7 @@ L’utente visualizza un tutorial su come utilizzare l’applicazione IW
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di un username per l’operazione di registrazione
 \paragraph{Postcondizioni}  L’utente ha inserito l’username per la registrazione
 \paragraph{Scenario principale}  
-L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -198,7 +198,7 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di una password per l’operazione di registrazione
 \paragraph{Postcondizioni}  L’utente ha inserito la password per la registrazione
 \paragraph{Scenario principale}  
-L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -210,7 +210,7 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede il reinserimento di una password per l’operazione di registrazione
 \paragraph{Postcondizioni}  L’utente ha reinserito la password per la registrazione
 \paragraph{Scenario principale}  
-L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -224,8 +224,8 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 
 \paragraph{Descrizione}  L’utente non registrato può eseguire l’operazione di autenticazione 
 \paragraph{Attore primario}  Utente non registrato
-\paragraph{Attore secondario}  MonoKee
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare l’autenticazione al servizio MonoKee
+\paragraph{Attore secondario}  \textit{MonoKee}
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed ha espresso la volontà di effettuare l’autenticazione al servizio \textit{MonoKee}
 \paragraph{Postcondizioni}  L’utente ha eseguito l’operazione di accesso al sistema ed è quindi ora riconosciuto come utente autenticato
 \paragraph{Scenario principale}  
     \begin{enumerate}
@@ -236,13 +236,13 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 
 
 \subsubsection{UC2.2.1 – Inserimento username}
-\paragraph{Descrizione}  L’utente non registrato deve inserire un username per l’operazione di autenticazione
+\paragraph{Descrizione}  L’utente non registrato deve inserire un \textit{username} per l’operazione di autenticazione
 \paragraph{Attore primario}  Utente non registrato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di un username per l’operazione di autenticazione
-\paragraph{Postcondizioni}  L’utente ha inserito l’username per l’autenticazione
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di un \textit{username} per l’operazione di autenticazione
+\paragraph{Postcondizioni}  L’utente ha inserito \textit{username} per l’autenticazione
 \paragraph{Scenario principale}  
-L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -254,7 +254,7 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema richiede l’inserimento di una password per l’operazione di autentificazione
 \paragraph{Postcondizioni}  L’utente ha inserito la password per l’autentificazione
 \paragraph{Scenario principale}  
-L’utente non registrato inserisce una stringa tramite l’utilizzo di una text box
+L’utente non registrato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -263,7 +263,7 @@ L’utente non registrato inserisce una stringa tramite l’utilizzo di una text
 \paragraph{Descrizione}  L’utente non registrato fornisce username già esistente o il doppio inserimento della password non coincide
 \paragraph{Attore primario}  Utente non registrato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un username già esistente o delle password non coincidenti durante la registrazionerichiede l’inserimento di una password per l’operazione di autentificazione
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un \textit{username} già esistente o delle password non coincidenti durante la registrazionerichiede l’inserimento di una password per l’operazione di autentificazione
 \paragraph{Postcondizioni}  L’utente ha visualizzato un messaggio di errore relativo all’impossibilità di effettuare la registrazione con i dati forniti
 \paragraph{Scenario principale}  
 L’utente visualizza un messaggio di errore relativo all’impossibilità di effettuare la registrazione con i dati forniti
@@ -272,10 +272,10 @@ L’utente visualizza un messaggio di errore relativo all’impossibilità di ef
 
 
 \subsubsection{UC2.4 – Visualizza messaggio di errore autenticazione}
-\paragraph{Descrizione}  L’utente non registrato fornisce username e password che non corrispondono a nessun utente registrato al servizio MonoKee
+\paragraph{Descrizione}  L’utente non registrato fornisce username e password che non corrispondono a nessun utente registrato al servizio \textit{MonoKee}
 \paragraph{Attore primario}  Utente non registrato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un username e una password che non corrispondono a nessun utente registrato al servizio MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, non è ancora riconosciuto nel sistema ed il sistema ha inserito un username e una password che non corrispondono a nessun utente registrato al servizio \textit{MonoKee}
 \paragraph{Postcondizioni}  L’utente ha visualizzato un messaggio di errore relativo all’impossibilità di effettuare l’autenticazione
 \paragraph{Scenario principale}  
 L’utente visualizza un messaggio di errore relativo all’impossibilità di effettuare l’autenticazione
@@ -293,8 +293,8 @@ L’utente visualizza un messaggio di errore relativo all’impossibilità di ef
 \paragraph{Descrizione}  L’utente autenticato può eseguire le operazioni legate alla gestione della sua identità e alla presentazione dei propri dati ad un SP
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  ITF
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed è riconosciuto nel sistema come utente di MonoKee
-\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione essere riconosciuto come utente di MonoKee
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione ed è riconosciuto nel sistema come utente di \textit{MonoKee}
+\paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione essere riconosciuto come utente di \textit{MonoKee}
 \paragraph{Scenario principale}  
     \begin{enumerate}
         \item UC3.1 Visualizza QR dell’informazione certificata
@@ -314,7 +314,7 @@ L’utente visualizza un messaggio di errore relativo all’impossibilità di ef
 \paragraph{Descrizione}  L’utente autenticato può visualizzare nel proprio schermo un codice QR che rappresenta un’informazione certificata
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto di visualizzare il codice QR di una certificazione precedentemente inserita.
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto di visualizzare il codice QR di una certificazione precedentemente inserita.
 \paragraph{Postcondizioni}  L’utente ha visualizzato il codice QR che rappresenta la certificazione selezionata
 \paragraph{Scenario principale}  
 L’utente seleziona e poi visualizza il codice QR che rappresenta la certificazione selezionata
@@ -325,7 +325,7 @@ L’utente seleziona e poi visualizza il codice QR che rappresenta la certificaz
 \paragraph{Descrizione}  L’utente autenticato può visualizzare la chiave pubblica generata al momento della registrazione
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della chiave pubblica.
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione della chiave pubblica.
 \paragraph{Postcondizioni}  L’utente ha visualizzato la propria chiave pubblica precedentemente generata
 \paragraph{Scenario principale}  
 L’utente visualizza la propria chiave pubblica precedentemente generata
@@ -337,7 +337,7 @@ L’utente visualizza la propria chiave pubblica precedentemente generata
 \paragraph{Descrizione}  L’utente autenticato può visualizzare la chiave privata generata al momento della registrazione
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della chiave privata.
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione della chiave privata.
 \paragraph{Postcondizioni}  L’utente ha visualizzato la propria chiave privata precedentemente generata
 \paragraph{Scenario principale}  
 L’utente visualizza la propria chiave privata precedentemente generata
@@ -355,7 +355,7 @@ L’utente visualizza la propria chiave privata precedentemente generata
 \paragraph{Descrizione}  L’utente autenticato può inserire una certificazione e sottometterla all’ITF
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  ITF
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee, e ha intende inserire una nuova certificazione alla propria identità
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee}, e ha intende inserire una nuova certificazione alla propria identità
 \paragraph{Postcondizioni}  L’utente ha inserito la certificazione e questa è stata presentata all’ITF
 \paragraph{Scenario principale}  
     \begin{enumerate}
@@ -374,7 +374,7 @@ L’utente visualizza la propria chiave privata precedentemente generata
 \paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema ed il sistema richiede l’inserimento di un nome per l’operazione di inserimento certificazione
 \paragraph{Postcondizioni}  L’utente ha inserito il nome per l’inserimento della certificazione
 \paragraph{Scenario principale}  
-L’utente autenticato inserisce una stringa tramite l’utilizzo di una text box
+L’utente autenticato inserisce una stringa tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -386,7 +386,7 @@ L’utente autenticato inserisce una stringa tramite l’utilizzo di una text bo
 \paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema ed il sistema richiede l’inserimento di una descrizione per l’operazione di inserimento certificazione
 \paragraph{Postcondizioni}  L’utente ha inserito la descrizione per l’inserimento della certificazione
 \paragraph{Scenario principale}  
-L’utente autenticato inserisce un insieme di stringhe tramite l’utilizzo di una text box
+L’utente autenticato inserisce un insieme di stringhe tramite l’utilizzo di una \textit{text box}
 \paragraph{Scenari alternativi}  Nessuno
 
 
@@ -396,7 +396,7 @@ L’utente autenticato inserisce un insieme di stringhe tramite l’utilizzo di 
 \paragraph{Descrizione}  L’utente autenticato può visualizzare un resoconto dei dati inseriti durante la procedura di inserimento certificazione
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee, ha iniziato una procedura di inserimento certificazione e ha richiesto la visualizzazione del resoconto dei dati inseriti
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee}, ha iniziato una procedura di inserimento certificazione e ha richiesto la visualizzazione del resoconto dei dati inseriti
 \paragraph{Postcondizioni}  L’utente ha visualizzato un resoconto dei dati inseriti durante la procedura di inserimento certificazione
 \paragraph{Scenario principale}  
 L’utente visualizza un resoconto dei dati inseriti durante la procedura di inserimento certificazione
@@ -439,7 +439,7 @@ L’utente visualizza un resoconto dei dati inseriti durante la procedura di ins
 \paragraph{Descrizione}  L’utente autenticato può visualizzare i dettagli di una certificazione selezionata della lista delle certificazioni
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  ITF
-\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione di una specifica entry della lista delle certificazioni
+\paragraph{Precondizioni}  L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione di una specifica \textit{entry} della lista delle certificazioni
 \paragraph{Postcondizioni}  L’utente ha visualizzato i dettagli di una specifica certificazione della lista
 \paragraph{Scenario principale}  
     \begin{enumerate}
@@ -456,7 +456,7 @@ L’utente visualizza un resoconto dei dati inseriti durante la procedura di ins
 \paragraph{Descrizione}  L’utente autenticato può visualizzare il nome di una certificazione selezionata della lista delle certificazioni
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione del nome di una specifica entry della lista delle certificazioni
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione del nome di una specifica \textit{entry} della lista delle certificazioni
 \paragraph{Postcondizioni}  L’utente ha visualizzato il nome di una specifica certificazione della lista
 \paragraph{Scenario principale}  
 L’utente visualizza il nome di una specifica certificazione della lista
@@ -469,7 +469,7 @@ L’utente visualizza il nome di una specifica certificazione della lista
 \paragraph{Descrizione}  L’utente autenticato può visualizzare la descrizione di una certificazione selezionata della lista delle certificazioni
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  Nessuno
-\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione della descrizione di una specifica entry della lista delle certificazioni
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione della descrizione di una specifica \textit{entry} della lista delle certificazioni
 \paragraph{Postcondizioni}  L’utente ha visualizzato la descrizione di una specifica certificazione della lista
 \paragraph{Scenario principale}  
 L’utente visualizza la descrizione di una specifica certificazione della lista
@@ -481,7 +481,7 @@ L’utente visualizza la descrizione di una specifica certificazione della lista
 \paragraph{Descrizione}  L’utente autenticato può visualizzare lo stato di una certificazione selezionata della lista delle certificazioni. L’informazione proviene dall’ITF.
 \paragraph{Attore primario}  Utente Autenticato
 \paragraph{Attore secondario}  ITF
-\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di MonoKee e ha richiesto la visualizzazione dello stato di una specifica entry della lista delle certificazioni
+\paragraph{Precondizioni} L’utente ha avviato l’applicazione, è riconosciuto nel sistema come utente di \textit{MonoKee} e ha richiesto la visualizzazione dello stato di una specifica \textit{entry} della lista delle certificazioni
 \paragraph{Postcondizioni}  L’utente ha visualizzato lo stato di una specifica certificazione della lista
 \paragraph{Scenario principale}  
 L’utente visualizza una stringa che può essere confermata da un TTP o non confermata.
@@ -519,14 +519,14 @@ L’utente seleziona e poi esprime la volontà di eliminare la certificazione ce
 \subsection{Tracciamento dei requisiti}
 
 \subsubsection{Fonti}
-Per la deduzione dei requisiti utente e di sistema, che verranno presentati nelle sezioni a seguire, sono stati usati come fonti lo studio Gartner \footcite{farah:The-Dawn-of-Decentralized-Identity}, il capitolo \emph{Studio di fattibilità IW} e gli Use Case presentati nella sezione \emph{Casi d'uso}. La struttura e le convenzioni usate sono ispirate dal capitolo di \cite{som:swe}. In seguito vengono riportate le categorie che vengono usate per la catalogazione:
+Per la deduzione dei requisiti utente e di sistema, che verranno presentati nelle sezioni a seguire, sono stati usati come fonti lo studio \textit{Gartner} \footcite{farah:The-Dawn-of-Decentralized-Identity}, il capitolo \emph{Studio di fattibilità IW} e gli \textit{Use Case} presentati nella sezione \emph{Casi d'uso}. La struttura e le convenzioni usate sono ispirate dal capitolo di \cite{som:swe}. In seguito vengono riportate le categorie che vengono usate per la catalogazione:
 \begin{itemize}
     \item F: requisito funzionale;
     \item V: requisito di vincolo;
     \item Q: requisito di qualità.
 \end{itemize}
     
-Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli indici usati sono i seguenti:
+Per l’attribuzione della priorità viene usata la tecnica \textit{MoSCoW}, quindi gli indici usati sono i seguenti:
 \begin{itemize}
     \item M: must;
     \item S: should; 
@@ -534,7 +534,7 @@ Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli i
     \item W: will.
 \end{itemize} 
     
-Nelle tabelle \ref{tab:requisiti-funzionali}, \ref{tab:requisiti-qualitativi} e \ref{tab:requisiti-vincolo} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
+Nelle tabelle \ref{tab:requisiti-funzionali}, \ref{tab:requisiti-qualitativi} e \ref{tab:requisiti-vincolo} sono riassunti i requisiti e il loro tracciamento con gli \textit{text}use case delineati in fase di analisi.
 
 \newpage
 \begin{center}
@@ -556,7 +556,7 @@ R[F][C]0004     & Il sistema potrebbe permettere di visualizzare un tutorial esp
 \hline
 R[F][M]0005     & Il sistema deve permettere di potersi registrare al servizio & UC2, UC2.1 \\
 \hline
-R[F][M]0006     & Il sistema deve permettere di essere riconosciuto dal sistema MonoKee & UC2, UC2.2 \\
+R[F][M]0006     & Il sistema deve permettere di essere riconosciuto dal sistema \textit{MonoKee} & UC2, UC2.2 \\
 \hline
 R[F][M]0007     & Il sistema deve visualizzare un messaggio di errore in caso i dati forniti durante la registrazione non dovessero essere validi & UC2, UC2.3 \\
 \hline
@@ -568,7 +568,7 @@ R[F][M]0010    & Il sistema deve permettere di inserire una password nell’otti
 \hline
 R[F][M]0011     & Il sistema deve permettere di reinserire la password nell’ottica della procedura di registrazione & UC2.1.3 \\
 \hline
-R[F][M]0012     & Il sistema deve permettere di inserire uno username nell’ottica della procedura di autentificazione & UC2.2.1 \\
+R[F][M]0012     & Il sistema deve permettere di inserire uno \textit{username} nell’ottica della procedura di autentificazione & UC2.2.1 \\
 \hline
 R[F][M] 0013     & Il sistema deve permettere di inserire una password nell’ottica della procedura di autentificazione & UC2.2.2 \\
 \hline
@@ -613,11 +613,11 @@ R[F][S] 0026     & Il sistema dovrebbe permettere ad un utente autenticato di vi
 \hline
 R[V][M] 0027    & Il sistema deve offrire le proprie funzionalità come applicazione mobile &  IW Studio di fattibilità \\
 \hline
-R[V][M] 0028    & Il sistema è implementato tramite l’uso di Xamarin & IW Studio di fattibilità \\
+R[V][M] 0028    & Il sistema è implementato tramite l’uso di \textit{Xamarin} & IW Studio di fattibilità \\
 \hline
-R[V][M] 0029    & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: Local, Test, Staging, Production & IW Studio di fattibilità \\
+R[V][M] 0029    & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: \textit{Local}, \textit{Test}, \textit{Staging}, \textit{Production} & IW Studio di fattibilità \\
 \hline
-R[V][M] 0030    & Il prodotto è sviluppato utilizzando uno strumento di linting & IW Studio di fattibilità \\
+R[V][M] 0030    & Il prodotto è sviluppato utilizzando uno strumento di \textit{linting} & IW Studio di fattibilità \\
 \hline
 R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale & IW Studio di fattibilità \\
 \hline
@@ -639,9 +639,9 @@ R[V][M] 0031    & Il sistema deve mantenere la chiave privata sempre in locale &
     \hline
     R[Q][S] 0033   & I test possono essere eseguiti localmente o come parte di integrazione continua & - \\
     \hline
-    R[Q][S] 0034    & Il sistema solo alla fine sarà testato nel network pubblico di prova & - \\
+    R[Q][S] 0034    & Il sistema solo alla fine sarà testato nel \textit{network} pubblico di prova & - \\
     \hline
-    R[Q][S] 0035    & Il codice sorgente del prodotto e la documentazione necessaria per l’utilizzo sono versionati in repository pubblici usando GitHub, BitBucket o GitLab & - \\
+    R[Q][S] 0035    & Il codice sorgente del prodotto e la documentazione necessaria per l’utilizzo sono versionati in \textit{repository} pubblici usando \textit{GitHub}, \textit{BitBuket} o \textit{GitLab} & - \\
     \hline
     R[Q][C] 0036    & Lo sviluppo si eseguirà utilizzano un approccio incrementale  & IW Studio di fattibilità \\
     \hline
@@ -817,7 +817,7 @@ I tipi di utente che andranno ad interagire direttamente con il sistema si divid
     \item Utente IW.
 \end{itemize}
 Tra gli attori precedentemente citati non è però prevista alcuna funzionalità in comune e non emerge quindi la necessità di avere una gerarchia. In immagine \ref{fig:ger-actors-sp} è proposta una visualizzazione grafica di quanto detto.
-Non sono stati individuati, invece, attori secondari che partecipano al sistema.
+Non sono stati invece individuati attori secondari che partecipano al sistema.
 \begin{figure}[!htbp]    
     \centering
     \includegraphics[width=0.5\columnwidth]{usecase/use-case-sp/attori.png} 
@@ -826,7 +826,7 @@ Non sono stati individuati, invece, attori secondari che partecipano al sistema.
 \end{figure}
 \paragraph{Attori principali}
 \begin{itemize}
-    \item Servizio convenzionato: l’attore servizio convenzionato è quello che nell’analisi del dominio è stato definito come Real Service Provider (RSP). Si tratta del fornitore reale del servizio.
+    \item Servizio convenzionato: l’attore servizio convenzionato è quello che nell’analisi del dominio è stato definito come \textit{Real Service Provider} (RSP). Si tratta del fornitore reale del servizio.
     \item Utente IW: l’attore utente IW è una persona fisica che utilizza la nostra applicazione mobile al fine di operare l’accesso ad un servizio convenzionato in MonoKee.
 \end{itemize}
 
@@ -891,7 +891,7 @@ Il sistema riceve l’esito della verificata ed in caso le PII necessarie per l�
 
 \paragraph{Descrizione} L’utente IW può eseguire le operazioni per l’accesso
 \paragraph{Attore primario}  Utente IW
-\paragraph{Attore secondario}  MonoKee
+\paragraph{Attore secondario}  \textit{MonoKee}
 \paragraph{Precondizioni} Nessuna
 \paragraph{Postcondizioni}  L’utente ha eseguito le azioni che desiderava compiere in relazione alla condizione.
 \paragraph{Scenario principale}  
@@ -954,7 +954,7 @@ Per la deduzione dei requisiti utente e di sistema, che verranno presentati nell
     \item Q: requisito di qualità.
 \end{itemize}
     
-Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli indici usati sono i seguenti:
+Per l’attribuzione della priorità viene usata la tecnica \textit{MoSCoW}, quindi gli indici usati sono i seguenti:
 \begin{itemize}
     \item M: must;
     \item S: should; 
@@ -962,7 +962,7 @@ Per l’attribuzione della priorità viene usata la tecnica MoSCoW, quindi gli i
     \item W: will.
 \end{itemize} 
     
-Nelle tabelle \ref{tab:requisiti-funzionali-sp}, \ref{tab:requisiti-qualitativi-sp} e \ref{tab:requisiti-vincolo-sp} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
+Nelle tabelle \ref{tab:requisiti-funzionali-sp}, \ref{tab:requisiti-qualitativi-sp} e \ref{tab:requisiti-vincolo-sp} sono riassunti i requisiti e il loro tracciamento con gli \textit{use case} delineati in fase di analisi.
 
 \newpage
 \begin{center}
@@ -988,15 +988,15 @@ R[F][M]0006     & Il sistema deve catturare nella schermata di accesso il codice
 \hline
 R[F][M]0007     & Il sistema deve essere in grado di decodificare le informazioni contenute in un codice QR & DA1 \\
 \hline
-R[F][M]0008     & Il sistema deve essere in grado di fare l’hash di una PII & DA1 \\
+R[F][M]0008     & Il sistema deve essere in grado di fare l’\textit{hash} di una PII & DA1 \\
 \hline
 R[F][M]0009     & Il sistema deve essere in grado di inviare una richiesta di verifica per un particolare PII  & DA1 \\
 \hline
 R[F][M]0010     & Il sistema deve essere in grado di eseguire l’operazione di hash e invio richiesta verifica per ogni PII presenta in un codice QR & DA1 \\
 \hline
-R[F][M]0011     & Il sistema deve inviare una richiesta dell’associazione utente-servizio a Monokee classico & DA1 \\
+R[F][M]0011     & Il sistema deve inviare una richiesta dell’associazione utente-servizio a \textit{MonoKee} classico & DA1 \\
 \hline
-R[F][M]0012     & Il sistema deve essere in grado di ricevere le informazioni richiesta dell’associazione utente servizio da Monokee classico & DA1 \\
+R[F][M]0012     & Il sistema deve essere in grado di ricevere le informazioni richiesta dell’associazione utente servizio da \textit{MonoKee} classico & DA1 \\
 \hline
 R[F][M]0013     & Il sistema deve visualizzare un messaggio di errore in caso cui l’associazione utente-servizio non sia presente per il servizio richiesto & DA1 \\
 \hline
@@ -1029,11 +1029,11 @@ R[F][M]0017     & Il sistema deve in caso di presenza dell’associazione e del 
     \hline
     B     & Il sistema è implementato tramite in linguaggi .NET & SP Studio di fattibilità \\
     \hline
-    B     & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: Local, Test, Staging, Production & SP Studio di fattibilità \\
+    B     & Il progetto prevede almeno i seguenti quattro ambienti di sviluppo: \textit{Local}, \textit{Test}, \textit{Staging}, \textit{Production} & SP Studio di fattibilità \\
     \hline
-    B     & Il prodotto è sviluppato utilizzando uno strumento di linting & SP Studio di fattibilità \\
+    B     & Il prodotto è sviluppato utilizzando uno strumento di \textit{linting} & SP Studio di fattibilità \\
     \hline
-    B     & Il sistema deve comunicare con la rete blockchain tramite un client Ethereum. & SP Studio di fattibilità \\
+    B     & Il sistema deve comunicare con la rete \textit{blockchain} tramite un \textit{client Ethereum}. & SP Studio di fattibilità \\
     \hline
     \end{longtable}
     \end{center}
