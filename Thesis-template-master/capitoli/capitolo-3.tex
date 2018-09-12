@@ -20,12 +20,12 @@ Il progetto ha come scopo la creazione di un’estensione del servizio \textit{M
         \item \textbf{Trusted Third Party} (TTP);
     \end{itemize} 
 In sintesi l’estensione dovrà operare al fine di fornire la possibilità ad un utente di registrare e gestire la propria identità autonomamente tramite l’IW e mandare i propri dati (\textit{personally identifiable information}, PII) all’ITF, il quale custodirà la sua identità e farà da garante per le asserzioni provenienti dai TTP. Inoltre il SP dovrà essere in grado con le informazioni provenienti da IW e ITF di verificare o meno l’accesso ai propri servizi.
-L'immagine in figura \ref{fig:diag-mod} dovrebbe chiarificare i vari componenti in gioco.
+L'immagine in figura \ref{fig:diag-mod1} dovrebbe chiarificare i vari componenti in gioco.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\columnwidth]{diagrammaComponenti.png} 
     \caption{Diagramma Moduli}
-    \label{fig:diag-mod} 
+    \label{fig:diag-mod1} 
 \end{figure}
 %**************************************************************
 \section{Studio Tecnologico Identity Trust Fabric}
@@ -398,7 +398,7 @@ Si è quindi proceduto a elaborare delle possibili soluzioni per far fronte a ta
 \begin{risk}{Inesperienza nello sviluppo Xamarin}
     \riskdescription{Il team non ha esperienza nello sviluppo di applicazioni mobili.}
     \risksolution{Rendere edotto il responsabili del progetto, il quale mettera a disposizione del personale per impartire lezioni sul \emph{framework Xamarin}.}
-    \label{risk:centralization-vision-from-user} 
+    \label{risk:mobile-inex} 
 \end{risk}
 \subsection{Conclusione Studio di fattibilità IW}
 Da questo primo studio di fattibilità emerge come, da un punto di vista dell’utente, lo sviluppo di un’applicazione mobile sia maggiormente adatto. Invece, da un punto di vista tecnologico, risulta come ci siano delle problematiche inerenti alla comunicazione tra i componenti IW e ITF. Riguardo questo si ritiene che lo sviluppo di un applicativo Desktop risulterebbe più adatto, ma molto probabilmente mal visto dalla maggioranza degli utenti finali. 
@@ -568,17 +568,17 @@ A seguito dell’analisi sopra proposta sono stati individuati i seguenti aspett
 \begin{risk}{Inesperienza nello sviluppo \emph{C Sharp}}
     \riskdescription{Non si ha esperienza nello sviluppo di applicazioni \emph{C Sharp}.}
     \risksolution{Rendere edotto il responsabili del progetto, il quale mettera a disposizione del personale per impartire supporto su \emph{C Sharp}.}
-    \label{risk:centralization-vision-from-user} 
+    \label{risk:c-sharp-inex} 
 \end{risk}
 \begin{risk}{difficoltà di integrazione con \emph{Monokee}}
     \riskdescription{Il componete SP è il componente che deve essere integrato in \emph{Monokee}.}
     \risksolution{Rendere edotto il responsabili del progetto, il quale metterà a disposizione del personale.}
-    \label{risk:centralization-vision-from-user} 
+    \label{risk:monokee-complex} 
 \end{risk}
 \begin{risk}{Prestazioni delle chiamate alla rete \emph{blockchain}}
     \riskdescription{Il componete SP deve interrogare la rete \emph{blockchain}, questo potrebbe rappresentare un problema di performance}
     \risksolution{Rendere edotto il responsabili del progetto, valutare soluzioni alternative.}
-    \label{risk:centralization-vision-from-user} 
+    \label{risk:bc-performance} 
 \end{risk}
 \subsection{Conclusioni}
 Dal presente studio emerge come la creazione di un SP sviluppato come applicativo server, e non come applicazione distribuita, possa essere un’ottima opzione implementativa. Lo studio non presenta particolari rischi. In definitiva, si ritiene che un approccio di questo tipo sia fattibile nei tempi dello stage.
