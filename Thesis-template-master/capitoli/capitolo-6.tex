@@ -14,9 +14,9 @@ La verifica statica è estremamente utile in quanto non richiede che il prodotto
     \item ispezione;
     \item analisi a pettine.
 \end{itemize}
-La verifica dinamica richiede l'esecuzione del codice e può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante l' attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente, venivano redatti i test che lo riguardavano e successivamente veniva fatta la progettazione in dettaglio. Ciò permetteva di progettare, in modo immediato, ad alto livello pensando al requisito astratto, ed anche in dettaglio grazie ai test che dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
+La verifica dinamica richiede l'esecuzione del codice e può essere automatica e ripetibile tramite l'uso di apposite \gls{suitetestg}\glsfirstoccur. I test rappresentano uno dei princiapali esempi di verifica dinamica. Durante l'attività di stage è stata adottata una strategia che prevedeva la creazione di test subito dopo la fase di progettazione. Ogni qual volta si prevedeva un componente, venivano redatti i test che lo riguardavano e successivamente veniva fatta la progettazione in dettaglio. Ciò permetteva di progettare, in modo immediato, ad alto livello pensando al requisito astratto, ed anche in dettaglio grazie ai test che dovevano essere completamente automatizzati ed eseguiti ad ogni commit del codice. 
 Per permettere uno sviluppo agevole si è utilizzata una tecnica di gestione del repository detta \emph{branch-pull}.\\
-Essa prevedeva che ogni attivita’ di codifica dovesse essere eseguita in un branch creato appositamente per lo scopo. Alla fine dell'attività si procedeva con una pull request verso il \emph{branch} principale, la quale veniva accettata se, e solo se, i test passavano totalmente. \\
+Essa prevedeva che ogni attività di codifica dovesse essere eseguita in un \emph{branch} creato appositamente per lo scopo. Alla fine dell'attività si procedeva con una \emph{pull request} verso il \emph{branch} principale, la quale veniva accettata se, e solo se, i test passavano totalmente. \\
 
 Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi: 
 \begin{itemize}
@@ -28,8 +28,8 @@ Le attivatà di verifica erano mirate al raggiungimento dei seguenti obiettivi:
 \end{itemize}
 \medskip
 Un punto critico è stato trovare un giusto quantitativo di test da produrein modo da non superare le scadenze inerenti alle attività di codifica, per questo abbiamo deciso di produrre almeno un test per metodo, ed uno per classe. 
-Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo optato per farli solo se ci fosse stato tempo utile. 
-L'uso di queste tecniche ha permesso di avere anche una certa libertà nelle modifiche a codice (già integrato nel sistema) in quanto ha fornito, almeno in parte, anche dei test di regressione. 
+Data l’elevata difficoltà nel prevedere test di integrazione e di sistema abbiamo optato di farli solo se ci fosse stato tempo utile. 
+L'uso di queste tecniche ha permesso di avere anche una certa libertà nelle modifiche al codice (già integrato nel sistema) in quanto ha fornito, almeno in parte, anche dei test di regressione. 
 
 Lo svolgimento del processo ha permesso di ottenere varie metriche quali:
 \begin{itemize}
@@ -39,19 +39,20 @@ Lo svolgimento del processo ha permesso di ottenere varie metriche quali:
 \end{itemize}
 
 \subsection{Attività di verifica statica}
-I componenti, basandosi sullo stesso linguaggio, hanno condiviso le procedure per la verifica statica. Il principale strumento di utilizzato è stato il \emph{linter} \emph{SonarLint}. Questo strumento ha permesso di mantenere lo stesso stile di scrittura in ogni parte del progetto e di individuaare potenziali errori logici e cattive pratiche. 
+I componenti, basandosi sullo stesso linguaggio, hanno condiviso le procedure per la verifica statica. Il principale strumento di utilizzato è stato il \emph{linter} \emph{SonarLint}. Questo strumento ha permesso di mantenere lo stesso stile di scrittura in ogni parte del progetto e di individuare potenziali errori logici e cattive pratiche. 
 Sono state anche utilizzate numerose funzionalità presenti in \emph{Visul Studio} che hanno permesso \emph{refactoring} automatici del codice e strumenti di analisi statica.
 
 \subsection{Realizzazione dei test}
 Entrambi i componenti codificati durante le ore di stage condividevano lo stesso linguaggio di programmazione, ma utilizzavano \gls{frameworkg} diversi. Nonostante molte librerie fossero in comune questo non lo era per i \emph{framework} di test. I test per il componente SP sono stati codificati usando \emph{MSTest}, mentre quelli per il componente IW hanno usato \emph{Xamarin.UITest}
 
-Altra particolare difficoltà è stata riscontrata nei test di integrazione del componente SP perchè lavora in stretto contatto con l'applicativo Monokee e con i componenti IW e ITF. Data l'elevata mutabilità dell'applicativo Monokee si è deciso di realizzare doppie versioni di ogni test; la prima prevedendo l'uso di \emph{mock}, la seconda  effettuando una reale comunicazione con i componenti precedentemente citati e ciò ha permesso una più semplice localizzazione dei problemi.
+Altra particolare difficoltà è stata riscontrata nei test di integrazione del componente SP perchè lavora in stretto contatto con l'applicativo \emph{Monokee} e con i componenti IW e ITF. Data l'elevata mutabilità dell'applicativo \emph{Monokee} si è deciso di realizzare doppie versioni di ogni test; la prima prevedendo l'uso di \emph{mock}, la seconda effettuando una reale comunicazione con i componenti precedentemente citati
+Ciò ha permesso una più semplice localizzazione dei problemi.
 
 Il componente IW è un'applicazione mobile le cui interazioni con elementi esterni sono di natura occasionale e con il fine unico di ottenere informazioni verificabili, motivo per cui si è scelto di non usare dei \emph{mock} ma di prevedere direttamente test che comunicassero con gli elementi esterni.
 
 
 \section{Validazione}
-La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfa il cliente e gli utenti finali. La principale attività di validazione è stata svolta durante l'ultima settimana di lavoro attraverso prove e dimostrazioni del prodotto e si è verificato, con la presenza del tutor aziendale, la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
+La validazione si occupa di accertarsi che il prodotto sviluppato sia quello realmente desiderato. In genere è fatta a prodotto finito ed è utile al fine di capire se il prodotto soddisfi il cliente e gli utenti finali. La principale attività di validazione è stata svolta durante l'ultima settimana di lavoro attraverso prove e dimostrazioni del prodotto e si è verificato, con la presenza del tutor aziendale, la corretta implementazione dei requisiti dedotti durante le prime fasi di analisi.
 
 L'esito, nonostante non avesse la totalità dei requisiti soddisfatti, è stato soddisfacente. Oltretutto è da sottolineare che molti requisiti sono stati ritenuti di importanza accessoria dall'azienda e quindi sostituiti con altre funzionalità non previste inizialmente.
 
@@ -165,9 +166,9 @@ I requisiti:
     \item R[F][M]0010; 
     \item R[F][M]0011 
 \end{itemize}
-sono stati cancellati in quanto le funzionalità che proponevano non volevano essere offerte dall'applicazione ma dal portale attualmente esistente di Monokee.
+sono stati cancellati in quanto le funzionalità che proponevano non dovevano essere offerte dall'applicazione ma dal portale attualmente esistente di \emph{Monokee}.
 
-Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche push, questo perchè lo sforzo sarebbe stato eccessivo rispetto al valore che avrebbe apportato la funzionalità, motivo per cui si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
+Il requisto R[F][S] 0026 non è stato implementato in quanto prevedeva una continua comunicazione con l'ITF e l'uso di notifiche \emph{push}. Lo sforzo sarebbe stato eccessivo rispetto al valore che avrebbe apportato la funzionalità, motivo per cui si è deciso di rimandare lo sviluppo a successive versioni dell'applicativo.
 
 \subsection{Validazione requisiti componente SP}
 In tabella \ref{tab:validazione-sp} mostra lo stato di validazione di ogni requisito del componente SP.I requisiti possono essere:
